@@ -1,0 +1,24 @@
+<div class="addForm">
+  <form [formGroup]="myForm"
+        (ngSubmit)="onSubmit(myForm.value)"
+        class="ui form">
+
+    <div class="field">
+      <label for="title">Title</label>
+      <input type="text"
+             id="title"
+             placeholder="Title"
+             [formControl]="myForm.controls['title']">
+
+      <label for="content">Content</label>
+      <input type="text"
+             id="content"
+             placeholder="Content"
+             [formControl]="myForm.controls['content']">
+    </div>
+
+    <button type="submit" class="ui button" *ngIf="isValidToSubmit()">Submit</button>
+  </form>
+
+  {{ myForm.get('title').value }}
+</div>
