@@ -1,20 +1,19 @@
 package com.nixsolutions.angular_boot.service;
 
-import com.nixsolutions.angular_boot.dao.RoleRepository;
-import com.nixsolutions.angular_boot.dao.UserRepository;
-import com.nixsolutions.angular_boot.entity.Role;
-import com.nixsolutions.angular_boot.entity.User;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
+import static com.nixsolutions.angular_boot.config.Constants.USER_ROLE;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
-import static com.nixsolutions.angular_boot.config.Constants.USER_ROLE;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.nixsolutions.angular_boot.dao.RoleRepository;
+import com.nixsolutions.angular_boot.dao.UserRepository;
+import com.nixsolutions.angular_boot.entity.Role;
+import com.nixsolutions.angular_boot.entity.User;
 
 @Service("userService")
 public class UserServiceImpl implements UserService
