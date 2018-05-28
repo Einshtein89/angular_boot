@@ -1,7 +1,17 @@
-<button style="border: 1px solid black; display: inline-block; margin-bottom: 10px;" (click)="showHideContent()">
-  {{ entity.title }}
-</button>
-<p style="border: 1px solid green; display: inline-block;" *ngIf="isShowContent">
-  {{ entity.content }}
-</p>
+
+<!--<pre *ngIf="!loading">{{allArticles | json}}</pre>-->
+
+  <div class="ui statistic">
+    <div class="value">
+      {{ entity.firstName }}
+    </div>
+  </div>
+
+  <a class="ui large header">
+    {{ entity.firstName }}
+  </a>
+  <div class="meta">({{ entity.lastName }})</div>
+
+
+
 

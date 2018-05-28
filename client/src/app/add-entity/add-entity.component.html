@@ -1,7 +1,7 @@
-<div class="addForm">
-  <form [formGroup]="myForm"
-        (ngSubmit)="onSubmit(myForm.value)"
-        class="ui form">
+<div class="ui main text container">
+  <form class="ui large form segment"
+        [formGroup]="myForm"
+        (ngSubmit)="onSubmit(myForm.value)">
 
     <div class="field">
       <label for="title">Title</label>
@@ -9,7 +9,8 @@
              id="title"
              placeholder="Title"
              [formControl]="myForm.controls['title']">
-
+    </div>
+    <div class="field">
       <label for="content">Content</label>
       <input type="text"
              id="content"
@@ -17,8 +18,10 @@
              [formControl]="myForm.controls['content']">
     </div>
 
-    <button type="submit" class="ui button" *ngIf="isValidToSubmit()">Submit</button>
+    <button type="submit"
+            class="ui positive right floated button"
+            *ngIf="isValidToSubmit()">Submit
+    </button>
   </form>
-
-  {{ myForm.get('title').value }}
 </div>
+

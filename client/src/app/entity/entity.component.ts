@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Entity} from "../model/entity";
+import {User} from "../model/user.model";
 
 @Component({
   selector: 'single-entity',
@@ -7,7 +7,7 @@ import {Entity} from "../model/entity";
   styleUrls: ['./entity.component.css']
 })
 export class EntityComponent implements OnInit {
-  @Input() entity: Entity;
+  @Input() entity: User;
   isShowContent: boolean;
 
   constructor() { }

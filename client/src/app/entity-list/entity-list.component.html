@@ -1,4 +1,10 @@
-<single-entity style="display: block;"
-        *ngFor="let entity of entityList"
-             [entity]="entity">
-</single-entity>
+<button type="button" (click)="makeRequest()">Make Request</button>
+<div *ngIf="loading">loading...</div>
+<div *ngIf="!loading">
+  <div class="ui three cards">
+    <single-entity class="card"
+            *ngFor="let entity of entityList"
+                 [entity]="entity">
+    </single-entity>
+  </div>
+</div>

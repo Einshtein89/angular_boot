@@ -1,13 +1,20 @@
 package com.nixsolutions.angular_boot.entity;
 
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
-
-import javax.persistence.*;
-import javax.validation.constraints.Pattern;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Table(name = "user", uniqueConstraints = {@UniqueConstraint(columnNames = { "email" }) })
@@ -15,31 +22,32 @@ import java.util.Set;
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
 	private long id;
 	@Column(name = "email")
-	@Email(message = "{hibernate.user.email.message}")
-	@NotEmpty(message = "{hibernate.user.email.empty.message}")
+//	@Email(message = "{hibernate.user.email.message}")
+//	@NotEmpty(message = "{hibernate.user.email.empty.message}")
 	private String email;
 	@Column(name = "password")
-	@Length(min = 5, message = "{hibernate.user.password.size.message}")
-	@NotEmpty(message = "{hibernate.user.password.empty.message}")
+//	@Length(min = 5, message = "{hibernate.user.password.size.message}")
+//	@NotEmpty(message = "{hibernate.user.password.empty.message}")
+//	@JsonIgnore
 	private String password;
 	@Column(name = "first_name")
-	@NotEmpty(message = "{hibernate.user.firstName.empty.message}")
-	@Pattern(regexp = "^[a-zA-Z]+$", message = "{hibernate.user.firstName.invalid.format}")
+//	@NotEmpty(message = "{hibernate.user.firstName.empty.message}")
+//	@Pattern(regexp = "^[a-zA-Z]+$", message = "{hibernate.user.firstName.invalid.format}")
 	private String firstName;
 	@Column(name = "last_name")
-	@NotEmpty(message = "{hibernate.user.lastName.empty.message}")
-	@Pattern(regexp = "^[a-zA-Z]+$", message = "{hibernate.user.lastName.invalid.format}")
+//	@NotEmpty(message = "{hibernate.user.lastName.empty.message}")
+//	@Pattern(regexp = "^[a-zA-Z]+$", message = "{hibernate.user.lastName.invalid.format}")
 	private String lastName;
 	@Column(name = "phone")
-	@NotEmpty(message = "{hibernate.user.phone.empty.message}")
-	@Pattern(regexp = "^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$", message = "{hibernate.user.phone.invalid.format}")
+//	@NotEmpty(message = "{hibernate.user.phone.empty.message}")
+//	@Pattern(regexp = "^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$", message = "{hibernate.user.phone.invalid.format}")
 	private String phone;
 	@Column(name = "sex")
-	@NotEmpty(message = "{hibernate.user.sex.empty.message}")
+//	@NotEmpty(message = "{hibernate.user.sex.empty.message}")
 	private String sex;
 	@Column(name = "active")
 	private int active;
