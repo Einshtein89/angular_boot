@@ -4,6 +4,7 @@ import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 import {Observable} from "rxjs/Observable";
 import {User} from "../model/user.model";
+import {UserService} from "../service/user.service";
 @Component({
   selector: 'entity-list',
   templateUrl: './entity-list.component.html',
@@ -14,33 +15,20 @@ export class EntityList implements OnInit {
   loading: boolean;
   statusCode: number;
 
-  constructor(private http: Http) {
+  constructor(private userService: UserService) {
   }
 
   ngOnInit() {
     // this.makeRequest();
   }
 
-  makeRequest(): void {
+  getAllUsers(): void {
     this.loading = true;
-    this.http.request('http://localhost:3000/users')
-      .map(this.extractData)
-      .catch(this.handleError)
+    this.userService.getAllUsers()
       .subscribe(
         data => {this.entityList = data, console.log(this.entityList)},
         errorCode =>  this.statusCode = errorCode,
         () => this.loading = false
       );
-  }
-
-  private extractData(res: Response) {
-    let body = res.json()._embedded.users;
-    console.log(res.json());
-    return body;
-  }
-
-  private handleError (error: Response | any) {
-    console.error(error.message || error);
-    return Observable.throw(error.status);
   }
 }
