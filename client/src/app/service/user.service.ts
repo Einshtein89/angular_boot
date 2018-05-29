@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {User} from "../model/user.model";
-import {USERS_API_URL} from "../constants/constants";
 
+export const USERS_API_URL = "";
 
 @Injectable()
 export class UserService {
@@ -56,7 +56,7 @@ export class UserService {
       .catch(this.handleError);
   }
   private extractData(res: Response) {
-    let body = res.json();
+    let body = res.json()._embedded.users;
     return body;
   }
   private handleError (error: Response | any) {

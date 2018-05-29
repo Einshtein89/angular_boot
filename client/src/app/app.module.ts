@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { EntityList } from './entity-list/entity-list.component';
 import { EntityComponent } from './entity/entity.component';
 import { AddEntityComponent } from './add-entity/add-entity.component';
+import {UserService} from "./service/user.service";
+import {constants} from "./constants/constants";
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { AddEntityComponent } from './add-entity/add-entity.component';
     HttpModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    UserService,
+    constants],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

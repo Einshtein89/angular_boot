@@ -1,14 +1,14 @@
-import { AngularTestPage } from './app.po';
+import { AppPage } from './app.po';
 
-describe('angular-test App', function() {
-  let page: AngularTestPage;
+describe('client App', () => {
+  let page: AppPage;
 
   beforeEach(() => {
-    page = new AngularTestPage();
+    page = new AppPage();
   });
 
-  it('should display message saying app works', () => {
+  it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('app works!');
+    expect(page.getParagraphText()).toEqual('Welcome to app!');
   });
 });
