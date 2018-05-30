@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {Entity} from "../model/entity";
+import {UserService} from "../service/user.service";
+import {User} from "../model/user.model";
 
 @Component({
   selector: 'add-entity',
@@ -8,15 +9,12 @@ import {Entity} from "../model/entity";
   styleUrls: ['./add-entity.component.css']
 })
 export class AddEntityComponent {
-  @Input() entityList: Entity[];
+  @Input() entityList: User[];
   myForm: FormGroup;
+  private statusCode: number;
 
 
-  constructor(fb: FormBuilder) {
-    this.entityList = [
-      new Entity("First", "Contents of the First element"),
-      new Entity("Second", "Contents of the Second element"),
-    ];
+  constructor(fb: FormBuilder, private userService: UserService) {
     this.myForm = fb.group({
       'title': [''],
       'content' : ['']
@@ -24,8 +22,19 @@ export class AddEntityComponent {
   }
 
   onSubmit(value: any): boolean {
-    this.entityList.push(new Entity(value.title, value.content));
+    let user = new User();
+    user.firstName = "dfs";
+    user.lastName = "sdfs";
+    user.email = "q2@sdf.ru"
+    this.entityList.push(user);
     this.myForm.reset();
+
+    console.log(user);
+    this.userService.createUser(user)
+      .subscribe(
+        successCode => this.statusCode = successCode,
+        errorCode => this.statusCode = errorCode
+      );
     return false;
   }
 

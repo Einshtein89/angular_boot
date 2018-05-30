@@ -10,23 +10,23 @@ import {UserService} from "../service/user.service";
 })
 export class EntityList implements OnInit {
   @Input() entityList: User[];
-  loading: boolean;
-  statusCode: number;
+  @Input() loading: boolean;
+  @Input() statusCode: number;
 
-  constructor(private userService: UserService) {
+  constructor() {
   }
 
   ngOnInit() {
     // this.makeRequest();
   }
 
-  getAllUsers(): void {
-    this.loading = true;
-    this.userService.getAllUsers()
-      .subscribe(
-        data => {this.entityList = data, console.log(this.entityList)},
-        errorCode =>  this.statusCode = errorCode,
-        () => this.loading = false
-      );
-  }
+  // getAllUsers(): void {
+  //   this.loading = true;
+  //   this.userService.getAllUsers()
+  //     .subscribe(
+  //       data => {this.entityList = data, console.log(this.entityList)},
+  //       errorCode =>  this.statusCode = errorCode,
+  //       () => this.loading = false
+  //     );
+  // }
 }

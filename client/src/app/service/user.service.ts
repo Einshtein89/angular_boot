@@ -24,7 +24,7 @@ export class UserService {
       .catch(this.handleError)
   }
 
-  createUser(user: User):Observable<User> {
+  createUser(user: User):Observable<number> {
     let headers = {headers: new HttpHeaders({ 'Content-Type': 'application/json' })};
     // let options = new RequestOptions({ options: options });
     return this.http.post(this.userUrl, user, this.options)
@@ -60,7 +60,7 @@ export class UserService {
       // .map(success => success.status)
       .catch(this.handleError);
   }
-  private extractData(res: HttpResponse<any>) {
+  private extractData(res: HttpResponse<any>) : any {
     console.log(res);
     let body = res._embedded.users;
     return body;

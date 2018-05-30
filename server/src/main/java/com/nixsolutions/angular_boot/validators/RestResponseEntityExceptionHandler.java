@@ -24,7 +24,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         .map(ObjectError::toString)
         .collect(Collectors.joining("\n"));
 
-    return new ResponseEntity<Object>(errors, new HttpHeaders(), HttpStatus.CONFLICT);
+    return new ResponseEntity<Object>(errors, new HttpHeaders(), HttpStatus.BAD_REQUEST);
   }
 }
 
