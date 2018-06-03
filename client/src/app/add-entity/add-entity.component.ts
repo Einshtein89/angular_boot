@@ -1,45 +1,76 @@
-import {Component, Input} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {Component, Input, OnInit} from '@angular/core';
+import {FormGroup, FormControl, Validators} from "@angular/forms";
 import {UserService} from "../service/user.service";
 import {User} from "../model/user.model";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'add-entity',
   templateUrl: './add-entity.component.html',
   styleUrls: ['./add-entity.component.css']
 })
-export class AddEntityComponent {
-  @Input() entityList: User[];
-  myForm: FormGroup;
+export class AddEntityComponent implements OnInit{
+  private myForm: FormGroup;
+  private firstName: FormControl;
+  private lastName: FormControl;
+  private email: FormControl;
+  private phone: FormControl;
+  private sex: FormControl;
   private statusCode: number;
+  userList: User[];
 
+  constructor(private userService: UserService, private router: Router) {}
 
-  constructor(fb: FormBuilder, private userService: UserService) {
-    this.myForm = fb.group({
-      'title': [''],
-      'content' : ['']
-    })
+  ngOnInit(): void {
+    this.createFormControls();
+    this.createForm();
   }
 
-  onSubmit(value: any): boolean {
-    let user = new User();
-    user.firstName = "dfs";
-    user.lastName = "sdfs";
-    user.email = "q2@sdf.ru"
-    this.entityList.push(user);
-    this.myForm.reset();
+  createFormControls() {
+    this.firstName = new FormControl('', Validators.required);
+    this.lastName = new FormControl('', Validators.required);
+    this.email = new FormControl('', [
+      Validators.required,
+      Validators.email
+    ]);
+    this.phone = new FormControl('', [
+      Validators.required,
+      // Validators.minLength(8)
+    ]);
+    this.sex = new FormControl('', Validators.required);
+  }
 
+  createForm() {
+    this.myForm = new FormGroup({
+      firstName: this.firstName,
+      lastName: this.lastName,
+      email: this.email,
+      phone: this.phone,
+      sex: this.sex
+    });
+  }
+
+  onSubmit(user: User) {
+    if (!this.myForm.valid) {
+      return false;
+    }
     console.log(user);
     this.userService.createUser(user)
       .subscribe(
-        successCode => this.statusCode = successCode,
+        () => {
+          this.myForm.reset();
+          // this.getCollection();
+          this.router.navigate(['/main']);
+        },
         errorCode => this.statusCode = errorCode
       );
     return false;
   }
 
-  isValidToSubmit(): boolean {
-    return this.myForm.get('title').value !== "" && this.myForm.get('content').touched
+  getCollection() {
+    this.userService.userList.subscribe(data => {
+      this.userList = data;
+      console.log(data);
+    });
   }
-
 }

@@ -1,7 +1,10 @@
-<button type="button" (click)="getAllUsers()">Make Request</button>
+
 <div *ngIf="loading">loading...</div>
 <div *ngIf="!loading">
-  <div class="ui three cards">
+  <button [routerLink]="['/addUser']"
+          class="ui positive button">Add User
+  </button>
+  <div class="ui link cards" style="max-width: 1000px; margin: 0 auto;">
     <single-entity class="card"
             *ngFor="let entity of entityList"
                  [entity]="entity">

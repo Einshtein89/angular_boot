@@ -1,26 +1,95 @@
+
 <div class="ui main text container">
-  <form class="ui large form segment"
+  <form class="ui large form segment" novalidate
         [formGroup]="myForm"
         (ngSubmit)="onSubmit(myForm.value)">
-
-    <div class="field">
-      <label for="title">Title</label>
+    <div class="field" [ngClass]="{
+        'has-danger': firstName.invalid && (firstName.dirty || firstName.touched),
+        'has-success': firstName.valid && (firstName.dirty || firstName.touched)
+      }">
+      <label #firstNameLabel for="firstName">First Name</label>
       <input type="text"
-             id="title"
-             placeholder="Title"
-             [formControl]="myForm.controls['title']">
-    </div>
-    <div class="field">
-      <label for="content">Content</label>
-      <input type="text"
-             id="content"
-             placeholder="Content"
-             [formControl]="myForm.controls['content']">
+             id="firstName"
+             class="form-control"
+             formControlName="firstName"
+             placeholder="First Name">
+      <div class="error"
+           *ngIf="firstName.errors && (firstName.dirty || firstName.touched)">
+        <p *ngIf="firstName.errors.required">{{ firstNameLabel.innerHTML}} field is required</p>
+      </div>
     </div>
 
-    <button type="submit"
-            class="ui positive right floated button"
-            *ngIf="isValidToSubmit()">Submit
+    <div class="field" [ngClass]="{
+        'has-danger': lastName.invalid && (lastName.dirty || lastName.touched),
+        'has-success': lastName.valid && (lastName.dirty || lastName.touched)
+      }">
+      <label #lastNameLabel for="lastName">Last Name</label>
+      <input type="text"
+             id="lastName"
+             class="form-control"
+             formControlName="lastName"
+             placeholder="Last Name">
+      <div class="error"
+           *ngIf="lastName.errors && (lastName.dirty || lastName.touched)">
+        <p *ngIf="lastName.errors.required">{{ lastNameLabel.innerHTML}} field is required</p>
+      </div>
+    </div>
+    <div class="field" [ngClass]="{
+        'has-danger': email.invalid && (email.dirty || email.touched),
+        'has-success': email.valid && (email.dirty || email.touched)
+      }">
+      <label #emailLabel for="email">E-mail</label>
+      <input type="text"
+             id="email"
+             class="form-control"
+             formControlName="email"
+             placeholder="E-mail">
+      <div class="error"
+           *ngIf="email.errors && (email.dirty || email.touched)">
+        <p *ngIf="email.errors.required">{{ emailLabel.innerHTML}} field is required</p>
+        <p *ngIf="email.errors.email">The email format is invalid</p>
+      </div>
+    </div>
+    <div class="field" [ngClass]="{
+        'has-danger': phone.invalid && (phone.dirty || phone.touched),
+        'has-success': phone.valid && (phone.dirty || phone.touched)
+      }">
+      <label #phoneLabel for="phone">Phone</label>
+      <input type="text"
+             id="phone"
+             class="form-control"
+             formControlName="phone"
+             placeholder="Phone">
+      <div class="error"
+           *ngIf="phone.errors && (phone.dirty || phone.touched)">
+        <p *ngIf="phone.errors.required">{{ phoneLabel.innerHTML}} field is required</p>
+        <!--<p *ngIf="phone.errors.minlength">Password must be 8 characters long,-->
+          <!--we need another {{ phone.errors.minlength.requiredLength - phone.errors.minlength.actualLength}} characters </p>-->
+      </div>
+    </div>
+    <div class="field" [ngClass]="{
+        'has-danger': sex.invalid && (sex.dirty || sex.touched),
+        'has-success': sex.valid && (sex.dirty || sex.touched)
+      }">
+      <label #sexLabel for="sex">Sex</label>
+      <input type="text"
+             id="sex"
+             class="form-control"
+             formControlName="sex"
+             placeholder="Sex">
+      <div class="error"
+           *ngIf="sex.errors && (sex.dirty || sex.touched)">
+        <p *ngIf="sex.errors.required">{{ sexLabel.innerHTML}} field is required</p>
+      </div>
+    </div>
+    <div *ngIf="myForm.touched  && myForm.invalid"
+         class="error">Please correct all errors before submitting the form</div>
+
+    <button [routerLink]="['/main']"
+            class="ui positive left floated button">Cancel
+    </button>
+    <button type="submit" [disabled]="myForm.invalid"
+            class="ui positive right floated button">Submit
     </button>
   </form>
 </div>

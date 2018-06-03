@@ -9,6 +9,7 @@ import { EntityComponent } from './entity/entity.component';
 import { AddEntityComponent } from './add-entity/add-entity.component';
 import {UserService} from "./service/user.service";
 import {constants} from "./constants/constants";
+import {AppRoutingModule} from "./router/router.module";
 
 @NgModule({
   declarations: [
@@ -21,10 +22,12 @@ import {constants} from "./constants/constants";
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AppRoutingModule
   ],
   providers: [
     UserService,
+    EntityList,
     constants],
   bootstrap: [AppComponent]
 })

@@ -8,7 +8,7 @@ CREATE TABLE user (
   sex VARCHAR(64) NOT NULL,
   active int(11) DEFAULT NULL,
   email varchar(255) UNIQUE NOT NULL,
-  password varchar(255) NOT NULL,
+  password varchar(255),
   PRIMARY KEY (user_id)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 

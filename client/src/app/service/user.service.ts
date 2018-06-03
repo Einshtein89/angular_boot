@@ -5,6 +5,8 @@ import 'rxjs/add/operator/catch';
 import {User} from "../model/user.model";
 import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from "@angular/common/http";
 import {assign} from "rxjs/util/assign";
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import {Subject} from "rxjs/Subject";
 
 
 export const USERS_API_URL = "";
@@ -13,20 +15,28 @@ export const USERS_API_URL = "";
 export class UserService {
 
   private options = {headers: new HttpHeaders({ 'Content-Type': 'application/json' })};
+  userList = this.getAllUsers();
+  // newUser: Subject<User[]> = new BehaviorSubject<User[]>(null);
+  // userList: Observable<User[]>;
 
   constructor(private http:HttpClient,
               @Inject(USERS_API_URL) private userUrl: string) {
   }
 
   getAllUsers(): Observable<User[]> {
-    return this.http.get(this.userUrl)
+    let params: string = [
+      `size=50`
+    ].join('&');
+    let queryUrl: string = `${this.userUrl}?${params}`;
+    return this.http.get(queryUrl)
       .map(this.extractData)
       .catch(this.handleError)
   }
 
-  createUser(user: User):Observable<number> {
-    let headers = {headers: new HttpHeaders({ 'Content-Type': 'application/json' })};
+  createUser(user: User):Observable<User> {
+    // let headers = {headers: new HttpHeaders({ 'Content-Type': 'application/json' })};
     // let options = new RequestOptions({ options: options });
+    // this.newUser.next(user);
     return this.http.post(this.userUrl, user, this.options)
       .catch(this.handleError);
   }
@@ -62,9 +72,9 @@ export class UserService {
   }
   private extractData(res: HttpResponse<any>) : any {
     console.log(res);
-    let body = res._embedded.users;
+    let body = res["_embedded"].users;
     return body;
-  }
+}
   private handleError (error: HttpResponse<any> | any) {
     console.error(error.message || error);
     return Observable.throw(error.status);

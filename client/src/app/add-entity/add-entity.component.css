@@ -1,0 +1,11 @@
+.error {
+  color: red;
+}
+
+.has-success .form-control {
+  border-color: #5cb85c;
+}
+
+.has-danger .form-control {
+  border-color: #d9534f;
+}
