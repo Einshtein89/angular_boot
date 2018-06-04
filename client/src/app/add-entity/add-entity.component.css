@@ -9,3 +9,6 @@
 .has-danger .form-control {
   border-color: #d9534f;
 }
+.ui.main.text.container {
+  margin-bottom: 10px;
+}
