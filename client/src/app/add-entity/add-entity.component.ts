@@ -22,6 +22,8 @@ export class AddEntityComponent implements OnInit{
   constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
+    this.userList = this.userService.entityList;
+    console.log(this.userList);
     this.createFormControls();
     this.createForm();
   }
@@ -58,19 +60,12 @@ export class AddEntityComponent implements OnInit{
     this.userService.createUser(user)
       .subscribe(
         () => {
+          this.userService.entityList.push(user);
           this.myForm.reset();
-          // this.getCollection();
           this.router.navigate(['/main']);
         },
         errorCode => this.statusCode = errorCode
       );
     return false;
-  }
-
-  getCollection() {
-    this.userService.userList.subscribe(data => {
-      this.userList = data;
-      console.log(data);
-    });
   }
 }

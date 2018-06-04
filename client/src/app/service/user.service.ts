@@ -13,9 +13,9 @@ export const USERS_API_URL = "";
 
 @Injectable()
 export class UserService {
-
+  public entityList: User[];
   private options = {headers: new HttpHeaders({ 'Content-Type': 'application/json' })};
-  userList = this.getAllUsers();
+  // userList = this.getAllUsers();
   // newUser: Subject<User[]> = new BehaviorSubject<User[]>(null);
   // userList: Observable<User[]>;
 
@@ -23,13 +23,13 @@ export class UserService {
               @Inject(USERS_API_URL) private userUrl: string) {
   }
 
-  getAllUsers(): Observable<User[]> {
+  getAllUsers(): Observable<any> {
     let params: string = [
       `size=50`
     ].join('&');
     let queryUrl: string = `${this.userUrl}?${params}`;
     return this.http.get(queryUrl)
-      .map(this.extractData)
+      // .map(this.extractData)
       .catch(this.handleError)
   }
 
