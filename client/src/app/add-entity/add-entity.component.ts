@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FormGroup, FormControl, Validators} from "@angular/forms";
 import {UserService} from "../service/user.service";
 import {User} from "../model/user.model";
@@ -9,7 +9,7 @@ import {Router} from "@angular/router";
   templateUrl: './add-entity.component.html',
   styleUrls: ['./add-entity.component.css']
 })
-export class AddEntityComponent implements OnInit{
+export class AddEntityComponent implements OnInit, OnDestroy {
   private myForm: FormGroup;
   private firstName: FormControl;
   private lastName: FormControl;
@@ -18,14 +18,26 @@ export class AddEntityComponent implements OnInit{
   private sex: FormControl;
   private statusCode: number;
   userList: User[];
+  errorList: any;
+  _ref:any;
+
 
   constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
-    this.userList = this.userService.entityList;
+    this.initializeUserList();
     console.log(this.userList);
     this.createFormControls();
     this.createForm();
+  }
+
+  ngOnDestroy() {
+    this.userService.entityList = this.userList;
+  }
+
+  removeObject(){
+    this._ref.destroy();
+    this.ngOnDestroy();
   }
 
   createFormControls() {
@@ -60,12 +72,24 @@ export class AddEntityComponent implements OnInit{
     this.userService.createUser(user)
       .subscribe(
         () => {
-          this.userService.entityList.push(user);
+          this.userList.push(user);
+          // this.userService.entityList = this.userList;
           this.myForm.reset();
-          this.router.navigate(['/main']);
+          this.removeObject();
+          // this.router.navigate(['/main']);
         },
-        errorCode => this.statusCode = errorCode
+        error => this.errorList = error.error
       );
     return false;
+  }
+
+  private initializeUserList() {
+    if (this.userService.entityList) {
+      this.userList = this.userService.entityList;
+    } else {
+      this.userService.getAllUsers().subscribe(
+        data => this.userList = data["_embedded"].users
+      )
+    }
   }
 }

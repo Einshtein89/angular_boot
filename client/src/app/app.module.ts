@@ -29,6 +29,7 @@ import {AppRoutingModule} from "./router/router.module";
     UserService,
     EntityList,
     constants],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [AddEntityComponent]
 })
 export class AppModule { }

@@ -1,5 +1,6 @@
 package com.nixsolutions.angular_boot.validators;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.data.rest.core.RepositoryConstraintViolationException;
@@ -20,9 +21,9 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     RepositoryConstraintViolationException nevEx =
         (RepositoryConstraintViolationException) ex;
 
-    String errors = nevEx.getErrors().getAllErrors().stream()
-        .map(ObjectError::toString)
-        .collect(Collectors.joining("\n"));
+    List<String> errors = nevEx.getErrors().getAllErrors().stream()
+        .map(ObjectError::getCode)
+        .collect(Collectors.toList());
 
     return new ResponseEntity<Object>(errors, new HttpHeaders(), HttpStatus.BAD_REQUEST);
   }

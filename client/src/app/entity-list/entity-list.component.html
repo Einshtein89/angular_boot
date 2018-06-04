@@ -1,9 +1,10 @@
 
 <div *ngIf="loading"><img src="assets/ajax-loader.gif"></div>
 <div *ngIf="!loading">
-  <button [routerLink]="['/addUser']"
+  <button (click)="showAddEntityForm()"
           class="ui positive button">Add User
   </button>
+  <template #addEntity></template>
   <div class="ui link cards" style="max-width: 1000px; margin: 0 auto;">
     <single-entity class="card"
             *ngFor="let entity of entityList"

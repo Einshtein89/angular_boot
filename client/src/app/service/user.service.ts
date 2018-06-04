@@ -77,6 +77,6 @@ export class UserService {
 }
   private handleError (error: HttpResponse<any> | any) {
     console.error(error.message || error);
-    return Observable.throw(error.status);
+    return Observable.throw(error);
   }
 }

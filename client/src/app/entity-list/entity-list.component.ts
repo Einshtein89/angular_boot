@@ -1,21 +1,41 @@
-import {Component, Injectable, Input, OnDestroy, OnInit, Optional} from '@angular/core';
+import {
+  AfterViewChecked,
+  Component,
+  ComponentFactoryResolver,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewContainerRef,
+  ChangeDetectorRef
+} from '@angular/core';
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 import {User} from "../model/user.model";
 import {UserService} from "../service/user.service";
+import {AddEntityComponent} from "../add-entity/add-entity.component";
 @Component({
   selector: 'entity-list',
   templateUrl: './entity-list.component.html',
   styleUrls: ['./entity-list.component.css']
 })
-export class EntityList implements OnInit, OnDestroy {
+export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
   entityList: User[] = [];
   loading: boolean;
   statusCode: number;
   user: User;
   links: any;
+  @ViewChild('addEntity', {read: ViewContainerRef}) viewContainerRef;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService,
+              private componentFactoryResolver: ComponentFactoryResolver,
+              private cdr: ChangeDetectorRef) {
+  }
+
+
+  showAddEntityForm () {
+    const factory = this.componentFactoryResolver.resolveComponentFactory(AddEntityComponent);
+    const expComponent =  this.viewContainerRef.createComponent(factory);
+    expComponent.instance._ref = expComponent;
   }
 
   ngOnInit() {
@@ -50,5 +70,12 @@ export class EntityList implements OnInit, OnDestroy {
   private extractLinks(data: any) {
     let links = data["_links"];
     return links;
+  }
+
+  ngAfterViewChecked(): void {
+    if (this.userService.entityList && this.entityList.length != this.userService.entityList.length) {
+      this.ngOnInit();
+      this.cdr.detectChanges();
+    }
   }
 }

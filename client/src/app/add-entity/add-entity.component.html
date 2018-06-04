@@ -84,8 +84,12 @@
     </div>
     <div *ngIf="myForm.touched  && myForm.invalid"
          class="error">Please correct all errors before submitting the form</div>
-
-    <button [routerLink]="['/main']"
+    <div class="error" *ngIf="errorList">
+      <p *ngFor="let error of errorList">
+        {{error}}
+      </p>
+    </div>
+    <button (click)="removeObject()"
             class="ui positive left floated button">Cancel
     </button>
     <button type="submit" [disabled]="myForm.invalid"
