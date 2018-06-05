@@ -20,11 +20,13 @@ export class AddEntityComponent implements OnInit, OnDestroy {
   userList: User[];
   errorList: any;
   _ref:any;
+  isCreated: boolean;
 
 
   constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
+    this.isCreated = true;
     this.initializeUserList();
     console.log(this.userList);
     this.createFormControls();

@@ -6,7 +6,7 @@ import {
   OnInit,
   ViewChild,
   ViewContainerRef,
-  ChangeDetectorRef
+  ChangeDetectorRef, ComponentRef
 } from '@angular/core';
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
@@ -33,9 +33,12 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
 
 
   showAddEntityForm () {
-    const factory = this.componentFactoryResolver.resolveComponentFactory(AddEntityComponent);
-    const expComponent =  this.viewContainerRef.createComponent(factory);
-    expComponent.instance._ref = expComponent;
+
+      const factory = this.componentFactoryResolver.resolveComponentFactory(AddEntityComponent);
+      this.viewContainerRef.clear();
+      const expComponent =  this.viewContainerRef.createComponent(factory);
+      expComponent.instance._ref = expComponent;
+
   }
 
   ngOnInit() {
@@ -78,4 +81,6 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
       this.cdr.detectChanges();
     }
   }
+
+
 }
