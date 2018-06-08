@@ -17,7 +17,8 @@
     ],
     "types": [
       "underscore",
-      "jquery"
+      "jquery",
+      "bootstrap"
     ]
   }
 }

@@ -13,6 +13,8 @@ import {AppRoutingModule} from "./router/router.module";
 import { FirstChildComponent } from './routeTest/first-child-component/first-child.component';
 import { SecondChildComponent } from './routeTest/second-child-component/second-child.component';
 import { MainViewComponent } from './main-view/main-view.component';
+import * as bootstrap from "bootstrap";
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { MainViewComponent } from './main-view/main-view.component';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbModule.forRoot()
   ],
   providers: [
     UserService,
