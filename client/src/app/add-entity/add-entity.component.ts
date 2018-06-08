@@ -33,9 +33,7 @@ export class AddEntityComponent implements OnInit, OnDestroy {
     this.createForm();
   }
 
-  ngOnDestroy() {
-    this.userService.entityList = this.userList;
-  }
+  ngOnDestroy() {}
 
   removeObject(){
     this._ref.destroy();
@@ -74,11 +72,8 @@ export class AddEntityComponent implements OnInit, OnDestroy {
     this.userService.createUser(user)
       .subscribe(
         () => {
-          this.userList.push(user);
-          // this.userService.entityList = this.userList;
           this.myForm.reset();
           this.removeObject();
-          // this.router.navigate(['/main']);
         },
         error => this.errorList = error.error
       );

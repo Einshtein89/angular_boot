@@ -6,13 +6,14 @@ import {
   OnInit,
   ViewChild,
   ViewContainerRef,
-  ChangeDetectorRef, ComponentRef
+  ChangeDetectorRef
 } from '@angular/core';
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 import {User} from "../model/user.model";
 import {UserService} from "../service/user.service";
 import {AddEntityComponent} from "../add-entity/add-entity.component";
+import * as  _ from "underscore"
 @Component({
   selector: 'entity-list',
   templateUrl: './entity-list.component.html',
@@ -33,15 +34,14 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
 
 
   showAddEntityForm () {
-
-      const factory = this.componentFactoryResolver.resolveComponentFactory(AddEntityComponent);
-      this.viewContainerRef.clear();
-      const expComponent =  this.viewContainerRef.createComponent(factory);
-      expComponent.instance._ref = expComponent;
-
+    const factory = this.componentFactoryResolver.resolveComponentFactory(AddEntityComponent);
+    this.viewContainerRef.clear();
+    const expComponent =  this.viewContainerRef.createComponent(factory);
+    expComponent.instance._ref = expComponent;
   }
 
   ngOnInit() {
+    this.userService.currentUser.subscribe(user => this.user = user);
     if(!this.userService.entityList) {
       this.getAllUsers();
     } else {
@@ -76,9 +76,10 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngAfterViewChecked(): void {
-    if (this.userService.entityList && this.entityList.length != this.userService.entityList.length) {
-      this.ngOnInit();
-      this.cdr.detectChanges();
+    if (this.user && !_.contains(this.entityList, this.user)) {
+      console.log(_.contains(this.entityList, this.user));
+      this.entityList.push(this.user);
+      console.log(this.entityList);
     }
   }
 

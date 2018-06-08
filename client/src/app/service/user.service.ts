@@ -15,9 +15,8 @@ export const USERS_API_URL = "";
 export class UserService {
   public entityList: User[];
   private options = {headers: new HttpHeaders({ 'Content-Type': 'application/json' })};
-  // userList = this.getAllUsers();
-  // newUser: Subject<User[]> = new BehaviorSubject<User[]>(null);
-  // userList: Observable<User[]>;
+  private newUser = new BehaviorSubject<User>(null);
+  currentUser = this.newUser.asObservable();
 
   constructor(private http:HttpClient,
               @Inject(USERS_API_URL) private userUrl: string) {
@@ -25,7 +24,7 @@ export class UserService {
 
   getAllUsers(): Observable<any> {
     let params: string = [
-      `size=50`
+      `size=20`
     ].join('&');
     let queryUrl: string = `${this.userUrl}?${params}`;
     return this.http.get(queryUrl)
@@ -36,7 +35,7 @@ export class UserService {
   createUser(user: User):Observable<User> {
     // let headers = {headers: new HttpHeaders({ 'Content-Type': 'application/json' })};
     // let options = new RequestOptions({ options: options });
-    // this.newUser.next(user);
+    this.newUser.next(user);
     return this.http.post(this.userUrl, user, this.options)
       .catch(this.handleError);
   }

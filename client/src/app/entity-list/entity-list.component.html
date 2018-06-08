@@ -4,15 +4,6 @@
   <button (click)="showAddEntityForm()"
           class="ui positive button">Add User
   </button>
-
-  <button [routerLink]="['./first']"
-          class="ui positive button">First
-  </button>
-  <button [routerLink]="['./second']"
-          class="ui positive button">Second
-  </button>
-
-  <router-outlet></router-outlet>
   <template #addEntity></template>
   <div class="ui link cards">
     <single-entity class="card"

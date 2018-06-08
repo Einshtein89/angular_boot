@@ -12,7 +12,7 @@ import {constants} from "./constants/constants";
 import {AppRoutingModule} from "./router/router.module";
 import { FirstChildComponent } from './routeTest/first-child-component/first-child.component';
 import { SecondChildComponent } from './routeTest/second-child-component/second-child.component';
-import { TopComponent } from './routeTest/top-component/top.component';
+import { MainViewComponent } from './main-view/main-view.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,7 @@ import { TopComponent } from './routeTest/top-component/top.component';
     AddEntityComponent,
     FirstChildComponent,
     SecondChildComponent,
-    TopComponent
+    MainViewComponent
   ],
   imports: [
     BrowserModule,
