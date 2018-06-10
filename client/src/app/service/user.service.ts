@@ -2,6 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/do';
 import {User} from "../model/user.model";
 import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from "@angular/common/http";
 import {assign} from "rxjs/util/assign";
@@ -24,7 +25,7 @@ export class UserService {
 
   getAllUsers(): Observable<any> {
     let params: string = [
-      `size=20`
+      `size=50`
     ].join('&');
     let queryUrl: string = `${this.userUrl}?${params}`;
     return this.http.get(queryUrl)
@@ -35,8 +36,9 @@ export class UserService {
   createUser(user: User):Observable<User> {
     // let headers = {headers: new HttpHeaders({ 'Content-Type': 'application/json' })};
     // let options = new RequestOptions({ options: options });
-    this.newUser.next(user);
+    // this.newUser.next(user);
     return this.http.post(this.userUrl, user, this.options)
+      .do(() => this.newUser.next(user))
       .catch(this.handleError);
   }
 

@@ -15,6 +15,7 @@ import { SecondChildComponent } from './routeTest/second-child-component/second-
 import { MainViewComponent } from './main-view/main-view.component';
 import * as bootstrap from "bootstrap";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { PaginationComponent } from './pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     AddEntityComponent,
     FirstChildComponent,
     SecondChildComponent,
-    MainViewComponent
+    MainViewComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,
