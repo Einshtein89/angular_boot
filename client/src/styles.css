@@ -1,3 +1,4 @@
+@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 @import './app/vendor/semantic.min.css';
 
 
@@ -28,6 +29,19 @@ ul.ui.list li:before {
   left: 50%;
   margin-left: -50px;
   margin-top: -50px;
+}
 
+.modal-content {
+  width: max-content;
+}
+
+.modal-dialog {
+  width: 600px;
+  margin: 30px auto;
+  position: absolute;
+  top: 10%;
+  left: 30%;
+  margin-left: -50px;
+  margin-top: -50px;
 }
 

@@ -14,6 +14,8 @@ import {User} from "../model/user.model";
 import {UserService} from "../service/user.service";
 import {AddEntityComponent} from "../add-entity/add-entity.component";
 import * as  _ from "underscore"
+
+
 @Component({
   selector: 'entity-list',
   templateUrl: './entity-list.component.html',

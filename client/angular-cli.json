@@ -21,8 +21,8 @@
       "styles": [
         "styles.css"
       ],
-      "scripts": [
-        "app/vendor/semantic.min.js",
+      "scripts": ["../node_modules/jquery/dist/jquery.min.js",
+        "../node_modules/bootstrap/dist/js/bootstrap.min.js",
         "app/vendor/menu.js"],
       "environmentSource": "environments/environment.ts",
       "environments": {

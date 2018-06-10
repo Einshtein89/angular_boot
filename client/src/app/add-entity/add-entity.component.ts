@@ -3,6 +3,7 @@ import {FormGroup, FormControl, Validators} from "@angular/forms";
 import {UserService} from "../service/user.service";
 import {User} from "../model/user.model";
 import {Router} from "@angular/router";
+declare var $ : any;
 
 @Component({
   selector: 'add-entity',
@@ -31,11 +32,14 @@ export class AddEntityComponent implements OnInit, OnDestroy {
     console.log(this.userList);
     this.createFormControls();
     this.createForm();
+    $("#myModal").modal(/*{backdrop: "static"}*/);
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+  }
 
   removeObject(){
+    $("#myModal").modal('hide');
     this._ref.destroy();
     this.ngOnDestroy();
   }
