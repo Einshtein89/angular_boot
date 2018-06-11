@@ -7,8 +7,6 @@ import {User} from "../model/user.model";
 import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from "@angular/common/http";
 import {assign} from "rxjs/util/assign";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
-import {Subject} from "rxjs/Subject";
-
 
 export const USERS_API_URL = "";
 
@@ -17,7 +15,9 @@ export class UserService {
   public entityList: User[];
   private options = {headers: new HttpHeaders({ 'Content-Type': 'application/json' })};
   private newUser = new BehaviorSubject<User>(null);
-  currentUser = this.newUser.asObservable();
+  private updatedUser = new BehaviorSubject<any>(null);
+  addedUser = this.newUser.asObservable();
+  changedUser = this.updatedUser.asObservable();
 
   constructor(private http:HttpClient,
               @Inject(USERS_API_URL) private userUrl: string) {
@@ -53,11 +53,14 @@ export class UserService {
       .catch(this.handleError);
   }
 
-  updateUser(user: User):Observable<number> {
+  updateUser(user: User, userUrl: string):Observable<User> {
     // let cpHeaders = new Headers({ 'Content-Type': 'application/json' });
     // let options = new RequestOptions({ headers: cpHeaders });
-    return this.http.put(this.userUrl, user, this.options)
-      // .map(success => success.status)
+    return this.http.put(userUrl, user, this.options)
+      .do(() => {
+        user.link = userUrl;
+        this.updatedUser.next(user)
+      })
       .catch(this.handleError);
   }
 

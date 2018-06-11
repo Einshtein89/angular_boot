@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.nixsolutions.angular_boot.entity.User;
 
-@RepositoryRestResource(collectionResourceRel = "users", path = "users",
-    excerptProjection = UserProjection.class)
+@RepositoryRestResource(collectionResourceRel = "users", path = "users")
 public interface UserRepository extends PagingAndSortingRepository<User, Long>
 {
   User findByFirstNameAndLastName(@Param("firstName") String firstName, @Param("lastName") String lastName);

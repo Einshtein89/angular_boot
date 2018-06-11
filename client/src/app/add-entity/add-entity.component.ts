@@ -21,15 +21,12 @@ export class AddEntityComponent implements OnInit, OnDestroy {
   errorList: any;
   _ref:any;
   _currentUser: User;
-  isCreated: boolean;
-
 
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.isCreated = true;
     this.initializeUserList();
-    console.log(this.userList);
+    // console.log(this.userList);
     this.createFormControls();
     this.createForm();
     $("#myModal").modal(/*{backdrop: "static"}*/);
@@ -80,7 +77,7 @@ export class AddEntityComponent implements OnInit, OnDestroy {
   }
 
   private updateUser(user: User) {
-    this.userService.updateUser(user)
+    this.userService.updateUser(user, this._currentUser["_links"].self.href)
       .subscribe(
         () => {
           this.myForm.reset();

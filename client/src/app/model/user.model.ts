@@ -7,6 +7,7 @@ export class User {
   public password: string;
   public phone: string;
   public sex: string;
+  public link: any;
 
   constructor() {
   }

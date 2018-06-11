@@ -26,11 +26,13 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
   loading: boolean;
   statusCode: number;
   user: User;
+  // updatedUser: User;
   links: any;
   @ViewChild('addEntity', {read: ViewContainerRef}) viewContainerRef;
 
   constructor(private userService: UserService,
-              private componentFactoryResolver: ComponentFactoryResolver) {
+              private componentFactoryResolver: ComponentFactoryResolver,
+              private cdr: ChangeDetectorRef) {
   }
 
 
@@ -42,7 +44,8 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngOnInit() {
-    this.userService.currentUser.subscribe(user => this.user = user);
+    this.userService.addedUser.subscribe(user => this.user = user);
+    // this.userService.changedUser.subscribe(user => this.updatedUser = user);
     if(!this.userService.entityList) {
       this.getAllUsers();
     } else {
@@ -78,10 +81,13 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
 
   ngAfterViewChecked(): void {
     if (this.user && !_.contains(this.entityList, this.user)) {
-      console.log(_.contains(this.entityList, this.user));
       this.entityList.push(this.user);
-      console.log(this.entityList);
     }
+    // if (this.updatedUser) {
+    //  let foundedUser = _.find(this.entityList, entity => entity.link == this.updatedUser.link);
+    //  foundedUser = this.updatedUser;
+    // }
+    this.cdr.detectChanges();
   }
 
 
