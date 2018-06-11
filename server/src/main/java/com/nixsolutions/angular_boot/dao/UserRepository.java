@@ -10,7 +10,6 @@ import com.nixsolutions.angular_boot.entity.User;
 
 @RepositoryRestResource(collectionResourceRel = "users", path = "users",
     excerptProjection = UserProjection.class)
-@CrossOrigin(origins = "http://localhost:4200")
 public interface UserRepository extends PagingAndSortingRepository<User, Long>
 {
   User findByFirstNameAndLastName(@Param("firstName") String firstName, @Param("lastName") String lastName);

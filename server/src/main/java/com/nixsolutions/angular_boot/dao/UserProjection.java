@@ -10,6 +10,7 @@ import com.nixsolutions.angular_boot.entity.User;
 @Projection(name = "userFields", types = { User.class })
 interface UserProjection
 {
+  long getId();
   String getFirstName();
   String getLastName();
   String getPhone();

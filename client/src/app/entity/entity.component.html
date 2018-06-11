@@ -1,17 +1,22 @@
 
 <!--<pre *ngIf="!loading">{{allArticles | json}}</pre>-->
 
-  <div class="ui statistic">
-    <div class="value">
-      {{ entity.firstName }}
+<div class="blurring dimmable image">
+  <div class="ui dimmer">
+    <div class="content">
+      <div class="center">
+        <button class="ui inverted button" (click)="editUser()">Edit</button>
+      </div>
     </div>
   </div>
+  <img src="../../assets/{{entity.sex}}.png">
+</div>
 
   <a class="ui large header">
-    {{ entity.firstName }}
+    {{ entity.firstName }} {{ entity.lastName }}
   </a>
-  <div class="meta">({{ entity.lastName }})</div>
+  <div class="meta">{{ entity.phone }}</div>
 
-
+<!--<template #editEntity></template>-->
 
 

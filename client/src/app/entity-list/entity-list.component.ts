@@ -30,8 +30,7 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
   @ViewChild('addEntity', {read: ViewContainerRef}) viewContainerRef;
 
   constructor(private userService: UserService,
-              private componentFactoryResolver: ComponentFactoryResolver,
-              private cdr: ChangeDetectorRef) {
+              private componentFactoryResolver: ComponentFactoryResolver) {
   }
 
 

@@ -3,9 +3,10 @@
 
     <!-- Modal content-->
     <div class="modal-content">
-      <div class="modal-header" style="padding:35px 50px;">
+      <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" (click)="removeObject()">&times;</button>
-        <h2>Add new user</h2>
+        <h2 class="title" *ngIf="!this._currentUser">Add new user</h2>
+        <h2 class="title" *ngIf="this._currentUser">Edit user</h2>
       </div>
       <div class="modal-body">
         <div class="ui main text container">

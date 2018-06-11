@@ -5,10 +5,11 @@
           class="ui positive button">Add User
   </button>
   <template #addEntity></template>
-  <div class="ui link cards">
+  <div class="ui special link cards">
     <single-entity class="card"
             *ngFor="let entity of entityList"
-                 [entity]="entity">
+                 [entity]="entity"
+                   [editForm] = "viewContainerRef">
     </single-entity>
   </div>
 </div>

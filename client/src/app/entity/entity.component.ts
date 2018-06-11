@@ -1,5 +1,18 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {
+  AfterContentInit,
+  AfterViewChecked, AfterViewInit, ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ComponentFactoryResolver,
+  Input,
+  OnInit,
+  ViewChild,
+  ViewContainerRef
+} from '@angular/core';
 import {User} from "../model/user.model";
+import {UserService} from "../service/user.service";
+import {AddEntityComponent} from "../add-entity/add-entity.component";
+declare var $ : any;
 
 @Component({
   selector: 'single-entity',
@@ -8,14 +21,29 @@ import {User} from "../model/user.model";
 })
 export class EntityComponent implements OnInit {
   @Input() entity: User;
-  isShowContent: boolean;
+  @Input() editForm: ViewContainerRef;
 
-  constructor() { }
+  constructor(private userService: UserService,
+              private componentFactoryResolver: ComponentFactoryResolver,
+              private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
+    $('.special.cards .image').dimmer({
+      on: 'hover'
+    });
   }
 
-  showHideContent() {
-    this.isShowContent = !this.isShowContent;
+  showAddEntityForm () {
+    const factory = this.componentFactoryResolver.resolveComponentFactory(AddEntityComponent);
+    this.editForm.clear();
+    const expComponent =  this.editForm.createComponent(factory);
+    expComponent.instance._ref = expComponent;
+    expComponent.instance._currentUser = this.entity;
+    this.cdr.detectChanges();
+  }
+
+  editUser() {
+    this.showAddEntityForm();
+    console.log(this.entity);
   }
 }

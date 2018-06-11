@@ -1,5 +1,5 @@
 @import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-@import './app/vendor/semantic.min.css';
+@import '../node_modules/semantic-ui/dist/semantic.min.css';
 
 
 form.ui.segment.form {
@@ -43,5 +43,9 @@ ul.ui.list li:before {
   left: 30%;
   margin-left: -50px;
   margin-top: -50px;
+}
+
+.modal-header .title {
+  display: inline;
 }
 
