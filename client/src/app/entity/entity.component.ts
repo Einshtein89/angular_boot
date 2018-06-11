@@ -1,12 +1,10 @@
 import {
-  AfterContentInit,
-  AfterViewChecked, AfterViewInit, ChangeDetectionStrategy,
+  AfterViewChecked,
   ChangeDetectorRef,
   Component,
   ComponentFactoryResolver,
   Input,
   OnInit,
-  ViewChild,
   ViewContainerRef
 } from '@angular/core';
 import {User} from "../model/user.model";
@@ -19,15 +17,17 @@ declare var $ : any;
   templateUrl: './entity.component.html',
   styleUrls: ['./entity.component.css']
 })
-export class EntityComponent implements OnInit {
+export class EntityComponent implements OnInit, AfterViewChecked {
   @Input() entity: User;
   @Input() editForm: ViewContainerRef;
+  updatedUser: User;
 
   constructor(private userService: UserService,
               private componentFactoryResolver: ComponentFactoryResolver,
               private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
+    this.userService.changedUser.subscribe(user => this.updatedUser = user);
     $('.special.cards .image').dimmer({
       on: 'hover'
     });
@@ -44,6 +44,14 @@ export class EntityComponent implements OnInit {
 
   editUser() {
     this.showAddEntityForm();
-    console.log(this.entity);
+  }
+
+  ngAfterViewChecked(): void {
+    if (this.updatedUser && this.entity["_links"].self.href == this.updatedUser.link) {
+      let links = this.entity["_links"];
+      this.entity = this.updatedUser;
+      this.entity["_links"] = links;
+    }
+    this.cdr.detectChanges();
   }
 }
