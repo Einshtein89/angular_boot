@@ -50,3 +50,7 @@ ul.ui.list li:before {
   display: inline;
 }
 
+.jconfirm-title-c:before {
+  content: "as";
+}
+

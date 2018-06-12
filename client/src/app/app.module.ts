@@ -41,6 +41,6 @@ import { PaginationComponent } from './pagination/pagination.component';
     EntityList,
     constants],
   bootstrap: [AppComponent],
-  entryComponents: [AddEditEntityComponent]
+  entryComponents: [AddEditEntityComponent, PaginationComponent]
 })
 export class AppModule { }

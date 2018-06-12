@@ -6,7 +6,7 @@ import {
   OnInit,
   ViewChild,
   ViewContainerRef,
-  ChangeDetectorRef
+  ChangeDetectorRef, AfterViewInit
 } from '@angular/core';
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
@@ -14,6 +14,7 @@ import {User} from "../model/user.model";
 import {UserService} from "../service/user.service";
 import {AddEditEntityComponent} from "../add-edit-entity/add-edit-entity.component";
 import * as  _ from "underscore"
+import {PaginationComponent} from "../pagination/pagination.component";
 
 
 @Component({
@@ -28,7 +29,8 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
   user: User;
   // updatedUser: User;
   links: any;
-  @ViewChild('addEntity', {read: ViewContainerRef}) viewContainerRef;
+  isAdd: boolean;
+  @ViewChild('addEditEntity', {read: ViewContainerRef}) addEditContainerRef;
 
   constructor(private userService: UserService,
               private componentFactoryResolver: ComponentFactoryResolver,
@@ -38,8 +40,8 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
 
   showAddEntityForm () {
     const factory = this.componentFactoryResolver.resolveComponentFactory(AddEditEntityComponent);
-    this.viewContainerRef.clear();
-    const expComponent =  this.viewContainerRef.createComponent(factory);
+    this.addEditContainerRef.clear();
+    const expComponent =  this.addEditContainerRef.createComponent(factory);
     expComponent.instance._ref = expComponent;
   }
 

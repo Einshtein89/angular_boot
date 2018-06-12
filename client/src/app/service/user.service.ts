@@ -34,9 +34,6 @@ export class UserService {
   }
 
   createUser(user: User):Observable<User> {
-    // let headers = {headers: new HttpHeaders({ 'Content-Type': 'application/json' })};
-    // let options = new RequestOptions({ options: options });
-    // this.newUser.next(user);
     return this.http.post(this.userUrl, user, this.options)
       .do(() => this.newUser.next(user))
       .catch(this._handleError);
@@ -54,8 +51,6 @@ export class UserService {
   }
 
   updateUser(user: User, userUrl: string):Observable<User> {
-    // let cpHeaders = new Headers({ 'Content-Type': 'application/json' });
-    // let options = new RequestOptions({ headers: cpHeaders });
     return this.http.put(userUrl, user, this.options)
       .do(() => {
         user.link = userUrl;
@@ -65,11 +60,6 @@ export class UserService {
   }
 
   deleteUser(user: User, userUrl: string): Observable<User> {
-    // let cpHeaders = new Headers({ 'Content-Type': 'application/json' });
-    // let cpParams = new HttpParams();
-    // cpParams.append('id', 2);
-    // assign(this.options, { body: cpParams })
-    // let options = new RequestOptions({ headers: cpHeaders, body: cpParams });
     return this.http.delete(userUrl, this.options)
       .catch(this._handleError);
   }

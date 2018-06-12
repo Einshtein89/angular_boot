@@ -53,29 +53,31 @@ export class EntityComponent implements OnInit, OnDestroy, AfterViewChecked {
   removeUser() {
     var self = this;
     $.confirm({
+      animation: 'top',
+      closeAnimation: 'top',
       title: 'Delete Confirmation',
       content: 'Do you really want to delete '
       + '<text class="userName">' + this.entity.firstName + '</text>' + '?',
       draggable: false,
       closeIcon: true,
       // container: '.main',
-      type: 'red',
+      // type: 'red',
       buttons: {
         confirm: {
-          btnClass: 'confirm-delete',
+          btnClass: 'btn-danger',
           action: function () {
             self.userService.deleteUser(self.entity, self.entity["_links"].self.href)
               .subscribe(
-                () => {
-                  self._removeUserFromUi();
-                },
+                () => self._removeUserFromUi(),
                 error => self.errorList = error.error
               );
           }
         },
-        cancel: function () {
-
-        },
+        cancel: {
+          btnClass: 'btn-default',
+          action: function () {
+          }
+        }
       }
     });
   }

@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PaginationComponent implements OnInit {
 
+  _ref:any;
+
   constructor() { }
 
   ngOnInit() {

@@ -4,12 +4,13 @@
   <button (click)="showAddEntityForm()"
           class="ui positive button">Add User
   </button>
-  <template #addEntity></template>
+  <template #addEditEntity></template>
   <div class="ui special link cards">
     <single-entity class="card"
             *ngFor="let entity of entityList"
                  [entity]="entity"
-                   [editForm] = "viewContainerRef">
+                   [editForm] = "addEditContainerRef">
     </single-entity>
   </div>
+  <app-pagination></app-pagination>
 </div>
