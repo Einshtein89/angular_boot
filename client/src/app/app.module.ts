@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { EntityList } from './entity-list/entity-list.component';
 import { EntityComponent } from './entity/entity.component';
-import { AddEntityComponent } from './add-entity/add-entity.component';
+import { AddEditEntityComponent } from './add-edit-entity/add-edit-entity.component';
 import {UserService} from "./service/user.service";
 import {constants} from "./constants/constants";
 import {AppRoutingModule} from "./router/router.module";
@@ -22,7 +22,7 @@ import { PaginationComponent } from './pagination/pagination.component';
     AppComponent,
     EntityList,
     EntityComponent,
-    AddEntityComponent,
+    AddEditEntityComponent,
     FirstChildComponent,
     SecondChildComponent,
     MainViewComponent,
@@ -41,6 +41,6 @@ import { PaginationComponent } from './pagination/pagination.component';
     EntityList,
     constants],
   bootstrap: [AppComponent],
-  entryComponents: [AddEntityComponent]
+  entryComponents: [AddEditEntityComponent]
 })
 export class AppModule { }

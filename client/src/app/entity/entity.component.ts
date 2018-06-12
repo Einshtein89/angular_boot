@@ -3,13 +3,13 @@ import {
   ChangeDetectorRef,
   Component,
   ComponentFactoryResolver,
-  Input,
+  Input, OnDestroy,
   OnInit,
   ViewContainerRef
 } from '@angular/core';
 import {User} from "../model/user.model";
 import {UserService} from "../service/user.service";
-import {AddEntityComponent} from "../add-entity/add-entity.component";
+import {AddEditEntityComponent} from "../add-edit-entity/add-edit-entity.component";
 declare var $ : any;
 
 @Component({
@@ -17,10 +17,11 @@ declare var $ : any;
   templateUrl: './entity.component.html',
   styleUrls: ['./entity.component.css']
 })
-export class EntityComponent implements OnInit, AfterViewChecked {
+export class EntityComponent implements OnInit, OnDestroy, AfterViewChecked {
   @Input() entity: User;
   @Input() editForm: ViewContainerRef;
   updatedUser: User;
+  errorList: any;
 
   constructor(private userService: UserService,
               private componentFactoryResolver: ComponentFactoryResolver,
@@ -33,8 +34,11 @@ export class EntityComponent implements OnInit, AfterViewChecked {
     });
   }
 
+  ngOnDestroy() {
+  }
+
   showAddEntityForm () {
-    const factory = this.componentFactoryResolver.resolveComponentFactory(AddEntityComponent);
+    const factory = this.componentFactoryResolver.resolveComponentFactory(AddEditEntityComponent);
     this.editForm.clear();
     const expComponent =  this.editForm.createComponent(factory);
     expComponent.instance._ref = expComponent;
@@ -46,6 +50,42 @@ export class EntityComponent implements OnInit, AfterViewChecked {
     this.showAddEntityForm();
   }
 
+  removeUser() {
+    var self = this;
+    $.confirm({
+      title: 'Delete Confirmation',
+      content: 'Do you really want to delete '
+      + '<text class="userName">' + this.entity.firstName + '</text>' + '?',
+      draggable: false,
+      closeIcon: true,
+      // container: '.main',
+      type: 'red',
+      buttons: {
+        confirm: {
+          btnClass: 'confirm-delete',
+          action: function () {
+            self.userService.deleteUser(self.entity, self.entity["_links"].self.href)
+              .subscribe(
+                () => {
+                  self._removeUserFromUi();
+                },
+                error => self.errorList = error.error
+              );
+          }
+        },
+        cancel: function () {
+
+        },
+      }
+    });
+  }
+
+  private _removeUserFromUi() {
+    let entityList = this.editForm["_view"].component.entityList;
+    let userIndex = entityList.indexOf(this.entity);
+    entityList.splice(userIndex, 1)
+  }
+
   ngAfterViewChecked(): void {
     if (this.updatedUser && this.entity["_links"].self.href == this.updatedUser.link) {
       let links = this.entity["_links"];
@@ -54,4 +94,6 @@ export class EntityComponent implements OnInit, AfterViewChecked {
     }
     this.cdr.detectChanges();
   }
+
+
 }

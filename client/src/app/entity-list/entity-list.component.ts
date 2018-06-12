@@ -12,7 +12,7 @@ import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 import {User} from "../model/user.model";
 import {UserService} from "../service/user.service";
-import {AddEntityComponent} from "../add-entity/add-entity.component";
+import {AddEditEntityComponent} from "../add-edit-entity/add-edit-entity.component";
 import * as  _ from "underscore"
 
 
@@ -37,7 +37,7 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
 
 
   showAddEntityForm () {
-    const factory = this.componentFactoryResolver.resolveComponentFactory(AddEntityComponent);
+    const factory = this.componentFactoryResolver.resolveComponentFactory(AddEditEntityComponent);
     this.viewContainerRef.clear();
     const expComponent =  this.viewContainerRef.createComponent(factory);
     expComponent.instance._ref = expComponent;

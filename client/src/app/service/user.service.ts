@@ -29,8 +29,8 @@ export class UserService {
     ].join('&');
     let queryUrl: string = `${this.userUrl}?${params}`;
     return this.http.get(queryUrl)
-      // .map(this.extractData)
-      .catch(this.handleError)
+      // .map(this._extractData)
+      .catch(this._handleError)
   }
 
   createUser(user: User):Observable<User> {
@@ -39,7 +39,7 @@ export class UserService {
     // this.newUser.next(user);
     return this.http.post(this.userUrl, user, this.options)
       .do(() => this.newUser.next(user))
-      .catch(this.handleError);
+      .catch(this._handleError);
   }
 
   getUserById(userId: string): Observable<User> {
@@ -49,8 +49,8 @@ export class UserService {
     assign(this.options, { body: cpParams })
     // let options = new RequestOptions({ headers: cpHeaders, body: cpParams });
     return this.http.get(this.userUrl, this.options)
-      .map(this.extractData)
-      .catch(this.handleError);
+      .map(this._extractData)
+      .catch(this._handleError);
   }
 
   updateUser(user: User, userUrl: string):Observable<User> {
@@ -61,25 +61,24 @@ export class UserService {
         user.link = userUrl;
         this.updatedUser.next(user)
       })
-      .catch(this.handleError);
+      .catch(this._handleError);
   }
 
-  deleteUserById(userId: string): Observable<number> {
+  deleteUser(user: User, userUrl: string): Observable<User> {
     // let cpHeaders = new Headers({ 'Content-Type': 'application/json' });
-    let cpParams = new HttpParams();
-    cpParams.append('id', userId);
-    assign(this.options, { body: cpParams })
+    // let cpParams = new HttpParams();
+    // cpParams.append('id', 2);
+    // assign(this.options, { body: cpParams })
     // let options = new RequestOptions({ headers: cpHeaders, body: cpParams });
-    return this.http.delete(this.userUrl, this.options)
-      // .map(success => success.status)
-      .catch(this.handleError);
+    return this.http.delete(userUrl, this.options)
+      .catch(this._handleError);
   }
-  private extractData(res: HttpResponse<any>) : any {
+  private _extractData(res: HttpResponse<any>) : any {
     console.log(res);
     let body = res["_embedded"].users;
     return body;
 }
-  private handleError (error: HttpResponse<any> | any) {
+  private _handleError (error: HttpResponse<any> | any) {
     console.error(error.message || error);
     return Observable.throw(error);
   }

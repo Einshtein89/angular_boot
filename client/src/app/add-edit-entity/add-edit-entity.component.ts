@@ -2,15 +2,14 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FormGroup, FormControl, Validators} from "@angular/forms";
 import {UserService} from "../service/user.service";
 import {User} from "../model/user.model";
-import {Router} from "@angular/router";
 declare var $ : any;
 
 @Component({
   selector: 'add-entity',
-  templateUrl: './add-entity.component.html',
-  styleUrls: ['./add-entity.component.css']
+  templateUrl: './add-edit-entity.component.html',
+  styleUrls: ['./add-edit-entity.component.css']
 })
-export class AddEntityComponent implements OnInit, OnDestroy {
+export class AddEditEntityComponent implements OnInit, OnDestroy {
   private myForm: FormGroup;
   private firstName: FormControl;
   private lastName: FormControl;
@@ -26,17 +25,16 @@ export class AddEntityComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initializeUserList();
-    // console.log(this.userList);
     this.createFormControls();
     this.createForm();
-    $("#myModal").modal(/*{backdrop: "static"}*/);
+    $("#addEditUserModal").modal(/*{backdrop: "static"}*/);
   }
 
   ngOnDestroy() {
   }
 
   removeObject(){
-    $("#myModal").modal('hide');
+    $("#addEditUserModal").modal('hide');
     this._ref.destroy();
     this.ngOnDestroy();
   }
@@ -82,6 +80,7 @@ export class AddEntityComponent implements OnInit, OnDestroy {
         () => {
           this.myForm.reset();
           this.removeObject();
+          this._renderMessage("User " + user.firstName + " was updated!");
         },
         error => this.errorList = error.error
       );
@@ -94,6 +93,7 @@ export class AddEntityComponent implements OnInit, OnDestroy {
         () => {
           this.myForm.reset();
           this.removeObject();
+          this._renderMessage("User " + user.firstName + " was created!");
         },
         error => this.errorList = error.error
       );
@@ -109,5 +109,24 @@ export class AddEntityComponent implements OnInit, OnDestroy {
       )
     }
   }
+
+  private _renderMessage(message) {
+    $.confirm({
+      title: '',
+      content: message,
+      draggable: false,
+      closeIcon: true,
+      type: 'red',
+      buttons: {
+        ok: function () {
+        },
+      }
+    });
+    // if (addErrorDiv) {
+    //   $('#messages').html("");
+    //   $('<div id="messages"></div>').insertBefore($('#registerform'));
+    //   $("#messages").html(message);
+    // }
+  };
 
 }
