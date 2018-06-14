@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
-import {User} from "../model/user.model";
+import {User} from "../models/user.model";
 import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from "@angular/common/http";
 import {assign} from "rxjs/util/assign";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
@@ -23,11 +23,11 @@ export class UserService {
               @Inject(USERS_API_URL) private userUrl: string) {
   }
 
-  getAllUsers(): Observable<any> {
+  getAllUsers(url?: string): Observable<any> {
     let params: string = [
-      `size=50`
+      `size=10`
     ].join('&');
-    let queryUrl: string = `${this.userUrl}?${params}`;
+    let queryUrl: string = url ? url : `${this.userUrl}?${params}`;
     return this.http.get(queryUrl)
       // .map(this._extractData)
       .catch(this._handleError)

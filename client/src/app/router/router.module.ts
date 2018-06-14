@@ -1,9 +1,9 @@
 import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {EntityList} from "../entity-list/entity-list.component";
-import {FirstChildComponent} from "../routeTest/first-child-component/first-child.component";
-import {SecondChildComponent} from "../routeTest/second-child-component/second-child.component";
-import {MainViewComponent} from "../main-view/main-view.component";
+import {EntityList} from "../components/entity-list/entity-list.component";
+import {FirstChildComponent} from "../components/routeTest/first-child-component/first-child.component";
+import {SecondChildComponent} from "../components/routeTest/second-child-component/second-child.component";
+import {MainViewComponent} from "../components/main-view/main-view.component";
 
 
 export const childRoutes: Routes = [

@@ -1,7 +1,9 @@
 @import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 @import '../node_modules/semantic-ui/dist/semantic.min.css';
 @import '../node_modules/jquery-confirm/dist/jquery-confirm.min.css';
+@import 'app/styles/confirm-modal.less';
 
+@modal-header-background-color:               green;
 
 form.ui.segment.form {
   background-color: #F1F9FF;
@@ -32,6 +34,12 @@ ul.ui.list li:before {
   margin-top: -50px;
 }
 
+.modal-header {
+  background-color: @modal-header-background-color;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
 .modal-content {
   width: max-content;
 }
@@ -49,8 +57,3 @@ ul.ui.list li:before {
 .modal-header .title {
   display: inline;
 }
-
-.jconfirm-title-c:before {
-  content: "as";
-}
-

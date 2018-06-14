@@ -1,7 +1,7 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FormGroup, FormControl, Validators} from "@angular/forms";
-import {UserService} from "../service/user.service";
-import {User} from "../model/user.model";
+import {UserService} from "../../services/user.service";
+import {User} from "../../models/user.model";
 declare var $ : any;
 
 @Component({

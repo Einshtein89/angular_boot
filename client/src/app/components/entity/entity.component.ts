@@ -7,8 +7,8 @@ import {
   OnInit,
   ViewContainerRef
 } from '@angular/core';
-import {User} from "../model/user.model";
-import {UserService} from "../service/user.service";
+import {User} from "../../models/user.model";
+import {UserService} from "../../services/user.service";
 import {AddEditEntityComponent} from "../add-edit-entity/add-edit-entity.component";
 declare var $ : any;
 
@@ -37,7 +37,7 @@ export class EntityComponent implements OnInit, OnDestroy, AfterViewChecked {
   ngOnDestroy() {
   }
 
-  showAddEntityForm () {
+  showEditEntityForm () {
     const factory = this.componentFactoryResolver.resolveComponentFactory(AddEditEntityComponent);
     this.editForm.clear();
     const expComponent =  this.editForm.createComponent(factory);
@@ -47,7 +47,7 @@ export class EntityComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   editUser() {
-    this.showAddEntityForm();
+    this.showEditEntityForm();
   }
 
   removeUser() {
