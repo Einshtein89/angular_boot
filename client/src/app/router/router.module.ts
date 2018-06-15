@@ -4,13 +4,22 @@ import {EntityList} from "../components/entity-list/entity-list.component";
 import {FirstChildComponent} from "../components/routeTest/first-child-component/first-child.component";
 import {SecondChildComponent} from "../components/routeTest/second-child-component/second-child.component";
 import {MainViewComponent} from "../components/main-view/main-view.component";
+import {PaginationComponent} from "../components/pagination/pagination.component";
 
+export const paginationRoutes: Routes = [
+  { path: '', redirectTo: 'first', pathMatch: 'full' },
+  { path: 'first', component: EntityList, pathMatch: 'full' },
+  { path: 'last', component: EntityList, pathMatch: 'full' }
+];
 
 export const childRoutes: Routes = [
   { path: '', redirectTo: 'first', pathMatch: 'full' },
   { path: 'first', component: FirstChildComponent},
   { path: 'second', component: SecondChildComponent },
-  { path: 'allUsers', component: EntityList, pathMatch: 'full' }
+  { path: 'allUsers', component: EntityList, pathMatch: 'full' },
+  // { path: 'allUsers', redirectTo: 'allUsers/first', pathMatch: 'full' },d
+  // { path: 'allUsers/first', component: EntityList },
+  // { path: 'allUsers/:page', component: EntityList }
 ];
 
 const routes: Routes = [
@@ -22,7 +31,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
