@@ -9,7 +9,8 @@
     <single-entity class="card"
             *ngFor="let entity of entityList"
                  [entity]="entity"
-                   [editForm] = "addEditContainerRef">
+                   [editForm] = "addEditContainerRef"
+                   [entityListComponent]="this">
     </single-entity>
   </div>
 </div>

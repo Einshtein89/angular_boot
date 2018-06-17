@@ -1,26 +1,20 @@
 <div class="center">
-  <ul class="pagination">
-    <li onclick="$(this).siblings().addClass('active').not(':eq(1)').removeClass('active')">
+  <ul *ngIf="this.entityListComponent.page" class="pagination">
+    <li *ngIf="this.entityListComponent.page.number !== 0">
       <a (click)="getFirstPage()">«</a>
     </li>
-    <li>
+    <li *ngIf="this.entityListComponent.page.number !== 0">
       <a (click)="getPreviousPage()"><</a>
     </li>
     <!--{#pages}-->
-    <li>
-      <a>1</a>
-    </li>
-    <li>
-      <a>1</a>
-    </li>
-    <li>
-      <a>1</a>
+    <li *ngFor="let page of pageArray" [ngClass]="{active:this.entityListComponent.page.number === page}">
+      <a (click)="getPage(page)">{{ page + 1 }}</a>
     </li>
     <!--{/pages}-->
-    <li>
+    <li *ngIf="this.entityListComponent.page.number !== this.entityListComponent.page.totalPages - 1">
       <a (click)="getNextPage()">></a>
     </li>
-    <li onclick="$(this).siblings().prev().addClass('active').not('li:last').removeClass('active')">
+    <li *ngIf="this.entityListComponent.page.number !== this.entityListComponent.page.totalPages - 1">
       <a (click)="getLastPage()">»</a>
     </li>
   </ul>

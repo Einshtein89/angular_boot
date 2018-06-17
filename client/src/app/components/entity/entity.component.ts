@@ -10,6 +10,8 @@ import {
 import {User} from "../../models/user.model";
 import {UserService} from "../../services/user.service";
 import {AddEditEntityComponent} from "../add-edit-entity/add-edit-entity.component";
+import {EntityList} from "../entity-list/entity-list.component";
+import {PaginationService} from "../../services/pagination.service";
 declare var $ : any;
 
 @Component({
@@ -17,13 +19,15 @@ declare var $ : any;
   templateUrl: './entity.component.html',
   styleUrls: ['./entity.component.css']
 })
-export class EntityComponent implements OnInit, OnDestroy, AfterViewChecked {
+export class EntityComponent implements OnInit, OnDestroy {
   @Input() entity: User;
   @Input() editForm: ViewContainerRef;
+  @Input() entityListComponent: EntityList;
   updatedUser: User;
   errorList: any;
 
   constructor(private userService: UserService,
+              private paginationService: PaginationService,
               private componentFactoryResolver: ComponentFactoryResolver,
               private cdr: ChangeDetectorRef) {}
 
@@ -51,7 +55,7 @@ export class EntityComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   removeUser() {
-    var self = this;
+    let self = this;
     $.confirm({
       animation: 'top',
       closeAnimation: 'top',
@@ -60,15 +64,28 @@ export class EntityComponent implements OnInit, OnDestroy, AfterViewChecked {
       + '<text class="userName">' + this.entity.firstName + '</text>' + '?',
       draggable: false,
       closeIcon: true,
-      // container: '.main',
-      // type: 'red',
       buttons: {
         confirm: {
           btnClass: 'btn-danger',
           action: function () {
             self.userService.deleteUser(self.entity, self.entity["_links"].self.href)
               .subscribe(
-                () => self._removeUserFromUi(),
+                () => {
+                  // let lastUserOnPage = self.entityListComponent.entityList.length === 1;
+                  // if (!lastUserOnPage) {
+                  //   self._removeUserFromUi();
+                  // } else {
+                    self.paginationService.getPageByNumber(self.entityListComponent.page.number)
+                      .subscribe(
+                        data => {
+                          self.entityListComponent.entityList = self.entityListComponent.extractUsers(data);
+                          self.entityListComponent.links = self.entityListComponent.extractLinks(data);
+                          self.entityListComponent.page = self.entityListComponent.extractPage(data);
+                        },
+                        () => error => self.errorList = error.error,
+                      )
+                  // }
+                  },
                 error => self.errorList = error.error
               );
           }
@@ -80,22 +97,11 @@ export class EntityComponent implements OnInit, OnDestroy, AfterViewChecked {
         }
       }
     });
-  }
+  };
 
   private _removeUserFromUi() {
     let entityList = this.editForm["_view"].component.entityList;
     let userIndex = entityList.indexOf(this.entity);
     entityList.splice(userIndex, 1)
   }
-
-  ngAfterViewChecked(): void {
-    if (this.updatedUser && this.entity["_links"].self.href == this.updatedUser.link) {
-      let links = this.entity["_links"];
-      this.entity = this.updatedUser;
-      this.entity["_links"] = links;
-    }
-    this.cdr.detectChanges();
-  }
-
-
 }

@@ -14,8 +14,8 @@ export const paginationRoutes: Routes = [
 
 export const childRoutes: Routes = [
   { path: '', redirectTo: 'first', pathMatch: 'full' },
-  { path: 'first', component: FirstChildComponent},
-  { path: 'second', component: SecondChildComponent },
+  { path: 'first', component: FirstChildComponent, pathMatch: 'full'},
+  { path: 'second', component: SecondChildComponent, pathMatch: 'full' },
   { path: 'allUsers', component: EntityList, pathMatch: 'full' },
   // { path: 'allUsers', redirectTo: 'allUsers/first', pathMatch: 'full' },d
   // { path: 'allUsers/first', component: EntityList },

@@ -16,6 +16,7 @@ import { MainViewComponent } from './components/main-view/main-view.component';
 import * as bootstrap from "bootstrap";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import {PaginationService} from "./services/pagination.service";
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
   ],
   providers: [
     UserService,
+    PaginationService,
     EntityList,
     constants],
   bootstrap: [AppComponent],

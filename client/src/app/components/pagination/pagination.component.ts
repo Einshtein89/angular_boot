@@ -3,6 +3,7 @@ import {UserService} from "../../services/user.service";
 import {EntityList} from "../entity-list/entity-list.component";
 import {User} from "../../models/user.model";
 import {Router} from "@angular/router";
+import {PaginationService} from "../../services/pagination.service";
 
 @Component({
   selector: 'app-pagination',
@@ -18,63 +19,62 @@ export class PaginationComponent implements OnInit, AfterViewChecked {
   // @Input() links: any;
 
   @Input() entityListComponent: EntityList;
-  _currentPath: string;
+  // _currentPath: string;
+  private pageArray: any[];
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService,
+              private paginationService: PaginationService) { }
 
   ngOnInit() {
     console.log(this.entityListComponent._page);
   }
 
   getFirstPage() {
-    this._getPage("first", "first");
+    this._getPage("first");
   }
 
   getLastPage() {
-    this._getPage("last", "last");
+    this._getPage("last");
   }
 
   getNextPage() {
-    this._getPage("next", "next");
+    this._getPage("next");
   }
 
   getPreviousPage() {
-    this._getPage("prev", "prev");
+    this._getPage("prev");
   }
 
-  private _getPage(page: string, navigateTo?: string) {
-
-    // if (page != this._currentPath) {
-      this.entityListComponent.loading = true;
-      this.userService.getAllUsers(this.entityListComponent.links[page].href)
-        .subscribe(
-          data => {
-            this.entityListComponent.entityList = this.entityListComponent.extractUsers(data);
-            this.entityListComponent.links = this.entityListComponent.extractLinks(data);
-            this.entityListComponent.page = this.entityListComponent.extractPage(data);
-            if (navigateTo) {
-              // this.entityListComponent.router.navigate(['../' + navigateTo + ''], { relativeTo: this.entityListComponent.route });
-            }
-            this._currentPath = page;
-          },
-          errorCode =>  this.entityListComponent.statusCode = errorCode,
-          () => this.entityListComponent.loading = false
-        )
-    // }
+  getPage(pageNumber: number) {
+    this.paginationService.getPageByNumber(pageNumber)
+      .subscribe(
+        data => this._populateEntities(data),
+        errorCode =>  this.entityListComponent.statusCode = errorCode,
+        () => this.entityListComponent.loading = false
+      );
   }
 
   ngAfterViewChecked(): void {
-    // if (this.entityListComponent.links) {
-    //   let path = this.entityListComponent._page;
-    //   if (path) {
-    //     this._getPage(path, path);
-    //     path = null;
-    //   }
-    // }
+    if (this.entityListComponent.page) {
+      this.pageArray = Array.from(Array(this.entityListComponent.page.totalPages).keys());
+    }
   }
 
-  // ngAfterContentInit(): void {
-  //   const path = this.entityListComponent.route.snapshot["_urlSegment"].segments[2].path;
-  //   this._getPage(path, path);
-  // }
+  private _getPage(pageName: string) {
+    this.paginationService.getPageByLink(this.entityListComponent.links[pageName].href)
+      .subscribe(
+        data => this._populateEntities(data),
+        errorCode => this.entityListComponent.statusCode = errorCode,
+        () => this.entityListComponent.loading = false
+      );
+  }
+
+  private _populateEntities(data: Object) {
+    this.entityListComponent.entityList = this.entityListComponent.extractUsers(data);
+    this.entityListComponent.links = this.entityListComponent.extractLinks(data);
+    this.entityListComponent.page = this.entityListComponent.extractPage(data);
+    // if (navigateTo) {
+    //   // this.entityListComponent.router.navigate(['../' + navigateTo + ''], { relativeTo: this.entityListComponent.route });
+    // }
+  }
 }

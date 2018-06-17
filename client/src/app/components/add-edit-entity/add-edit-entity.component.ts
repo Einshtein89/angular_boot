@@ -2,6 +2,8 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FormGroup, FormControl, Validators} from "@angular/forms";
 import {UserService} from "../../services/user.service";
 import {User} from "../../models/user.model";
+import {PaginationService} from "../../services/pagination.service";
+import {EntityList} from "../entity-list/entity-list.component";
 declare var $ : any;
 
 @Component({
@@ -20,11 +22,14 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
   errorList: any;
   _ref:any;
   _currentUser: User;
+  _links: any;
+  _entityListComponent: EntityList;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService,
+              private paginationService: PaginationService) {}
 
   ngOnInit(): void {
-    this.initializeUserList();
+    // this.initializeUserList();
     this.createFormControls();
     this.createForm();
     $("#addEditUserModal").modal(/*{backdrop: "static"}*/);
@@ -92,31 +97,55 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
       .subscribe(
         () => {
           this.myForm.reset();
-          this.removeObject();
           this._renderMessage("User " + user.firstName + " was created!");
+          let usersOnLastPage = this._entityListComponent.page.totalElements % this._entityListComponent.page.size;
+          if (this._entityListComponent.entityList.length / this._entityListComponent.page.size
+            === 1 && usersOnLastPage === 0)
+          {
+            this.paginationService.getPageByNumber(this._entityListComponent.page.totalPages)
+              .subscribe(
+                data => {
+                  this._entityListComponent.entityList = this._entityListComponent.extractUsers(data);
+                  this._entityListComponent.links = this._entityListComponent.extractLinks(data);
+                  this._entityListComponent.page = this._entityListComponent.extractPage(data);
+                }
+              );
+          } else {
+            this.paginationService.getPageByLink(this._links.last.href)
+              .subscribe(
+                data => {
+                  this._entityListComponent.entityList = this._entityListComponent.extractUsers(data);
+                  this._entityListComponent.links = this._entityListComponent.extractLinks(data);
+                  this._entityListComponent.page = this._entityListComponent.extractPage(data);
+                }
+              );
+          }
+          this.removeObject();
         },
         error => this.errorList = error.error
       );
     return false;
   }
 
-  private initializeUserList() {
-    if (this.userService.entityList) {
-      this.userList = this.userService.entityList;
-    } else {
-      this.userService.getAllUsers().subscribe(
-        data => this.userList = data["_embedded"].users
-      )
-    }
-  }
+  // private initializeUserList() {
+  //   if (this.userService.entityList) {
+  //     this.userList = this.userService.entityList;
+  //   } else {
+  //     this.userService.getAllUsers().subscribe(
+  //       data => this.userList = data["_embedded"].users
+  //     )
+  //   }
+  // }
 
   private _renderMessage(message) {
     $.confirm({
-      title: '',
+      animation: 'top',
+      closeAnimation: 'top',
+      title: 'Confirm',
       content: message,
       draggable: false,
       closeIcon: true,
-      type: 'red',
+      // type: 'red',
       buttons: {
         ok: function () {
         },

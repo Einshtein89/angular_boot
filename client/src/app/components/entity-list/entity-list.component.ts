@@ -48,15 +48,17 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
     this.addEditContainerRef.clear();
     const expComponent =  this.addEditContainerRef.createComponent(factory);
     expComponent.instance._ref = expComponent;
+    expComponent.instance._links = this.links;
+    expComponent.instance._entityListComponent = this;
   }
 
   ngOnInit() {
     this.userService.addedUser.subscribe(user => this.user = user);
-    if(!this.userService.entityList) {
+    // if(!this.userService.entityList) {
       this.getAllUsers();
-    } else {
-       this.entityList = this.userService.entityList;
-    }
+    // } else {
+    //    this.entityList = this.userService.entityList;
+    // }
   }
 
   ngOnDestroy() {
@@ -68,9 +70,10 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
     this.userService.getAllUsers()
       .subscribe(
         data => {
-          this.entityList = this.extractUsers(data); console.log(data);
+          this.entityList = this.extractUsers(data);
           this.links = this.extractLinks(data);
-          this.page = this.extractPage(data);},
+          this.page = this.extractPage(data);
+          },
         errorCode =>  this.statusCode = errorCode,
         () => this.loading = false
       );
@@ -92,9 +95,9 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngAfterViewChecked(): void {
-    if (this.user && !_.contains(this.entityList, this.user)) {
-      this.entityList.push(this.user);
-    }
+    // if (this.user && !_.contains(this.entityList, this.user)) {
+    //   this.entityList.push(this.user);
+    // }
     this.cdr.detectChanges();
   }
 }
