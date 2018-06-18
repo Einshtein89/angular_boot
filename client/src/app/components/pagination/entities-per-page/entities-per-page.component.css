@@ -1,9 +1,9 @@
 .entitiesPerPage {
-  float: right;
+  margin-top: 10px;
 }
 
 #entitiesPerPageDropdown.form-control {
-  width: 100px;
+  width: 70px;
 }
 
 label {

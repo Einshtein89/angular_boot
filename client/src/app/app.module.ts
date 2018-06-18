@@ -18,6 +18,9 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import {PaginationService} from "./services/pagination.service";
 import { EntitiesPerPageComponent } from './components/pagination/entities-per-page/entities-per-page.component';
+import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatSidenavModule, MatSelectModule } from '@angular/material';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -33,11 +36,19 @@ import { EntitiesPerPageComponent } from './components/pagination/entities-per-p
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    MatSidenavModule,
+    MatMenuModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MatSelectModule,
+    MatListModule
   ],
   providers: [
     UserService,

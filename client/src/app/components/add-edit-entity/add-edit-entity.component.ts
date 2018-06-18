@@ -99,25 +99,17 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
           this.myForm.reset();
           this._renderMessage("User " + user.firstName + " was created!");
           let usersOnLastPage = this._entityListComponent.page.totalElements % this._entityListComponent.page.size;
-          if (this._entityListComponent.entityList.length / this._entityListComponent.page.size
-            === 1 && usersOnLastPage === 0)
+          if (this._entityListComponent.entityList.length / this._entityListComponent.page.size === 1
+            && usersOnLastPage === 0)
           {
             this.paginationService.getPageByNumber(this._entityListComponent.page.totalPages)
               .subscribe(
-                data => {
-                  this._entityListComponent.entityList = this._entityListComponent.extractUsers(data);
-                  this._entityListComponent.links = this._entityListComponent.extractLinks(data);
-                  this._entityListComponent.page = this._entityListComponent.extractPage(data);
-                }
+                data => this._populateEntities(data)
               );
           } else {
             this.paginationService.getPageByLink(this._links.last.href)
               .subscribe(
-                data => {
-                  this._entityListComponent.entityList = this._entityListComponent.extractUsers(data);
-                  this._entityListComponent.links = this._entityListComponent.extractLinks(data);
-                  this._entityListComponent.page = this._entityListComponent.extractPage(data);
-                }
+                data => this._populateEntities(data)
               );
           }
           this.removeObject();
@@ -125,6 +117,12 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
         error => this.errorList = error.error
       );
     return false;
+  }
+
+  private _populateEntities(data: Object) {
+    this._entityListComponent.entityList = this._entityListComponent.extractUsers(data);
+    this._entityListComponent.links = this._entityListComponent.extractLinks(data);
+    this._entityListComponent.page = this._entityListComponent.extractPage(data);
   }
 
   // private initializeUserList() {
@@ -145,17 +143,11 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
       content: message,
       draggable: false,
       closeIcon: true,
-      // type: 'red',
       buttons: {
         ok: function () {
         },
       }
     });
-    // if (addErrorDiv) {
-    //   $('#messages').html("");
-    //   $('<div id="messages"></div>').insertBefore($('#registerform'));
-    //   $("#messages").html(message);
-    // }
   };
 
 }

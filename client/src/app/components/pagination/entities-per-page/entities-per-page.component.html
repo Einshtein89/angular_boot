@@ -1,9 +1,13 @@
 <div class="entitiesPerPage right floated">
-  <label for="entitiesPerPageDropdown">Entities per Page:</label>
-  <select class="form-control" (change)="changePageSize($event.target.value)" id="entitiesPerPageDropdown">
-    <option *ngFor="let pageSize of pageSizes" value="{{ pageSize }}"
-            [selected]="pageSize == this.paginationService.currentPageSize">
-      {{ pageSize }}
-    </option>
-  </select>
+  <!--<label for="entitiesPerPageDropdown">Entities per Page:</label>-->
+  <mat-form-field>
+    <mat-select placeholder="Entities per Page"
+                (change)="changePageSize($event.value)"
+                id="entitiesPerPageDropdown"
+                [value]="this.paginationService.currentPageSize">
+      <mat-option *ngFor="let pageSize of pageSizes" [value]="pageSize">
+        {{ pageSize }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>

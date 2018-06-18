@@ -13,7 +13,7 @@ export class EntitiesPerPageComponent implements OnInit {
   pageSizes: Array<number>;
 
   constructor(public paginationService: PaginationService) {
-    this.pageSizes = [3,5,10];
+    this.pageSizes = [3,5,10,25,100];
     console.log(this.paginationService.currentPageSize);
   }
 

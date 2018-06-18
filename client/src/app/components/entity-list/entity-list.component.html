@@ -1,19 +1,35 @@
 
 <div *ngIf="loading"><img class="spinner" src="assets/ajax-loader.gif"></div>
 <div *ngIf="!loading">
-  <button (click)="showAddEntityForm()"
-          class="ui positive button">Add User
-  </button>
-  <entities-per-page [entityListComponent]="this"></entities-per-page>
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav  mode="push">
+      <mat-list>
+        <mat-list-item>
+          <button (click)="showAddEntityForm()"
+                  class="ui positive button">Add User
+          </button>
+        </mat-list-item>
+        <mat-list-item>
+          <entities-per-page [entityListComponent]="this"></entities-per-page>
+        </mat-list-item>
+      </mat-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div>
+        <img src="assets/menu_icon.png" style="height: 40px; width: 40px;" mat-button (mouseover)="sidenav.toggle()"/>
+      </div>
+      <div class="ui special link cards">
+        <single-entity class="card"
+                       *ngFor="let entity of entityList"
+                       [entity]="entity"
+                       [editForm] = "addEditContainerRef"
+                       [entityListComponent]="this">
+        </single-entity>
+      </div>
+      <app-pagination [entityListComponent]="this" ></app-pagination>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
   <template #addEditEntity></template>
-  <div class="ui special link cards">
-    <single-entity class="card"
-            *ngFor="let entity of entityList"
-                 [entity]="entity"
-                   [editForm] = "addEditContainerRef"
-                   [entityListComponent]="this">
-    </single-entity>
-  </div>
 </div>
-<app-pagination [entityListComponent]="this" ></app-pagination>
-<!--<app-pagination [links] = "links"></app-pagination>-->
+
