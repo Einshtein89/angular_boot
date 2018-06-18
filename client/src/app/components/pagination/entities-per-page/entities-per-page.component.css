@@ -1,0 +1,15 @@
+.entitiesPerPage {
+  float: right;
+}
+
+#entitiesPerPageDropdown.form-control {
+  width: 100px;
+}
+
+label {
+  float:left;
+  margin-right: 10px;
+}
+
+
+

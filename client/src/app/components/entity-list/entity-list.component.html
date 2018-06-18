@@ -4,6 +4,7 @@
   <button (click)="showAddEntityForm()"
           class="ui positive button">Add User
   </button>
+  <entities-per-page [entityListComponent]="this"></entities-per-page>
   <template #addEditEntity></template>
   <div class="ui special link cards">
     <single-entity class="card"

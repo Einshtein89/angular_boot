@@ -71,20 +71,13 @@ export class EntityComponent implements OnInit, OnDestroy {
             self.userService.deleteUser(self.entity, self.entity["_links"].self.href)
               .subscribe(
                 () => {
-                  // let lastUserOnPage = self.entityListComponent.entityList.length === 1;
-                  // if (!lastUserOnPage) {
-                  //   self._removeUserFromUi();
-                  // } else {
-                    self.paginationService.getPageByNumber(self.entityListComponent.page.number)
-                      .subscribe(
-                        data => {
-                          self.entityListComponent.entityList = self.entityListComponent.extractUsers(data);
-                          self.entityListComponent.links = self.entityListComponent.extractLinks(data);
-                          self.entityListComponent.page = self.entityListComponent.extractPage(data);
-                        },
-                        () => error => self.errorList = error.error,
-                      )
-                  // }
+                  let lastUserOnPage = self.entityListComponent.entityList.length === 1;
+                  if (!lastUserOnPage) {
+                    // self._removeUserFromUi();
+                    self.getPageAfterRemove(self.entityListComponent.page.number);
+                  } else {
+                    self.getPageAfterRemove(self.entityListComponent.page.number -1);
+                  }
                   },
                 error => self.errorList = error.error
               );
@@ -98,6 +91,18 @@ export class EntityComponent implements OnInit, OnDestroy {
       }
     });
   };
+
+  private getPageAfterRemove(pageNumber: number) {
+    this.paginationService.getPageByNumber(pageNumber)
+      .subscribe(
+        data => {
+          this.entityListComponent.entityList = this.entityListComponent.extractUsers(data);
+          this.entityListComponent.links = this.entityListComponent.extractLinks(data);
+          this.entityListComponent.page = this.entityListComponent.extractPage(data);
+        },
+        () => error => this.errorList = error.error,
+      )
+  }
 
   private _removeUserFromUi() {
     let entityList = this.editForm["_view"].component.entityList;

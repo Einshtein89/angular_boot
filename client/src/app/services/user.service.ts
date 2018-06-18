@@ -9,6 +9,7 @@ import {assign} from "rxjs/util/assign";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 export const USERS_API_URL = "";
+export const DEFAULT_PAGE_SIZE = 0;
 
 @Injectable()
 export class UserService {
@@ -20,12 +21,13 @@ export class UserService {
   changedUser = this.updatedUser.asObservable();
 
   constructor(private http:HttpClient,
-              @Inject(USERS_API_URL) private userUrl: string) {
+              @Inject(USERS_API_URL) private userUrl: string,
+              @Inject(DEFAULT_PAGE_SIZE) private defaultPageSize: number) {
   }
 
   getAllUsers(url?: string): Observable<any> {
     let params: string = [
-      `size=10`
+      `size=${this.defaultPageSize}`
     ].join('&');
     let queryUrl: string = url ? url : `${this.userUrl}?${params}`;
     return this.http.get(queryUrl)
