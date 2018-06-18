@@ -17,6 +17,7 @@ import * as bootstrap from "bootstrap";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import {PaginationService} from "./services/pagination.service";
+import { EntitiesPerPageComponent } from './components/pagination/entities-per-page/entities-per-page.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import {PaginationService} from "./services/pagination.service";
     FirstChildComponent,
     SecondChildComponent,
     MainViewComponent,
-    PaginationComponent
+    PaginationComponent,
+    EntitiesPerPageComponent
   ],
   imports: [
     BrowserModule,

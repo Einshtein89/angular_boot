@@ -16,6 +16,7 @@ import {AddEditEntityComponent} from "../add-edit-entity/add-edit-entity.compone
 import * as  _ from "underscore"
 import {PaginationComponent} from "../pagination/pagination.component";
 import {ActivatedRoute, Router} from "@angular/router";
+import {PaginationService} from "../../services/pagination.service";
 
 
 @Component({
@@ -35,6 +36,7 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
   // @ViewChild(PaginationComponent) pagination: PaginationComponent;
 
   constructor(private userService: UserService,
+              private paginationService: PaginationService,
               private componentFactoryResolver: ComponentFactoryResolver,
               private cdr: ChangeDetectorRef,
               public router: Router,
@@ -53,6 +55,7 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngOnInit() {
+    this.paginationService.currentPageSize = this.paginationService.defaultPageSize;
     this.userService.addedUser.subscribe(user => this.user = user);
     // if(!this.userService.entityList) {
       this.getAllUsers();

@@ -23,7 +23,9 @@ export class PaginationComponent implements OnInit, AfterViewChecked {
   private pageArray: any[];
 
   constructor(private userService: UserService,
-              private paginationService: PaginationService) { }
+              private paginationService: PaginationService) {
+    // this.paginationService.currentPageSize = 10;
+  }
 
   ngOnInit() {
     console.log(this.entityListComponent._page);
@@ -61,6 +63,7 @@ export class PaginationComponent implements OnInit, AfterViewChecked {
   }
 
   private _getPage(pageName: string) {
+    this.entityListComponent.loading = true;
     this.paginationService.getPageByLink(this.entityListComponent.links[pageName].href)
       .subscribe(
         data => this._populateEntities(data),
