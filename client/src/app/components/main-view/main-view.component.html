@@ -1,10 +1,7 @@
 <div class="ui inverted segment">
   <div class="ui inverted secondary pointing menu">
-    <a class="item" [routerLink]="['/']">
+    <a class="item" [routerLink]="['./home']">
       Home
-    </a>
-    <a class="item" [routerLink]="['./first']">
-      First Page
     </a>
     <a class="item" [routerLink]="['./second']">
       Second Page
@@ -12,7 +9,13 @@
     <a class="item" [routerLink]="['./allUsers']">
       All Users
     </a>
-    <div class="right menu">
+    <div class="right menu" >
+      <a class="item" (click)="logout()" *ngIf="this.authService.isLoggedIn()">
+        Log Out
+      </a>
+      <a class="item" [routerLink]="['/login']" *ngIf="!this.authService.isLoggedIn()">
+        Log In
+      </a>
       <div class="item">
         <div class="ui icon input">
           <input type="text" placeholder="Search...">
@@ -22,5 +25,10 @@
     </div>
   </div>
 </div>
+<!--<div [ngSwitch]="this.authService.isLoggedIn()">-->
+  <!--<div *ngSwitchCase="true">Welcome {{this.authService.getUser()}}</div>-->
+  <!--<div *ngSwitchCase="false">Welcome</div>-->
+<!--</div>-->
+
 <router-outlet></router-outlet>
 

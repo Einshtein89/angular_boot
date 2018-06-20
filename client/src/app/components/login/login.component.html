@@ -1,0 +1,48 @@
+<div class="ui inverted segment" xmlns:th="http://www.w3.org/1999/xhtml">
+  <div class="ui inverted secondary pointing menu">
+    <a class="item" [routerLink]="['/']">
+      Home
+    </a>
+    <div class="right menu" >
+      <a class="item" (click)="logout()" *ngIf="this.authService.isLoggedIn()">
+        Log Out
+      </a>
+      <a class="item" [routerLink]="['/login']" *ngIf="!this.authService.isLoggedIn()">
+        Log In
+      </a>
+      <div class="item">
+        <div class="ui icon input">
+          <input type="text" placeholder="Search...">
+          <i class="search link icon"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="alert alert-danger" role="alert" *ngIf="message">
+  {{ message }}
+  </div>
+
+
+<div class="container">
+  <img src="assets/login.jpg" class="img-responsive center-block" width="300" height="300" alt="Logo" />
+  <form class="form-signin">
+    <h3 class="form-signin-heading">Welcome</h3>
+    <br/>
+
+    <div class="form-group">
+      <label for="username">User: (type <em>user</em>)</label>
+      <input class="form-control" name="username" id="username" #username>
+    </div> <br/>
+    <div class="form-group">
+      <label for="password">Password: (type <em>password</em>)</label>
+      <input class="form-control" type="password" id="password" name="password" #password>
+    </div> <br />
+
+    <button class="btn btn-lg btn-primary btn-block"
+            name="Submit" value="Login" type="Submit"
+            (click)="login(username.value, password.value)">Login</button>
+  </form>
+</div>
+

@@ -10,7 +10,7 @@ import { AddEditEntityComponent } from './components/add-edit-entity/add-edit-en
 import {UserService} from "./services/user.service";
 import {constants} from "./constants/constants";
 import {AppRoutingModule} from "./router/router.module";
-import { FirstChildComponent } from './components/routeTest/first-child-component/first-child.component';
+import { HomeComponent } from './components/home-component/home.component';
 import { SecondChildComponent } from './components/routeTest/second-child-component/second-child.component';
 import { MainViewComponent } from './components/main-view/main-view.component';
 import * as bootstrap from "bootstrap";
@@ -21,18 +21,23 @@ import { EntitiesPerPageComponent } from './components/pagination/entities-per-p
 import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatSidenavModule, MatSelectModule } from '@angular/material';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatListModule} from '@angular/material/list';
-
+import {AuthGuard} from "./auth/auth-guard.service";
+import {AuthService} from "./auth/auth.service";
+import { LoginComponent } from './components/login/login.component';
+import { LogoutComponent } from './components/logout/logout.component';
 @NgModule({
   declarations: [
     AppComponent,
     EntityList,
     EntityComponent,
     AddEditEntityComponent,
-    FirstChildComponent,
+    HomeComponent,
     SecondChildComponent,
     MainViewComponent,
     PaginationComponent,
-    EntitiesPerPageComponent
+    EntitiesPerPageComponent,
+    LoginComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +59,9 @@ import {MatListModule} from '@angular/material/list';
     UserService,
     PaginationService,
     EntityList,
-    constants],
+    constants,
+    AuthService,
+    AuthGuard],
   bootstrap: [AppComponent],
   entryComponents: [AddEditEntityComponent, PaginationComponent]
 })
