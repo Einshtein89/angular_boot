@@ -8,16 +8,18 @@ export const DEFAULT_PAGE_SIZE = 0;
 export class PaginationService {
 
   currentPageSize: number = this.defaultPageSize;
+  sortBy: string = "";
 
   constructor(private http:HttpClient,
               @Inject(USERS_API_URL) private userUrl: string,
               @Inject(DEFAULT_PAGE_SIZE) public defaultPageSize: number) {
   }
 
-  getPageByNumber(page: number) {
+  getPageByNumber(page: number, sortOption?:string) {
     let params: string = [
       `size=${this.currentPageSize ? this.currentPageSize : this.defaultPageSize}`,
-      `page=${page}`
+      `page=${page}`,
+      `sort=${sortOption}`
     ].join('&');
     let queryUrl: string =`${this.userUrl}?${params}`;
     return this.http.get(queryUrl);

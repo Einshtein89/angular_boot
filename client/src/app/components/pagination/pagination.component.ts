@@ -48,7 +48,7 @@ export class PaginationComponent implements OnInit, AfterViewChecked {
   }
 
   getPage(pageNumber: number) {
-    this.paginationService.getPageByNumber(pageNumber)
+    this.paginationService.getPageByNumber(pageNumber, this.paginationService.sortBy)
       .subscribe(
         data => this._populateEntities(data),
         errorCode =>  this.entityListComponent.statusCode = errorCode,

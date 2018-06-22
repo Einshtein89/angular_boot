@@ -3,3 +3,8 @@
   margin-left: auto!important;
   margin-right: auto!important;
 }
+
+.menu-icon {
+  width: auto;
+  display: inline-block;
+}

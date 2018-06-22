@@ -25,6 +25,8 @@ import {AuthGuard} from "./auth/auth-guard.service";
 import {AuthService} from "./auth/auth.service";
 import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
+import { SortingComponent } from './components/sorting/sorting.component';
+import { SearchComponent } from './components/search/search.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +39,9 @@ import { LogoutComponent } from './components/logout/logout.component';
     PaginationComponent,
     EntitiesPerPageComponent,
     LoginComponent,
-    LogoutComponent
+    LogoutComponent,
+    SortingComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

@@ -17,13 +17,12 @@ import * as  _ from "underscore"
 import {PaginationComponent} from "../pagination/pagination.component";
 import {ActivatedRoute, Router} from "@angular/router";
 import {PaginationService} from "../../services/pagination.service";
-// import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatSidenavModule } from '@angular/material';
-
 
 @Component({
   selector: 'entity-list',
   templateUrl: './entity-list.component.html',
-  styleUrls: ['./entity-list.component.css']
+  styleUrls: ['./entity-list.component.css'],
+
 })
 export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
   entityList: User[] = [];
@@ -33,6 +32,7 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
   links: any;
   page: any;
   _page: string;
+
   @ViewChild('addEditEntity', {read: ViewContainerRef}) addEditContainerRef;
   // @ViewChild(PaginationComponent) pagination: PaginationComponent;
 
@@ -81,6 +81,12 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
         errorCode =>  this.statusCode = errorCode,
         () => this.loading = false
       );
+  }
+
+  populateEntities(data: Object) {
+    this.entityList = this.extractUsers(data);
+    this.links = this.extractLinks(data);
+    this.page = this.extractPage(data);
   }
 
   extractUsers(data: any) {

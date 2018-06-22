@@ -14,7 +14,6 @@ export class EntitiesPerPageComponent implements OnInit {
 
   constructor(public paginationService: PaginationService) {
     this.pageSizes = [3,5,10,25,100];
-    console.log(this.paginationService.currentPageSize);
   }
 
   ngOnInit() {}
@@ -22,16 +21,11 @@ export class EntitiesPerPageComponent implements OnInit {
   changePageSize(value: any) {
     this.entityListComponent.loading = true;
     this.paginationService.currentPageSize = value;
+    this.paginationService.sortBy = "";
     this.paginationService.getPageByNumber(0)
       .subscribe(
-        data => this._populateEntities(data),
+        data => this.entityListComponent.populateEntities(data),
         errorCode =>  this.entityListComponent.statusCode = errorCode,
         () => this.entityListComponent.loading = false)
-  }
-
-  private _populateEntities(data: Object) {
-    this.entityListComponent.entityList = this.entityListComponent.extractUsers(data);
-    this.entityListComponent.links = this.entityListComponent.extractLinks(data);
-    this.entityListComponent.page = this.entityListComponent.extractPage(data);
   }
 }

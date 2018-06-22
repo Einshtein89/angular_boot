@@ -12,12 +12,17 @@
         <mat-list-item>
           <entities-per-page [entityListComponent]="this"></entities-per-page>
         </mat-list-item>
+        <mat-list-item>
+          <sorting-entities [entityListComponent]="this"></sorting-entities>
+        </mat-list-item>
       </mat-list>
     </mat-sidenav>
     <mat-sidenav-content>
-      <div>
+      <div class="menu-icon">
         <img src="assets/menu_icon.png" style="height: 40px; width: 40px;" mat-button (mouseover)="sidenav.toggle()"/>
       </div>
+      <search [entityListComponent]="this"></search>
+
       <div class="ui special link cards">
         <single-entity class="card"
                        *ngFor="let entity of entityList"

@@ -1,0 +1,10 @@
+<div class="search"
+     (mouseover)="this.searchState = 'active'"
+     (mouseout)="this.searchState = 'inactive'">
+  <div class="item">
+    <div class="ui icon input">
+      <input type="text" placeholder="Search..." [@searchState]="this.searchState">
+      <i class="search link icon" ></i>
+    </div>
+  </div>
+</div>
