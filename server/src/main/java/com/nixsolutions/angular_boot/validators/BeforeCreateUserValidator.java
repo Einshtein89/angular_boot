@@ -1,9 +1,11 @@
 package com.nixsolutions.angular_boot.validators;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -24,13 +26,13 @@ public class BeforeCreateUserValidator implements Validator
   @Override
   public void validate(Object obj, Errors errors) {
     User newUser = (User) obj;
-    User oldUserByNames =
+    List<User> oldUsersByNames =
         repository.findByFirstNameAndLastName(newUser.getFirstName(), newUser.getLastName());
     User oldUserByEmail =
         repository.findByEmail(newUser.getEmail());
-    if (Objects.nonNull(oldUserByNames))
+    if (!CollectionUtils.isEmpty(oldUsersByNames))
     {
-      errors.rejectValue("firstName", "User with such First Name and Last Name already exists!");
+      errors.rejectValue("firstName", "User with such First Name or Last Name already exists!");
     }
     if (Objects.nonNull(oldUserByEmail))
     {

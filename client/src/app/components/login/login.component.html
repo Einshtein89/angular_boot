@@ -3,6 +3,12 @@
     <a class="item" [routerLink]="['/']">
       Home
     </a>
+    <a class="item" [routerLink]="['../main/second']">
+      Second Page
+    </a>
+    <a class="item" [routerLink]="['../main/allUsers']">
+      All Users
+    </a>
     <div class="right menu" >
       <a class="item" (click)="logout()" *ngIf="this.authService.isLoggedIn()">
         Log Out
@@ -10,12 +16,6 @@
       <a class="item" [routerLink]="['/login']" *ngIf="!this.authService.isLoggedIn()">
         Log In
       </a>
-      <div class="item">
-        <div class="ui icon input">
-          <input type="text" placeholder="Search...">
-          <i class="search link icon"></i>
-        </div>
-      </div>
     </div>
   </div>
 </div>

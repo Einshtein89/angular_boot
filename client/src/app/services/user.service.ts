@@ -31,7 +31,6 @@ export class UserService {
     ].join('&');
     let queryUrl: string = url ? url : `${this.userUrl}?${params}`;
     return this.http.get(queryUrl)
-      // .map(this._extractData)
       .catch(this._handleError)
   }
 
@@ -65,6 +64,17 @@ export class UserService {
     return this.http.delete(userUrl, this.options)
       .catch(this._handleError);
   }
+
+  searchByFirstOrLastName(value: string) {
+    let params: string = [
+      `firstName=${value}`,
+      `lastName=${value}`
+    ].join('&');
+    let queryUrl: string = `${this.userUrl}/search/findByFirstNameContainsOrLastNameContains?${params}`;
+    return this.http.get(queryUrl)
+      .catch(this._handleError)
+  }
+
   private _extractData(res: HttpResponse<any>) : any {
     console.log(res);
     let body = res["_embedded"].users;

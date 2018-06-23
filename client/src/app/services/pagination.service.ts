@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 
 export const USERS_API_URL = "";
 export const DEFAULT_PAGE_SIZE = 0;
+export const DEFAULT_SORT = "";
 
 @Injectable()
 export class PaginationService {

@@ -27,9 +27,7 @@ export class PaginationComponent implements OnInit, AfterViewChecked {
     // this.paginationService.currentPageSize = 10;
   }
 
-  ngOnInit() {
-    console.log(this.entityListComponent._page);
-  }
+  ngOnInit() {}
 
   getFirstPage() {
     this._getPage("first");
@@ -50,7 +48,7 @@ export class PaginationComponent implements OnInit, AfterViewChecked {
   getPage(pageNumber: number) {
     this.paginationService.getPageByNumber(pageNumber, this.paginationService.sortBy)
       .subscribe(
-        data => this._populateEntities(data),
+        data => this.entityListComponent.populateEntities(data),
         errorCode =>  this.entityListComponent.statusCode = errorCode,
         () => this.entityListComponent.loading = false
       );
@@ -66,18 +64,9 @@ export class PaginationComponent implements OnInit, AfterViewChecked {
     this.entityListComponent.loading = true;
     this.paginationService.getPageByLink(this.entityListComponent.links[pageName].href)
       .subscribe(
-        data => this._populateEntities(data),
+        data => this.entityListComponent.populateEntities(data),
         errorCode => this.entityListComponent.statusCode = errorCode,
         () => this.entityListComponent.loading = false
       );
-  }
-
-  private _populateEntities(data: Object) {
-    this.entityListComponent.entityList = this.entityListComponent.extractUsers(data);
-    this.entityListComponent.links = this.entityListComponent.extractLinks(data);
-    this.entityListComponent.page = this.entityListComponent.extractPage(data);
-    // if (navigateTo) {
-    //   // this.entityListComponent.router.navigate(['../' + navigateTo + ''], { relativeTo: this.entityListComponent.route });
-    // }
   }
 }

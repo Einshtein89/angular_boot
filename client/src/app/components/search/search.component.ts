@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {EntityList} from "../entity-list/entity-list.component";
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'search',
@@ -24,13 +25,23 @@ export class SearchComponent implements OnInit {
   searchState: string = 'inactive';
 
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
   }
 
-  searchToggle() {
-    this.searchState = this.searchState === 'active' ? 'inactive' : 'active';
+  search(value: any) {
+    if (value) {
+      this.userService.searchByFirstOrLastName(value)
+        .subscribe(
+          data => this.entityListComponent.populateEntities(data),
+          errorCode =>  this.entityListComponent.statusCode = errorCode,
+          () => this.entityListComponent.loading = false
+        );
+    }
   }
 
+  resetInput(searchInput: any) {
+    searchInput.value = "";
+  }
 }
