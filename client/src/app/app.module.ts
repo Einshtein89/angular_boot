@@ -27,6 +27,8 @@ import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { SortingComponent } from './components/sorting/sorting.component';
 import { SearchComponent } from './components/search/search.component';
+import { SearchResultComponent } from './components/search/search-result/search-result.component';
+import { SearchResultListComponent } from './components/search/search-result-list/search-result-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +43,9 @@ import { SearchComponent } from './components/search/search.component';
     LoginComponent,
     LogoutComponent,
     SortingComponent,
-    SearchComponent
+    SearchComponent,
+    SearchResultComponent,
+    SearchResultListComponent
   ],
   imports: [
     BrowserModule,
@@ -67,6 +71,6 @@ import { SearchComponent } from './components/search/search.component';
     AuthService,
     AuthGuard],
   bootstrap: [AppComponent],
-  entryComponents: [AddEditEntityComponent, PaginationComponent]
+  entryComponents: [AddEditEntityComponent, SearchResultListComponent]
 })
 export class AppModule { }
