@@ -20,7 +20,7 @@ declare var $ : any;
 @Component({
   selector: 'search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.css'],
+  styleUrls: ['./search.component.less'],
   animations: [
     trigger('searchState', [
       state('inactive', style({
@@ -44,7 +44,6 @@ export class SearchComponent implements OnInit {
 
 
   constructor(private userService: UserService,
-              private paginationService: PaginationService,
               private componentFactoryResolver: ComponentFactoryResolver) { }
 
   ngOnInit() {

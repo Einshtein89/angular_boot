@@ -29,6 +29,7 @@ import { SortingComponent } from './components/sorting/sorting.component';
 import { SearchComponent } from './components/search/search.component';
 import { SearchResultComponent } from './components/search/search-result/search-result.component';
 import { SearchResultListComponent } from './components/search/search-result-list/search-result-list.component';
+import { UserInfoComponent } from './components/user-info/user-info.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +46,8 @@ import { SearchResultListComponent } from './components/search/search-result-lis
     SortingComponent,
     SearchComponent,
     SearchResultComponent,
-    SearchResultListComponent
+    SearchResultListComponent,
+    UserInfoComponent
   ],
   imports: [
     BrowserModule,
