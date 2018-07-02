@@ -1,8 +1,11 @@
-<div class="item">
-  <div class="ui tiny image">
-    <img src="../../assets/{{searchResult.sex}}.png">
+<a [routerLink]="['.', getUserId()]" [attr.data-tooltip]="getToolTipText()" data-inverted="" data-position="left center">
+  <div class="item">
+    <div class="ui tiny image">
+      <img src="../../assets/{{searchResult.sex}}.png">
+    </div>
+    <div class="middle aligned content">
+      {{searchResult.firstName}} {{searchResult.lastName}}
+    </div>
   </div>
-  <div class="middle aligned content">
-    {{searchResult.firstName}} {{searchResult.lastName}}
-  </div>
-</div>
+</a>
+

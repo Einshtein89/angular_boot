@@ -19,6 +19,7 @@ export class UserService {
   private updatedUser = new BehaviorSubject<any>(null);
   addedUser = this.newUser.asObservable();
   changedUser = this.updatedUser.asObservable();
+  public searchUser: User;
 
   constructor(private http:HttpClient,
               @Inject(USERS_API_URL) private userUrl: string,

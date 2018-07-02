@@ -8,6 +8,7 @@ import {PaginationComponent} from "../components/pagination/pagination.component
 import {AuthGuard} from "../auth/auth-guard.service";
 import {LoginComponent} from "../components/login/login.component";
 import {LogoutComponent} from "../components/logout/logout.component";
+import {UserInfoComponent} from "../components/user-info/user-info.component";
 
 export const paginationRoutes: Routes = [
   { path: '', redirectTo: 'first', pathMatch: 'full' },
@@ -22,7 +23,7 @@ export const childRoutes: Routes = [
   { path: 'allUsers', component: EntityList, canActivate: [AuthGuard] },
   // { path: 'allUsers', redirectTo: 'allUsers/first', pathMatch: 'full' },d
   // { path: 'allUsers/first', component: EntityList },
-  // { path: 'allUsers/:page', component: EntityList }
+  { path: 'allUsers/:userId', component: UserInfoComponent, canActivate: [AuthGuard] }
 ];
 
 const routes: Routes = [

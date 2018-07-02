@@ -44,7 +44,6 @@ export class SearchComponent implements OnInit {
 
 
   constructor(private userService: UserService,
-              private paginationService: PaginationService,
               private componentFactoryResolver: ComponentFactoryResolver) { }
 
   ngOnInit() {
