@@ -8,6 +8,9 @@
       </i>
       <i class="search link icon" (click)="search(searchInput.value)"></i>
     </div>
+  <div *ngIf="_loading">
+    <img style="position: absolute;" src="../../../../assets/ajax-loader.gif">
+  </div>
   <template #searchResult></template>
 </div>
 

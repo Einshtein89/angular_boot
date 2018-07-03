@@ -9,7 +9,6 @@ import {User} from "../../../models/user.model";
 export class SearchResultListComponent implements OnInit {
 
   _searchResults: User[];
-  _loading: boolean = true;
 
   constructor() {
   }

@@ -40,7 +40,7 @@ export class SearchComponent implements OnInit {
   searchState: string = 'inactive';
   @ViewChild('searchResult', {read: ViewContainerRef}) searchResultContainerRef;
   expComponent: ComponentRef<any>;
-  loading: boolean;
+  _loading: boolean;
 
 
   constructor(private userService: UserService,
@@ -51,6 +51,7 @@ export class SearchComponent implements OnInit {
 
   search(value: any) {
     if (value && value.length > 1) {
+      this._loading = true;
       this.userService.searchByFirstOrLastName(value)
         .subscribe(
           data => {
@@ -58,25 +59,32 @@ export class SearchComponent implements OnInit {
             this._showSearchResult();
           },
           errorCode =>  this.entityListComponent.statusCode = errorCode,
-          () => this.expComponent.instance._loading = false
+          () => this._loading = false
         );
     }
   }
+  private resetInput(searchInput: any) {
+    searchInput.value = "";
+  }
 
-  _showSearchResult () {
+  private _showSearchResult () {
+    let self = this;
     const factory = this.componentFactoryResolver.resolveComponentFactory(SearchResultListComponent);
     this.searchResultContainerRef.clear();
     this.expComponent =  this.searchResultContainerRef.createComponent(factory);
     this.expComponent.instance._searchResults = this.results;
-    // $("body").append('<div class="modal-backdrop fade in"></div>')
-  }
-
-  resetInput(searchInput: any) {
-    searchInput.value = "";
-    this.expComponent.destroy();
+    $("body").append('<div class="modal-backdrop fade in"></div>');
+    this.removeFading(self);
   }
 
   private _populateSearchResults(data: any) {
     this.results = data["_embedded"].users;
+  }
+
+  private removeFading(self) {
+    $(".modal-backdrop").click(function () {
+      $(this).remove();
+      self.expComponent.destroy();
+    })
   }
 }

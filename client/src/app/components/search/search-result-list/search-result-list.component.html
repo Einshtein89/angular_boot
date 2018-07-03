@@ -1,8 +1,6 @@
-<div *ngIf="_loading">
-  <img class="spinner" src="../../../../assets/ajax-loader.gif">
-</div>
-<div *ngIf="!_loading">
-  <div *ngIf="_searchResults.length == 0" class="search-result-list item">No results found</div>
+
+<div class="search-result-list">
+  <div *ngIf="_searchResults.length == 0" class="search-result-list searchItem">No results found</div>
   <div *ngIf="_searchResults.length > 0" class="search-result-list" >
     <search-result  class="ui divided items"
                    *ngFor="let result of _searchResults"
