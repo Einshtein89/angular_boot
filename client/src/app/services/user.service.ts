@@ -7,6 +7,7 @@ import {User} from "../models/user.model";
 import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from "@angular/common/http";
 import {assign} from "rxjs/util/assign";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import * as  _ from "underscore"
 
 export const USERS_API_URL = "";
 export const DEFAULT_PAGE_SIZE = 0;
@@ -19,7 +20,7 @@ export class UserService {
   private updatedUser = new BehaviorSubject<any>(null);
   addedUser = this.newUser.asObservable();
   changedUser = this.updatedUser.asObservable();
-  public searchUser: User;
+  public searchResults: User[];
 
   constructor(private http:HttpClient,
               @Inject(USERS_API_URL) private userUrl: string,
@@ -76,6 +77,10 @@ export class UserService {
       .catch(this._handleError)
   }
 
+  getSearchResultUserById(id: string) : User {
+    return _.find(this.searchResults, result => result.id == id)
+  }
+
   private _extractData(res: HttpResponse<any>) : any {
     console.log(res);
     let body = res["_embedded"].users;
@@ -85,4 +90,6 @@ export class UserService {
     console.error(error.message || error);
     return Observable.throw(error);
   }
+
+
 }

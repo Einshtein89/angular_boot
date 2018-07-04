@@ -25,16 +25,10 @@ export class SearchResultComponent implements OnInit, OnDestroy {
   constructor(private userService: UserService) {}
 
   ngOnInit() {
-    this.userService.searchUser = this.searchResult;
+    // this.userService.searchUser = this.searchResult;
   }
 
   ngOnDestroy(): void {
-  }
-
-  getUserId() : string {
-    const userSelfHref = this.searchResult["_links"].self.href;
-    let userId = userSelfHref.substring(userSelfHref.lastIndexOf("/") + 1, userSelfHref.length);
-    return userId;
   }
 
   getToolTipText() : string {

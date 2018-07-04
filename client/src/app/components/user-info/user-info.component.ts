@@ -19,7 +19,7 @@ export class UserInfoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.user = this.userService.searchUser;
+    this.user = this.userService.getSearchResultUserById(this.id);
   }
 
 }
