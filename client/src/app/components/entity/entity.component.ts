@@ -1,8 +1,6 @@
 import {
-  AfterViewChecked,
   ChangeDetectorRef,
   Component,
-  ComponentFactoryResolver,
   Input, OnDestroy,
   OnInit,
   ViewContainerRef
@@ -12,6 +10,7 @@ import {UserService} from "../../services/user.service";
 import {AddEditEntityComponent} from "../add-edit-entity/add-edit-entity.component";
 import {EntityList} from "../entity-list/entity-list.component";
 import {PaginationService} from "../../services/pagination.service";
+import {ComponentFactory} from "../../component-factory/component-factory";
 declare var $ : any;
 
 @Component({
@@ -28,7 +27,7 @@ export class EntityComponent implements OnInit, OnDestroy {
 
   constructor(private userService: UserService,
               private paginationService: PaginationService,
-              private componentFactoryResolver: ComponentFactoryResolver,
+              private componentFactory: ComponentFactory,
               private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
@@ -42,9 +41,7 @@ export class EntityComponent implements OnInit, OnDestroy {
   }
 
   showEditEntityForm () {
-    const factory = this.componentFactoryResolver.resolveComponentFactory(AddEditEntityComponent);
-    this.editForm.clear();
-    const expComponent =  this.editForm.createComponent(factory);
+    const expComponent =  this.componentFactory.getComponent(AddEditEntityComponent, this.editForm);
     expComponent.instance._ref = expComponent;
     expComponent.instance._currentUser = this.entity;
     this.cdr.detectChanges();

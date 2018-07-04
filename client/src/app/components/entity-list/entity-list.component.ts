@@ -1,7 +1,6 @@
 import {
   AfterViewChecked,
   Component,
-  ComponentFactoryResolver,
   OnDestroy,
   OnInit,
   ViewChild,
@@ -14,9 +13,9 @@ import {User} from "../../models/user.model";
 import {UserService} from "../../services/user.service";
 import {AddEditEntityComponent} from "../add-edit-entity/add-edit-entity.component";
 import * as  _ from "underscore"
-import {PaginationComponent} from "../pagination/pagination.component";
 import {ActivatedRoute, Router} from "@angular/router";
 import {PaginationService} from "../../services/pagination.service";
+import {ComponentFactory} from "../../component-factory/component-factory";
 
 @Component({
   selector: 'entity-list',
@@ -38,18 +37,16 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
 
   constructor(private userService: UserService,
               private paginationService: PaginationService,
-              private componentFactoryResolver: ComponentFactoryResolver,
               private cdr: ChangeDetectorRef,
               public router: Router,
-              public route: ActivatedRoute) {
+              public route: ActivatedRoute,
+              private componentFactory: ComponentFactory) {
     route.params.subscribe(params => { this._page = params['page']; });
   }
 
 
   showAddEntityForm () {
-    const factory = this.componentFactoryResolver.resolveComponentFactory(AddEditEntityComponent);
-    this.addEditContainerRef.clear();
-    const expComponent =  this.addEditContainerRef.createComponent(factory);
+    const expComponent =  this.componentFactory.getComponent(AddEditEntityComponent, this.addEditContainerRef);
     expComponent.instance._ref = expComponent;
     expComponent.instance._links = this.links;
     expComponent.instance._entityListComponent = this;

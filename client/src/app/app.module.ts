@@ -30,6 +30,7 @@ import { SearchComponent } from './components/search/search.component';
 import { SearchResultComponent } from './components/search/search-result/search-result.component';
 import { SearchResultListComponent } from './components/search/search-result-list/search-result-list.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
+import { ComponentFactory } from './component-factory/component-factory';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,7 +48,8 @@ import { UserInfoComponent } from './components/user-info/user-info.component';
     SearchComponent,
     SearchResultComponent,
     SearchResultListComponent,
-    UserInfoComponent
+    UserInfoComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -71,7 +73,8 @@ import { UserInfoComponent } from './components/user-info/user-info.component';
     EntityList,
     constants,
     AuthService,
-    AuthGuard],
+    AuthGuard,
+    ComponentFactory],
   bootstrap: [AppComponent],
   entryComponents: [AddEditEntityComponent, SearchResultListComponent]
 })

@@ -1,6 +1,6 @@
 <div class="ui search"
      (mouseover)="this.searchState = 'active'"
-     (mouseout)="this.searchState = 'inactive'">
+     (mouseout)="this.searchState = getSearchState(searchInput.value)">
     <div class="ui icon input">
       <input type="text" placeholder="Search..." [@searchState]="this.searchState" #searchInput class="prompt" />
       <i *ngIf="searchInput.value.length > 0" class="icon searchremove" (click)="resetInput(searchInput)">

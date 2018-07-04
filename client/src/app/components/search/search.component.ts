@@ -1,6 +1,5 @@
 import {
   Component,
-  ComponentFactoryResolver,
   ComponentRef,
   Input,
   OnInit,
@@ -15,6 +14,7 @@ import {AddEditEntityComponent} from "../add-edit-entity/add-edit-entity.compone
 import {SearchResultListComponent} from "./search-result-list/search-result-list.component";
 import {SearchResultComponent} from "./search-result/search-result.component";
 import {User} from "../../models/user.model";
+import {ComponentFactory} from "../../component-factory/component-factory";
 declare var $ : any;
 
 @Component({
@@ -44,7 +44,7 @@ export class SearchComponent implements OnInit {
 
 
   constructor(private userService: UserService,
-              private componentFactoryResolver: ComponentFactoryResolver) { }
+              private componentFactory: ComponentFactory) { }
 
   ngOnInit() {
   }
@@ -68,13 +68,10 @@ export class SearchComponent implements OnInit {
   }
 
   private _showSearchResult () {
-    let self = this;
-    const factory = this.componentFactoryResolver.resolveComponentFactory(SearchResultListComponent);
-    this.searchResultContainerRef.clear();
-    this.expComponent =  this.searchResultContainerRef.createComponent(factory);
+    this.expComponent =  this.componentFactory.getComponent(SearchResultListComponent, this.searchResultContainerRef);
     this.expComponent.instance._searchResults = this.results;
     $("body").append('<div class="modal-backdrop fade in"></div>');
-    this.removeFading(self);
+    this.removeFading(this);
   }
 
   private _populateSearchResults(data: any) {
@@ -86,5 +83,12 @@ export class SearchComponent implements OnInit {
       $(this).remove();
       self.expComponent.destroy();
     })
+  }
+
+  getSearchState(value: any): string {
+    if (value.length === 0) {
+      return 'inactive';
+    }
+    return 'active';
   }
 }
