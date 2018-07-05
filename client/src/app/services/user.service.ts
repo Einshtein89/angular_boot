@@ -43,13 +43,8 @@ export class UserService {
   }
 
   getUserById(userId: string): Observable<User> {
-    // let cpHeaders = new Headers({ 'Content-Type': 'application/json' });
-    let cpParams = new HttpParams();
-    cpParams.append('id', userId);
-    assign(this.options, { body: cpParams })
-    // let options = new RequestOptions({ headers: cpHeaders, body: cpParams });
-    return this.http.get(this.userUrl, this.options)
-      .map(this._extractData)
+    let queryUrl: string = `${this.userUrl}/${userId}`;
+    return this.http.get(queryUrl)
       .catch(this._handleError);
   }
 

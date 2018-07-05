@@ -1,6 +1,19 @@
 <div *ngIf="user">
-  <h1>{{user.firstName}}</h1>
-  <br/>
-  <h1>{{user.lastName}}</h1>
+  <div class="ui card single_card">
+    <a class="image">
+      <img src="../../assets/{{user.sex}}.png">
+    </a>
+    <div class="content">
+      <a class="header">{{user.firstName}} {{user.lastName}}</a>
+      <div class="meta">
+        <a>{{ user.phone }}</a>
+      </div>
+      <div class="center">
+        <button class="ui btn-default btn left floated" (click)="editUser()">Edit</button>
+        <button class="ui btn-danger btn right floated">Delete</button>
+      </div>
+    </div>
+  </div>
 </div>
 
+<template #addEditEntity></template>

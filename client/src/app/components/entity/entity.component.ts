@@ -1,4 +1,5 @@
 import {
+  AfterViewChecked,
   ChangeDetectorRef,
   Component,
   Input, OnDestroy,
@@ -18,7 +19,7 @@ declare var $ : any;
   templateUrl: './entity.component.html',
   styleUrls: ['./entity.component.css']
 })
-export class EntityComponent implements OnInit, OnDestroy {
+export class EntityComponent implements OnInit, OnDestroy, AfterViewChecked {
   @Input() entity: User;
   @Input() editForm: ViewContainerRef;
   @Input() entityListComponent: EntityList;
@@ -106,4 +107,15 @@ export class EntityComponent implements OnInit, OnDestroy {
     let userIndex = entityList.indexOf(this.entity);
     entityList.splice(userIndex, 1)
   }
+
+  ngAfterViewChecked(): void {
+    if (this.updatedUser && this.entity["_links"].self.href == this.updatedUser.link) {
+      let links = this.entity["_links"];
+      this.entity = this.updatedUser;
+      this.entity["_links"] = links;
+    }
+    this.cdr.detectChanges();
+  }
+
+
 }
