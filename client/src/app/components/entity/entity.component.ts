@@ -12,6 +12,7 @@ import {AddEditEntityComponent} from "../add-edit-entity/add-edit-entity.compone
 import {EntityList} from "../entity-list/entity-list.component";
 import {PaginationService} from "../../services/pagination.service";
 import {ComponentFactory} from "../../component-factory/component-factory";
+import {EditDeleteUserService} from "../../services/edit-delete-user.service";
 declare var $ : any;
 
 @Component({
@@ -28,8 +29,8 @@ export class EntityComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   constructor(private userService: UserService,
               private paginationService: PaginationService,
-              private componentFactory: ComponentFactory,
-              private cdr: ChangeDetectorRef) {}
+              private cdr : ChangeDetectorRef,
+              private editDeleteUserService: EditDeleteUserService) {}
 
   ngOnInit() {
     this.userService.changedUser.subscribe(user => this.updatedUser = user);
@@ -41,53 +42,13 @@ export class EntityComponent implements OnInit, OnDestroy, AfterViewChecked {
   ngOnDestroy() {
   }
 
-  showEditEntityForm () {
-    const expComponent =  this.componentFactory.getComponent(AddEditEntityComponent, this.editForm);
-    expComponent.instance._ref = expComponent;
-    expComponent.instance._currentUser = this.entity;
+  editUser() {
+    this.editDeleteUserService.showEditEntityForm(this.entity, this.editForm);
     this.cdr.detectChanges();
   }
 
-  editUser() {
-    this.showEditEntityForm();
-  }
-
   removeUser() {
-    let self = this;
-    $.confirm({
-      animation: 'top',
-      closeAnimation: 'top',
-      title: 'Delete Confirmation',
-      content: 'Do you really want to delete '
-      + '<text class="userName">' + this.entity.firstName + '</text>' + '?',
-      draggable: false,
-      closeIcon: true,
-      buttons: {
-        confirm: {
-          btnClass: 'btn-danger',
-          action: function () {
-            self.userService.deleteUser(self.entity, self.entity["_links"].self.href)
-              .subscribe(
-                () => {
-                  let lastUserOnPage = self.entityListComponent.entityList.length === 1;
-                  if (!lastUserOnPage) {
-                    // self._removeUserFromUi();
-                    self.getPageAfterRemove(self.entityListComponent.page.number);
-                  } else {
-                    self.getPageAfterRemove(self.entityListComponent.page.number -1);
-                  }
-                  },
-                error => self.errorList = error.error
-              );
-          }
-        },
-        cancel: {
-          btnClass: 'btn-default',
-          action: function () {
-          }
-        }
-      }
-    });
+    this.editDeleteUserService.deleteUser(this);
   };
 
   private getPageAfterRemove(pageNumber: number) {
@@ -109,13 +70,7 @@ export class EntityComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngAfterViewChecked(): void {
-    if (this.updatedUser && this.entity["_links"].self.href == this.updatedUser.link) {
-      let links = this.entity["_links"];
-      this.entity = this.updatedUser;
-      this.entity["_links"] = links;
-    }
+    this.editDeleteUserService.updateCurrentUser(this);
     this.cdr.detectChanges();
   }
-
-
 }

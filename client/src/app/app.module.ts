@@ -31,6 +31,7 @@ import { SearchResultComponent } from './components/search/search-result/search-
 import { SearchResultListComponent } from './components/search/search-result-list/search-result-list.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
 import { ComponentFactory } from './component-factory/component-factory';
+import {EditDeleteUserService} from "./services/edit-delete-user.service";
 @NgModule({
   declarations: [
     AppComponent,
@@ -74,7 +75,8 @@ import { ComponentFactory } from './component-factory/component-factory';
     constants,
     AuthService,
     AuthGuard,
-    ComponentFactory],
+    ComponentFactory,
+    EditDeleteUserService],
   bootstrap: [AppComponent],
   entryComponents: [AddEditEntityComponent, SearchResultListComponent]
 })

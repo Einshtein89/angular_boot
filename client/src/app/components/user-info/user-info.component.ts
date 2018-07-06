@@ -4,6 +4,7 @@ import {UserService} from "../../services/user.service";
 import {User} from "../../models/user.model";
 import {AddEditEntityComponent} from "../add-edit-entity/add-edit-entity.component";
 import {ComponentFactory} from "../../component-factory/component-factory";
+import {EditDeleteUserService} from "../../services/edit-delete-user.service";
 
 @Component({
   selector: 'app-user-info',
@@ -13,42 +14,37 @@ import {ComponentFactory} from "../../component-factory/component-factory";
 export class UserInfoComponent implements OnInit, AfterViewChecked {
 
   id: string;
-  user: User;
+  entity: User;
   updatedUser: User;
   @ViewChild('addEditEntity', {read: ViewContainerRef}) addEditContainerRef;
 
   constructor(private route: ActivatedRoute,
               private userService: UserService,
-              private componentFactory: ComponentFactory,
-              private cdr: ChangeDetectorRef) {
+              private cdr: ChangeDetectorRef,
+              private editDeleteUserService: EditDeleteUserService) {
      route.params.subscribe(params => { this.id = params['userId']; });
   }
 
   ngOnInit() {
     this.userService.changedUser.subscribe(user => this.updatedUser = user);
-    this.user = this.userService.getSearchResultUserById(this.id);
-    if (!this.user) {
+    this.entity = this.userService.getSearchResultUserById(this.id);
+    if (!this.entity) {
       this.userService.getUserById(this.id)
-        .subscribe(data => this.user = data);
+        .subscribe(data => this.entity = data);
     }
-  }
-
-  showEditEntityForm () {
-    const expComponent =  this.componentFactory.getComponent(AddEditEntityComponent, this.addEditContainerRef);
-    expComponent.instance._ref = expComponent;
-    expComponent.instance._currentUser = this.user;
   }
 
   editUser() {
-    this.showEditEntityForm();
+    this.editDeleteUserService.showEditEntityForm(this.entity, this.addEditContainerRef);
+    this.cdr.detectChanges();
+  }
+
+  removeUser() {
+    this.editDeleteUserService.deleteUser(this);
   }
 
   ngAfterViewChecked(): void {
-    if (this.updatedUser && this.user["_links"].self.href == this.updatedUser.link) {
-      let links = this.user["_links"];
-      this.user = this.updatedUser;
-      this.user["_links"] = links;
-    }
+    this.editDeleteUserService.updateCurrentUser(this);
     this.cdr.detectChanges();
   }
 

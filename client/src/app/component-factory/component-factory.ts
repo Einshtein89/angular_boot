@@ -1,6 +1,4 @@
 import {ComponentFactoryResolver, ComponentRef, Injectable} from '@angular/core';
-import {Type} from "@angular/core/src/type";
-import {SearchResultListComponent} from "../components/search/search-result-list/search-result-list.component";
 import {ViewContainerRef} from "@angular/core/src/linker/view_container_ref";
 
 @Injectable()

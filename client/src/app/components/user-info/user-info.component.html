@@ -1,16 +1,16 @@
-<div *ngIf="user">
+<div *ngIf="entity">
   <div class="ui card single_card">
     <a class="image">
-      <img src="../../assets/{{user.sex}}.png">
+      <img src="../../assets/{{entity.sex}}.png">
     </a>
     <div class="content">
-      <a class="header">{{user.firstName}} {{user.lastName}}</a>
+      <a class="header">{{entity.firstName}} {{entity.lastName}}</a>
       <div class="meta">
-        <a>{{ user.phone }}</a>
+        <a>{{ entity.phone }}</a>
       </div>
       <div class="center">
         <button class="ui btn-default btn left floated" (click)="editUser()">Edit</button>
-        <button class="ui btn-danger btn right floated">Delete</button>
+        <button class="ui btn-danger btn right floated" (click)="removeUser()">Delete</button>
       </div>
     </div>
   </div>
