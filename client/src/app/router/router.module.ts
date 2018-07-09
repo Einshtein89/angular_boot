@@ -5,7 +5,7 @@ import {HomeComponent} from "../components/home-component/home.component";
 import {SecondChildComponent} from "../components/routeTest/second-child-component/second-child.component";
 import {MainViewComponent} from "../components/main-view/main-view.component";
 import {PaginationComponent} from "../components/pagination/pagination.component";
-import {AuthGuard} from "../auth/auth-guard.service";
+import {AuthGuard} from "../services/auth/auth-guard.service";
 import {LoginComponent} from "../components/login/login.component";
 import {LogoutComponent} from "../components/logout/logout.component";
 import {UserInfoComponent} from "../components/user-info/user-info.component";

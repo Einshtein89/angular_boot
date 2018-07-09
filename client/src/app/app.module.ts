@@ -21,8 +21,8 @@ import { EntitiesPerPageComponent } from './components/pagination/entities-per-p
 import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatSidenavModule, MatSelectModule } from '@angular/material';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatListModule} from '@angular/material/list';
-import {AuthGuard} from "./auth/auth-guard.service";
-import {AuthService} from "./auth/auth.service";
+import {AuthGuard} from "./services/auth/auth-guard.service";
+import {AuthService} from "./services/auth/auth.service";
 import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { SortingComponent } from './components/sorting/sorting.component';

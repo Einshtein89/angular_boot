@@ -4,6 +4,7 @@ import {UserService} from "../../services/user.service";
 import {User} from "../../models/user.model";
 import {PaginationService} from "../../services/pagination.service";
 import {EntityList} from "../entity-list/entity-list.component";
+import {ValidatorFn} from "@angular/forms/src/directives/validators";
 declare var $ : any;
 
 @Component({
@@ -24,6 +25,7 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
   _currentUser: User;
   _links: any;
   _entityListComponent: EntityList;
+  isFirstNameRequired: boolean = true;
 
   constructor(private userService: UserService,
               private paginationService: PaginationService) {}
@@ -45,7 +47,7 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
   }
 
   createFormControls() {
-    this.firstName = new FormControl(this._currentUser ? this._currentUser.firstName : '', Validators.required);
+    this.firstName = new FormControl(this._currentUser ? this._currentUser.firstName : '', this.isFieldRequired());
     this.lastName = new FormControl(this._currentUser ? this._currentUser.lastName : '', Validators.required);
     this.email = new FormControl(this._currentUser ? this._currentUser.email : '', [
       Validators.required,
@@ -56,6 +58,11 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
       // Validators.minLength(8)
     ]);
     this.sex = new FormControl(this._currentUser ? this._currentUser.sex : '', Validators.required);
+  }
+
+  //field can be required by condition
+  private isFieldRequired()  {
+    return this.isFirstNameRequired ? Validators.required : null;
   }
 
   createForm() {
