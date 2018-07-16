@@ -1,5 +1,5 @@
-INSERT INTO user VALUES (1, 'Jack', 'Bauer', '(123)-456-7890', 'man', 1, 'admin@admin.ru', 'admin');
-INSERT INTO user VALUES (2, 'Chloe', 'OBrian', '(123)-456-7890', 'woman', 1, 'sdfa@sdf.ru', 'sdfssf');
+INSERT INTO user VALUES (1, 'Jack', 'Bauer', '(123)-456-7890', 'man', 1, 'admin@admin.ru', '$2a$04$I9Q2sDc4QGGg5WNTLmsz0.fvGv3OjoZyj81PrSFyGOqMphqfS2qKu');
+INSERT INTO user VALUES (2, 'Chloe', 'OBrian', '(123)-456-7890', 'woman', 1, 'sdfa@sdf.ru', '$2a$04$I9Q2sDc4QGGg5WNTLmsz0.fvGv3OjoZyj81PrSFyGOqMphqfS2qKu');
 INSERT INTO user VALUES (3, 'Kim', 'Bauer', '(123)-456-7890', 'man', 1, 'sd21f@sdf.ru', 'sdfssf');
 INSERT INTO user VALUES (4, 'David', 'Palmer', '(123)-456-7890', 'man', 1, 'sd123f@sdf.ru', 'sdfssf');
 INSERT INTO user VALUES (5, 'Michelle', 'Dessler', '(123)-456-7890', 'woman', 1, 'sd112f@sdf.ru', 'sdfssf');
