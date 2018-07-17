@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { EntityList } from './components/entity-list/entity-list.component';
@@ -32,6 +32,8 @@ import { SearchResultListComponent } from './components/search/search-result-lis
 import { UserInfoComponent } from './components/user-info/user-info.component';
 import { ComponentFactory } from './component-factory/component-factory';
 import {EditDeleteUserService} from "./services/edit-delete-user.service";
+import {TokenStorage} from "./services/auth/token.storage";
+import {Interceptor} from "./services/auth/interceptor";
 @NgModule({
   declarations: [
     AppComponent,
@@ -76,7 +78,12 @@ import {EditDeleteUserService} from "./services/edit-delete-user.service";
     AuthService,
     AuthGuard,
     ComponentFactory,
-    EditDeleteUserService],
+    EditDeleteUserService,
+    TokenStorage,
+    {provide: HTTP_INTERCEPTORS,
+      useClass: Interceptor,
+      multi : true
+    }],
   bootstrap: [AppComponent],
   entryComponents: [AddEditEntityComponent, SearchResultListComponent]
 })

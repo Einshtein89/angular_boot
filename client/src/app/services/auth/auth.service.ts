@@ -1,29 +1,23 @@
-import { Injectable } from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
+import {Observable} from "rxjs/Observable";
+import {HttpClient} from "@angular/common/http";
+import {TokenStorage} from "./token.storage";
+
+const APP_URL = "http://localhost:3000";
 
 @Injectable()
 export class AuthService {
 
-  constructor() { }
+  constructor(private http: HttpClient,
+              private tokenStorage: TokenStorage) { }
 
-  login(user: string, password: string): boolean {
-    if (user === 'user' && password === 'password') {
-      localStorage.setItem('username', user);
-      return true;
-    }
-
-    return false;
-  }
-
-  logout(): any {
-    localStorage.removeItem('username');
-  }
-
-  getUser(): any {
-    return localStorage.getItem('username');
+  login(email: string, password: string): Observable<any> {
+    const credentials = {username: email, password: password};
+    return this.http.post(APP_URL + '/token/generate-token', credentials);
   }
 
   isLoggedIn(): boolean {
-    return this.getUser() !== null;
+    return this.tokenStorage.getToken() !== null;
   }
 }
 

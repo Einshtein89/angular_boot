@@ -20,14 +20,12 @@
   </div>
 </div>
 
-  <div class="alert alert-danger" role="alert" *ngIf="message">
-  {{ message }}
-  </div>
-
-
 <div class="container">
   <img src="assets/login.jpg" class="img-responsive center-block" width="300" height="300" alt="Logo" />
   <form class="form-signin">
+    <div class="alert alert-danger" role="alert" *ngIf="message">
+      {{ message }}
+    </div>
     <h3 class="form-signin-heading">Welcome</h3>
     <br/>
 

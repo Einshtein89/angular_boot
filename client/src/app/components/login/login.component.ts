@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 import {ActivatedRoute, Router} from "@angular/router";
+import {TokenStorage} from "../../services/auth/token.storage";
 
 @Component({
   selector: 'app-login',
@@ -13,28 +14,40 @@ export class LoginComponent {
 
   constructor(public authService: AuthService,
               private router: Router,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private tokenStorage: TokenStorage) {
     this.message = '';
     this.route.queryParams
       .subscribe(params => this.return = params['return'] || '/main/home');
   }
 
-  login(username: string, password: string): boolean {
+  login(username: string, password: string): void {
     this.message = '';
-    if (!this.authService.login(username, password)) {
-      this.message = 'Incorrect credentials.';
-      setTimeout(function() {
-        this.message = '';
-      }.bind(this), 2500);
-      return false;
-    } else {
-      this.router.navigateByUrl(this.return);
-      return true;
-    }
+    this.authService.login(username, password).subscribe(
+      data => {
+        this.tokenStorage.saveToken(data.token);
+        this.parseToken(data.token);
+        this.router.navigateByUrl(this.return);
+      },
+      err => {
+        if (err.status === 401) {
+          this.message = 'Incorrect credentials.';
+          setTimeout(function() {
+            this.message = '';
+          }.bind(this), 2500);
+        }
+      }
+    );
+  }
+
+  parseToken(token : string) {
+    let jwtData = token.split('.')[1];
+    let decodedJwtJsonData = window.atob(jwtData);
+    let decodedJwtData = JSON.parse(decodedJwtJsonData)
   }
 
   logout(): boolean {
-    this.authService.logout();
+    this.tokenStorage.signOut();
     this.router.navigate(['/login']);
     return false;
   }
