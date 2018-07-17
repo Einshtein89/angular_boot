@@ -1,5 +1,6 @@
 package com.nixsolutions.angular_boot.config;
 
+import static com.nixsolutions.angular_boot.config.Constants.ADMIN_ROLE;
 import static com.nixsolutions.angular_boot.config.Constants.HEADER_STRING;
 import static com.nixsolutions.angular_boot.config.Constants.TOKEN_PREFIX;
 
@@ -30,12 +31,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter
     private UserDetailsService userDetailsService;
 
     @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+    private TokenProvider jwtTokenUtil;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException,
-        ServletException
-    {
+    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         String header = req.getHeader(HEADER_STRING);
         String username = null;
         String authToken = null;
@@ -58,8 +57,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
             if (jwtTokenUtil.validateToken(authToken, userDetails)) {
-                UsernamePasswordAuthenticationToken authentication =
-                    new UsernamePasswordAuthenticationToken(userDetails, null, Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN")));
+                UsernamePasswordAuthenticationToken authentication = jwtTokenUtil.getAuthentication(authToken, SecurityContextHolder.getContext().getAuthentication(), userDetails);
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
                 logger.info("authenticated user " + username + ", setting security context");
                 SecurityContextHolder.getContext().setAuthentication(authentication);

@@ -44,12 +44,16 @@ export class EditDeleteUserService {
             self.userService.deleteUser(self.entity, self.entity["_links"].self.href)
               .subscribe(
                 () => {
-                  let lastUserOnPage = self.entityListComponent.entityList.length === 1;
-                  if (!lastUserOnPage) {
-                    // self._removeUserFromUi();
-                    self.getPageAfterRemove(self.entityListComponent.page.number);
+                  if (!self.entityListComponent) {
+                    self.getPageAfterRemove(0);
                   } else {
-                    self.getPageAfterRemove(self.entityListComponent.page.number -1);
+                    let lastUserOnPage = self.entityListComponent.entityList.length === 1;
+                    if (!lastUserOnPage) {
+                      // self._removeUserFromUi();
+                      self.getPageAfterRemove(self.entityListComponent.page.number);
+                    } else {
+                      self.getPageAfterRemove(self.entityListComponent.page.number -1);
+                    }
                   }
                 },
                 error => self.errorList = error.error

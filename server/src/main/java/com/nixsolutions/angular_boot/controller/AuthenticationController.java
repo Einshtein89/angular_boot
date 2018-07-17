@@ -13,10 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nixsolutions.angular_boot.config.AuthToken;
-import com.nixsolutions.angular_boot.config.JwtTokenUtil;
+import com.nixsolutions.angular_boot.config.TokenProvider;
 import com.nixsolutions.angular_boot.dao.UserRepository;
 import com.nixsolutions.angular_boot.entity.LoginUser;
-import com.nixsolutions.angular_boot.entity.User;
 
 @RestController
 @RequestMapping("/token")
@@ -26,7 +25,7 @@ public class AuthenticationController {
   private AuthenticationManager authenticationManager;
 
   @Autowired
-  private JwtTokenUtil jwtTokenUtil;
+  private TokenProvider jwtTokenUtil;
 
   @Autowired
   private UserRepository userService;
@@ -41,8 +40,8 @@ public class AuthenticationController {
         )
     );
     SecurityContextHolder.getContext().setAuthentication(authentication);
-    final User user = userService.findByEmail(loginUser.getUsername());
-    final String token = jwtTokenUtil.generateToken(user);
+//    final User user = userService.findByEmail(loginUser.getUsername());
+    final String token = jwtTokenUtil.generateToken(authentication);
     return ResponseEntity.ok(new AuthToken(token));
   }
 

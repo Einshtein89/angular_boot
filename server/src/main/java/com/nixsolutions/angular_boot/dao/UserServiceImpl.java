@@ -1,7 +1,9 @@
 package com.nixsolutions.angular_boot.dao;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,6 +16,7 @@ import com.nixsolutions.angular_boot.entity.User;
 
 
 @Service(value = "userService")
+@Transactional
 public class UserServiceImpl implements UserDetailsService {
 
   @Autowired
@@ -24,10 +27,14 @@ public class UserServiceImpl implements UserDetailsService {
     if(user == null){
       throw new UsernameNotFoundException("Invalid username or password.");
     }
-    return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), getAuthority());
+    return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), getAuthority(user));
   }
 
-  private List<SimpleGrantedAuthority> getAuthority() {
-    return Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
+  private Set getAuthority(User user) {
+    Set authorities = new HashSet<>();
+    user.getRoles().forEach(role -> {
+      authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRole()));
+    });
+    return authorities;
   }
 }
