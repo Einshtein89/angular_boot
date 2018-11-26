@@ -17,6 +17,7 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
   private firstName: FormControl;
   private lastName: FormControl;
   private email: FormControl;
+  private password: FormControl;
   private phone: FormControl;
   private sex: FormControl;
   userList: User[];
@@ -53,6 +54,7 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
       Validators.required,
       Validators.email
     ]);
+    this.password = new FormControl(this._currentUser ? this._currentUser.password : '');
     this.phone = new FormControl(this._currentUser ? this._currentUser.phone : '', [
       Validators.required,
       // Validators.minLength(8)
@@ -70,6 +72,7 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
       firstName: this.firstName,
       lastName: this.lastName,
       email: this.email,
+      password: this.password,
       phone: this.phone,
       sex: this.sex
     });
