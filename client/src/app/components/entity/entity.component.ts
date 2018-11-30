@@ -43,7 +43,7 @@ export class EntityComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   editUser() {
-    this.editDeleteUserService.showEditEntityForm(this.entity, this.editForm, true);
+    this.editDeleteUserService.showEditEntityForm(this.entity, this.editForm, {_isEdit: true, _isModal: true});
     this.cdr.detectChanges();
   }
 

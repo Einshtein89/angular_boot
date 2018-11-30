@@ -14,10 +14,11 @@ export class EditDeleteUserService {
               private componentFactory: ComponentFactory) {}
 
 
-  showEditEntityForm (entity: User, editForm: ViewContainerRef, isModal: boolean) {
+  showEditEntityForm (entity: User, editForm: ViewContainerRef, options: any) {
     const expComponent =  this.componentFactory.getComponent(AddEditEntityComponent, editForm);
     expComponent.instance._ref = expComponent;
-    expComponent.instance._isModal = isModal;
+    expComponent.instance.options = options;
+    // expComponent.instance._isEdit = isEdit;
     expComponent.instance._currentUser = entity;
   }
 

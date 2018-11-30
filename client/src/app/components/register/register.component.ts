@@ -14,7 +14,7 @@ export class RegisterComponent implements OnInit {
   constructor(private editDeleteUserService: EditDeleteUserService) { }
 
   ngOnInit() {
-    this.editDeleteUserService.showEditEntityForm(this.entity, this.addEditContainerRef, false);
+    this.editDeleteUserService.showEditEntityForm(this.entity, this.addEditContainerRef,
+      {_isEdit: false, _isRegister: true, isModal: false});
   }
-
 }

@@ -30,10 +30,12 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
   _currentUser: User;
   _links: any;
   _entityListComponent: EntityList;
-  _isModal: boolean;
   _isRegister: boolean;
+  options: any;
   isFirstNameRequired: boolean = true;
   sexArray: any;
+  _isModal: boolean;
+  _isEdit: any;
 
   constructor(private userService: UserService,
               private paginationService: PaginationService,
@@ -43,13 +45,15 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+    this._isRegister = this.options._isRegister || false;
+    this._isModal = this.options._isModal || false;
+    this._isEdit = this.options._isEdit || false;
     // this.initializeUserList();
     this.createFormControls();
     this.createForm();
     if (this._isModal) {
       $("#addEditUserModal").modal(/*{backdrop: "static"}*/);
     } else {
-      this._isRegister = true;
       $("#addEditUserModal").removeClass();
     }
   }
@@ -109,7 +113,7 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
       confirmPassword: this.confirmPassword,
       phone: this.phone,
       sex: this.sex
-    }, {validators: this.MatchPassword});
+    }, {validators: () => this.MatchPassword});
   }
 
   onSubmit(user: User) {
@@ -142,6 +146,11 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
         () => {
           this.myForm.reset();
           this._renderMessage("User " + user.firstName + " was created!");
+          if (!this._isModal) {
+            this.myForm.reset();
+            this._location.back();
+            return;
+          }
           let usersOnLastPage = this._entityListComponent.page.totalElements % this._entityListComponent.page.size;
           if (this._entityListComponent.entityList.length / this._entityListComponent.page.size === 1
             && usersOnLastPage === 0)
@@ -198,10 +207,8 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
     let password = AC.get('password').value; // to get value in input tag
     let confirmPassword = AC.get('confirmPassword').value; // to get value in input tag
     if(password != confirmPassword) {
-      console.log('false');
       AC.get('confirmPassword').setErrors( {MatchPassword: true} )
     } else {
-      console.log('true');
       return null
     }
   }
