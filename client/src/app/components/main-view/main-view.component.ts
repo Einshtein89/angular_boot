@@ -19,6 +19,6 @@ export class MainViewComponent implements OnInit {
 
   logout() {
     this.tokenStorage.signOut();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/main/login']);
   }
 }

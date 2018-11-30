@@ -34,6 +34,7 @@ import { ComponentFactory } from './component-factory/component-factory';
 import {EditDeleteUserService} from "./services/edit-delete-user.service";
 import {TokenStorage} from "./services/auth/token.storage";
 import {Interceptor} from "./services/auth/interceptor";
+import { RegisterComponent } from './components/register/register.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,7 +53,7 @@ import {Interceptor} from "./services/auth/interceptor";
     SearchResultComponent,
     SearchResultListComponent,
     UserInfoComponent,
-
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

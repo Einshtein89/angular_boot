@@ -9,5 +9,4 @@ import com.nixsolutions.angular_boot.entity.Role;
 public interface RoleRepository extends PagingAndSortingRepository<Role, Integer>
 {
 	Role findByRole(String role);
-
 }

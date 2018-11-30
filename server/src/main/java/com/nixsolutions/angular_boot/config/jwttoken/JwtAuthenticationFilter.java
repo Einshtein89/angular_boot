@@ -1,11 +1,9 @@
-package com.nixsolutions.angular_boot.config;
+package com.nixsolutions.angular_boot.config.jwttoken;
 
-import static com.nixsolutions.angular_boot.config.Constants.ADMIN_ROLE;
 import static com.nixsolutions.angular_boot.config.Constants.HEADER_STRING;
 import static com.nixsolutions.angular_boot.config.Constants.TOKEN_PREFIX;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -14,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -57,7 +54,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
             if (jwtTokenUtil.validateToken(authToken, userDetails)) {
-                UsernamePasswordAuthenticationToken authentication = jwtTokenUtil.getAuthentication(authToken, SecurityContextHolder.getContext().getAuthentication(), userDetails);
+                UsernamePasswordAuthenticationToken authentication = jwtTokenUtil
+                    .getAuthentication(authToken, SecurityContextHolder.getContext().getAuthentication(), userDetails);
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
                 logger.info("authenticated user " + username + ", setting security context");
                 SecurityContextHolder.getContext().setAuthentication(authentication);

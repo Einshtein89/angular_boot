@@ -1,12 +1,13 @@
-<div class="modal fade" id="addEditUserModal" role="dialog">
-  <div class="modal-dialog">
+<div class="modal fade" id="addEditUserModal">
+  <div [ngClass]="{'modal-dialog': _isModal}">
 
     <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" (click)="removeObject()">&times;</button>
-        <h2 class="title" *ngIf="!this._currentUser">Add new user</h2>
-        <h2 class="title" *ngIf="this._currentUser">Edit user</h2>
+    <div [ngClass]="{'modal-content': _isModal}">
+      <div [ngClass]="{'modal-header': _isModal}">
+        <button *ngIf="_isModal" type="button" class="close" data-dismiss="modal" (click)="removeModal()">&times;</button>
+        <h2 class="title" *ngIf="!this._currentUser && _isModal">Add new user</h2>
+        <h2 class="title" *ngIf="this._currentUser && _isModal">Edit user</h2>
+        <h2 class="title" *ngIf="!_isModal" [ngClass]="{'header-centered': !_isModal}">Register</h2>
       </div>
       <div class="modal-body">
         <div class="ui main text container">
@@ -22,7 +23,7 @@
                      id="firstName"
                      class="form-control"
                      formControlName="firstName"
-                     placeholder="First Name">
+                     placeholder="{{ firstNameLabel.innerHTML}}">
               <div class="error"
                    *ngIf="firstName.errors && (firstName.dirty || firstName.touched)">
                 <p *ngIf="firstName.errors.required">{{ firstNameLabel.innerHTML}} field is required</p>
@@ -38,7 +39,7 @@
                      id="lastName"
                      class="form-control"
                      formControlName="lastName"
-                     placeholder="Last Name">
+                     placeholder="{{ lastNameLabel.innerHTML }}">
               <div class="error"
                    *ngIf="lastName.errors && (lastName.dirty || lastName.touched)">
                 <p *ngIf="lastName.errors.required">{{ lastNameLabel.innerHTML}} field is required</p>
@@ -53,11 +54,11 @@
                      id="email"
                      class="form-control"
                      formControlName="email"
-                     placeholder="E-mail">
+                     placeholder="{{ emailLabel.innerHTML}}">
               <div class="error"
                    *ngIf="email.errors && (email.dirty || email.touched)">
                 <p *ngIf="email.errors.required">{{ emailLabel.innerHTML}} field is required</p>
-                <p *ngIf="email.errors.email">The email format is invalid</p>
+                <p *ngIf="email.errors.email">The {{ emailLabel.innerHTML}} format is invalid</p>
               </div>
             </div>
             <div class="field" [ngClass]="{
@@ -69,10 +70,11 @@
                      id="phone"
                      class="form-control"
                      formControlName="phone"
-                     placeholder="Phone">
+                     placeholder="{{ phoneLabel.innerHTML}}">
               <div class="error"
                    *ngIf="phone.errors && (phone.dirty || phone.touched)">
                 <p *ngIf="phone.errors.required">{{ phoneLabel.innerHTML}} field is required</p>
+                <p *ngIf="phone.errors.pattern">The {{ phoneLabel.innerHTML}} format is invalid</p>
                 <!--<p *ngIf="phone.errors.minlength">Password must be 8 characters long,-->
                 <!--we need another {{ phone.errors.minlength.requiredLength - phone.errors.minlength.actualLength}} characters </p>-->
               </div>
@@ -82,18 +84,60 @@
           'has-success': sex.valid && (sex.dirty || sex.touched)
         }">
               <label #sexLabel for="sex">Sex</label>
-              <input type="text"
-                     id="sex"
-                     class="form-control"
-                     formControlName="sex"
-                     placeholder="Sex">
+              <select id="sex"
+                      class="form-control"
+                      formControlName="sex"
+                      value ="myForm.sex">
+                <option *ngFor="let sex of sexArray" [value]="sex">{{ sex }}</option>
+              </select>
+              <!--<input type="text"-->
+                     <!--id="sex"-->
+                     <!--class="form-control"-->
+                     <!--formControlName="sex"-->
+                     <!--placeholder="Sex">-->
               <div class="error"
                    *ngIf="sex.errors && (sex.dirty || sex.touched)">
                 <p *ngIf="sex.errors.required">{{ sexLabel.innerHTML}} field is required</p>
               </div>
             </div>
+            <div class="field" [ngClass]="{
+          'has-danger': password.invalid && (password.dirty || password.touched),
+          'has-success': password.valid && (password.dirty || password.touched)
+        }">
+              <label #passwordLabel for="password">Password</label>
+              <input type="password"
+                     id="password"
+                     class="form-control"
+                     formControlName="password"
+                     placeholder="{{ passwordLabel.innerHTML}}">
+              <div class="error"
+                   *ngIf="password.errors && (password.dirty || password.touched)">
+                <p *ngIf="password.errors.required">{{ passwordLabel.innerHTML}} field is required</p>
+              </div>
+            </div>
+            <div class="field" [ngClass]="{
+          'has-danger': confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched),
+          'has-success': confirmPassword.valid && (confirmPassword.dirty || confirmPassword.touched)
+        }">
+              <label #confirmPasswordLabel for="confirmPassword">Confirm Password</label>
+              <input type="password"
+                     id="confirmPassword"
+                     class="form-control"
+                     formControlName="confirmPassword"
+                     placeholder="{{ confirmPasswordLabel.innerHTML }}">
+              <div class="error"
+                   *ngIf="password.errors && (password.dirty || password.touched)">
+                <p *ngIf="password.errors.required">{{ confirmPasswordLabel.innerHTML}} field is required</p>
+              </div>
+            </div>
+
+            <div class="error"
+                 *ngIf="myForm.controls.confirmPassword.errors?.MatchPassword
+                 && (confirmPassword.touched)">Password doesn't match
+            </div>
+
             <div *ngIf="myForm.touched  && myForm.invalid"
-                 class="error">Please correct all errors before submitting the form
+                 class="error">Please fill in all required fields and correct all errors before submitting the form
             </div>
             <div class="error" *ngIf="errorList">
               <p *ngFor="let error of errorList">
@@ -101,7 +145,7 @@
               </p>
             </div>
             <div class="modal-footer">
-              <button (click)="removeObject()" data-dismiss="modal"
+              <button (click)="_isModal ? removeModal() : goToPrevPage()"
                       class="ui positive left floated button">Cancel
               </button>
               <button type="submit" [disabled]="myForm.invalid"

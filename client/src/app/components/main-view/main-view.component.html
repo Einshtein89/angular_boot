@@ -13,7 +13,7 @@
       <a class="item" (click)="logout()" *ngIf="this.authService.isLoggedIn()">
         Log Out
       </a>
-      <a class="item" [routerLink]="['/login']" *ngIf="!this.authService.isLoggedIn()">
+      <a class="item" [routerLink]="['./login']" *ngIf="!this.authService.isLoggedIn()">
         Log In
       </a>
     </div>

@@ -1,4 +1,4 @@
-import {USERS_API_URL} from "../services/user.service";
+import {USERS_API_URL, REGISTER_API_URL} from "../services/user.service";
 import {DEFAULT_PAGE_SIZE, DEFAULT_SORT} from "../services/pagination.service";
 
 export var constants: Array<any> = [

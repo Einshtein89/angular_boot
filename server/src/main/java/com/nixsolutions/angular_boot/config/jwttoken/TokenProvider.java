@@ -1,4 +1,4 @@
-package com.nixsolutions.angular_boot.config;
+package com.nixsolutions.angular_boot.config.jwttoken;
 
 import static com.nixsolutions.angular_boot.config.Constants.ACCESS_TOKEN_VALIDITY_SECONDS;
 import static com.nixsolutions.angular_boot.config.Constants.AUTHORITIES_KEY;

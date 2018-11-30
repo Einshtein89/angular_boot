@@ -10,6 +10,7 @@ import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import * as  _ from "underscore"
 
 export const USERS_API_URL = "";
+export const REGISTER_API_URL = 'http://localhost:3000/signup';
 export const DEFAULT_PAGE_SIZE = 0;
 
 @Injectable()
@@ -21,6 +22,7 @@ export class UserService {
   addedUser = this.newUser.asObservable();
   changedUser = this.updatedUser.asObservable();
   public searchResults: User[];
+  private registerUrl: string = REGISTER_API_URL;
 
   constructor(private http:HttpClient,
               @Inject(USERS_API_URL) private userUrl: string,
@@ -36,8 +38,8 @@ export class UserService {
       .catch(this._handleError)
   }
 
-  createUser(user: User):Observable<User> {
-    return this.http.post(this.userUrl, user, this.options)
+  createUser(user: User, isRegister: boolean):Observable<User> {
+    return this.http.post(isRegister ? this.registerUrl : this.userUrl, user, this.options)
       .do(() => this.newUser.next(user))
       .catch(this._handleError);
   }
