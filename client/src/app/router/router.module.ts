@@ -9,6 +9,7 @@ import {AuthGuard} from "../services/auth/auth-guard.service";
 import {LoginComponent} from "../components/login/login.component";
 import {LogoutComponent} from "../components/logout/logout.component";
 import {UserInfoComponent} from "../components/user-info/user-info.component";
+import {RegisterComponent} from "../components/register/register.component";
 
 export const paginationRoutes: Routes = [
   { path: '', redirectTo: 'first', pathMatch: 'full' },
@@ -23,14 +24,20 @@ export const childRoutes: Routes = [
   { path: 'allUsers', component: EntityList, canActivate: [AuthGuard] },
   // { path: 'allUsers', redirectTo: 'allUsers/first', pathMatch: 'full' },d
   // { path: 'allUsers/first', component: EntityList },
-  { path: 'allUsers/:userId', component: UserInfoComponent, canActivate: [AuthGuard] }
+  { path: 'allUsers/:userId', component: UserInfoComponent, canActivate: [AuthGuard] },
+  { path: 'register', component: RegisterComponent, pathMatch: 'full' },
+  { path: 'login', component: LoginComponent, pathMatch: 'full' },
+  { path: 'logout', component: LogoutComponent, pathMatch: 'full' }
+
+
 ];
 
 const routes: Routes = [
   { path: '', redirectTo: '/main/home', pathMatch: 'full' },
   { path: 'main', component: MainViewComponent, children: childRoutes },
-  { path: 'login', component: LoginComponent, pathMatch: 'full' },
-  { path: 'logout', component: LogoutComponent, pathMatch: 'full' },
+  // { path: 'login', component: LoginComponent, pathMatch: 'full' },
+  // { path: 'register', component: RegisterComponent, pathMatch: 'full' },
+  // { path: 'logout', component: LogoutComponent, pathMatch: 'full' },
   // { path: 'projects', component: ProjectsOverviewComponent, pathMatch: 'full'  },
   // { path: 'project/:projectid', component: ProjectItemComponent, pathMatch: 'full'  },
   // { path: '**', component: MainViewComponent, pathMatch: 'full'  },

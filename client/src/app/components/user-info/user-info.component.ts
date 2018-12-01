@@ -35,7 +35,7 @@ export class UserInfoComponent implements OnInit, AfterViewChecked {
   }
 
   editUser() {
-    this.editDeleteUserService.showEditEntityForm(this.entity, this.addEditContainerRef);
+    this.editDeleteUserService.showEditEntityForm(this.entity, this.addEditContainerRef, {_isEdit: true, _isModal: true});
     this.cdr.detectChanges();
   }
 

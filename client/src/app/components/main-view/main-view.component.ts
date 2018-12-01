@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../services/auth/auth.service";
 import {Router} from "@angular/router";
+import {TokenStorage} from "../../services/auth/token.storage";
 
 @Component({
   selector: 'app-main-view',
@@ -10,14 +11,14 @@ import {Router} from "@angular/router";
 export class MainViewComponent implements OnInit {
 
   constructor(private authService: AuthService,
-              private router: Router) { }
+              private router: Router,
+              private tokenStorage: TokenStorage) { }
 
   ngOnInit() {
   }
 
   logout() {
-    this.authService.logout();
-    this.router.navigate(['/login']);
+    this.tokenStorage.signOut();
+    this.router.navigate(['/main/login']);
   }
-
 }

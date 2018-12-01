@@ -49,6 +49,7 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
     const expComponent =  this.componentFactory.getComponent(AddEditEntityComponent, this.addEditContainerRef);
     expComponent.instance._ref = expComponent;
     expComponent.instance._links = this.links;
+    expComponent.instance.options = {_isModal: true};
     expComponent.instance._entityListComponent = this;
   }
 

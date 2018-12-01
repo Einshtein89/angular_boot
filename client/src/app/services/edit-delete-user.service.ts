@@ -14,9 +14,11 @@ export class EditDeleteUserService {
               private componentFactory: ComponentFactory) {}
 
 
-  showEditEntityForm (entity: User, editForm: ViewContainerRef) {
+  showEditEntityForm (entity: User, editForm: ViewContainerRef, options: any) {
     const expComponent =  this.componentFactory.getComponent(AddEditEntityComponent, editForm);
     expComponent.instance._ref = expComponent;
+    expComponent.instance.options = options;
+    // expComponent.instance._isEdit = isEdit;
     expComponent.instance._currentUser = entity;
   }
 
@@ -44,12 +46,16 @@ export class EditDeleteUserService {
             self.userService.deleteUser(self.entity, self.entity["_links"].self.href)
               .subscribe(
                 () => {
-                  let lastUserOnPage = self.entityListComponent.entityList.length === 1;
-                  if (!lastUserOnPage) {
-                    // self._removeUserFromUi();
-                    self.getPageAfterRemove(self.entityListComponent.page.number);
+                  if (!self.entityListComponent) {
+                    self.getPageAfterRemove(0);
                   } else {
-                    self.getPageAfterRemove(self.entityListComponent.page.number -1);
+                    let lastUserOnPage = self.entityListComponent.entityList.length === 1;
+                    if (!lastUserOnPage) {
+                      // self._removeUserFromUi();
+                      self.getPageAfterRemove(self.entityListComponent.page.number);
+                    } else {
+                      self.getPageAfterRemove(self.entityListComponent.page.number -1);
+                    }
                   }
                 },
                 error => self.errorList = error.error
