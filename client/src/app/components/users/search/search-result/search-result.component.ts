@@ -1,6 +1,6 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {User} from "../../../models/user.model";
-import {UserService} from "../../../services/user.service";
+import {User} from "../../../../models/user.model";
+import {UserService} from "../../../../services/user.service";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 declare var $ : any;
 

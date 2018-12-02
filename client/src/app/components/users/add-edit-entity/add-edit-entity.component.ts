@@ -1,8 +1,8 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FormGroup, FormControl, Validators, AbstractControl} from "@angular/forms";
-import {UserService} from "../../services/user.service";
-import {User} from "../../models/user.model";
-import {PaginationService} from "../../services/pagination.service";
+import {UserService} from "../../../services/user.service";
+import {User} from "../../../models/user.model";
+import {PaginationService} from "../../../services/pagination.service";
 import {EntityList} from "../entity-list/entity-list.component";
 import {ValidatorFn} from "@angular/forms/src/directives/validators";
 import {Router, RouterStateSnapshot} from "@angular/router";
@@ -39,7 +39,7 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
 
   constructor(private userService: UserService,
               private paginationService: PaginationService,
-              private _location: Location) {
+              private location: Location) {
     this.sexArray = ['man', 'woman'];
   }
 
@@ -69,7 +69,7 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
 
   goToPrevPage() {
     this.myForm.reset();
-    this._location.back();
+    this.location.back();
   }
 
   createFormControls() {
@@ -148,7 +148,7 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
           this._renderMessage("User " + user.firstName + " was created!");
           if (!this._isModal) {
             this.myForm.reset();
-            this._location.back();
+            this.location.back();
             return;
           }
           let usersOnLastPage = this._entityListComponent.page.totalElements % this._entityListComponent.page.size;

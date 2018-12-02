@@ -31,7 +31,7 @@ INSERT INTO user VALUES (30, 'Jack', 'Smirnov', '1234567890', 'man', 1, 'sdfg3@s
 INSERT INTO user VALUES (31, 'Pit', 'Stop', '1234567890', 'man', 1, 'sd345f@sdf.ru', 'sdfssf');
 INSERT INTO user VALUES (32, 'Miranda', 'Walsh', '1234567890', 'woman', 1, 'sd346675f@sdf.ru', 'sdfssf');
 INSERT INTO user VALUES (33, 'Celeste', 'O', '1234567890', 'woman', 1, 'sdgfghfgf@sdf.ru', 'sdfssf');
-INSERT INTO user VALUES (34, 'user', 'user', '1234567890', 'man', 1, 'user@user.ru', 'user');
+INSERT INTO user VALUES (34, 'user', 'user', '1234567890', 'man', 1, 'user@user.ru', '$2a$04$XnWyzCgrsJ/yAxMYdnXwaef3DWspeUB.8WHBEoXic/lHGLi1IFKBy');
 
 
 INSERT INTO role VALUES (1,'ADMIN');

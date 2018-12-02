@@ -1,0 +1,24 @@
+<div class="ui inverted segment">
+  <div class="ui inverted secondary pointing menu">
+    <a class="item" [routerLink]="['./home']">
+      Home
+    </a>
+    <a class="item" [routerLink]="['./second']">
+      Second Page
+    </a>
+    <a class="item" [routerLink]="['./allUsers']">
+      My Cabinet
+    </a>
+    <a class="item" *ngIf="this.authService.isAdmin()" [routerLink]="['./allUsers']">
+      All Users
+    </a>
+    <div class="right menu" >
+      <a class="item" (click)="logout()" *ngIf="this.authService.isLoggedIn()">
+        Log Out
+      </a>
+      <a class="item" [routerLink]="['./login']" *ngIf="!this.authService.isLoggedIn()">
+        Log In
+      </a>
+    </div>
+  </div>
+</div>

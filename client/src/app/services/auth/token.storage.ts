@@ -6,6 +6,8 @@ const TOKEN_KEY = 'AuthToken';
 @Injectable()
 export class TokenStorage {
 
+  public userRoles: string[];
+
   constructor() { }
 
   signOut() {
@@ -20,5 +22,22 @@ export class TokenStorage {
 
   public getToken(): string {
     return sessionStorage.getItem(TOKEN_KEY);
+  }
+
+  public getUserRoles(): string[] {
+    let decodedJwtData = this._parseToken(sessionStorage.getItem(TOKEN_KEY));
+    this.userRoles = decodedJwtData['scopes'] ? decodedJwtData['scopes'].split(',') : [];
+    return this.userRoles;
+  }
+
+
+  private _parseToken(token : string) {
+    if(!token) {
+      return "";
+    }
+    let jwtData = token.split('.')[1];
+    let decodedJwtJsonData = window.atob(jwtData);
+    let decodedJwtData = JSON.parse(decodedJwtJsonData);
+    return decodedJwtData;
   }
 }

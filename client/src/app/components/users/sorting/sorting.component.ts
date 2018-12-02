@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {EntityList} from "../entity-list/entity-list.component";
-import {PaginationService} from "../../services/pagination.service";
+import {PaginationService} from "../../../services/pagination.service";
 
 @Component({
   selector: 'sorting-entities',

@@ -26,7 +26,6 @@ export class LoginComponent {
     this.authService.login(username, password).subscribe(
       data => {
         this.tokenStorage.saveToken(data.token);
-        this.parseToken(data.token);
         this.router.navigateByUrl(this.return);
       },
       err => {
@@ -38,12 +37,6 @@ export class LoginComponent {
         }
       }
     );
-  }
-
-  parseToken(token : string) {
-    let jwtData = token.split('.')[1];
-    let decodedJwtJsonData = window.atob(jwtData);
-    let decodedJwtData = JSON.parse(decodedJwtJsonData)
   }
 
   logout(): boolean {

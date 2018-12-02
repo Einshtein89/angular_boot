@@ -19,6 +19,10 @@ export class AuthService {
   isLoggedIn(): boolean {
     return this.tokenStorage.getToken() !== null;
   }
+
+  isAdmin(): boolean {
+    return this.tokenStorage.getUserRoles().includes("ROLE_ADMIN");
+  }
 }
 
 export const AUTH_PROVIDERS: Array<any> = [

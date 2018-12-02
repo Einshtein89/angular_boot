@@ -8,13 +8,13 @@ import {
 } from '@angular/core';
 import {EntityList} from "../entity-list/entity-list.component";
 import {animate, state, style, transition, trigger} from "@angular/animations";
-import {UserService} from "../../services/user.service";
-import {PaginationService} from "../../services/pagination.service";
+import {UserService} from "../../../services/user.service";
+import {PaginationService} from "../../../services/pagination.service";
 import {AddEditEntityComponent} from "../add-edit-entity/add-edit-entity.component";
 import {SearchResultListComponent} from "./search-result-list/search-result-list.component";
 import {SearchResultComponent} from "./search-result/search-result.component";
-import {User} from "../../models/user.model";
-import {ComponentFactory} from "../../component-factory/component-factory";
+import {User} from "../../../models/user.model";
+import {ComponentFactory} from "../../../component-factory/component-factory";
 declare var $ : any;
 
 @Component({

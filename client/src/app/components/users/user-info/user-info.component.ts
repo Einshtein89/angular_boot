@@ -1,10 +1,11 @@
 import {AfterViewChecked, ChangeDetectorRef, Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {UserService} from "../../services/user.service";
-import {User} from "../../models/user.model";
+import {ActivatedRoute, Router} from "@angular/router";
+import {UserService} from "../../../services/user.service";
+import {User} from "../../../models/user.model";
 import {AddEditEntityComponent} from "../add-edit-entity/add-edit-entity.component";
-import {ComponentFactory} from "../../component-factory/component-factory";
-import {EditDeleteUserService} from "../../services/edit-delete-user.service";
+import {ComponentFactory} from "../../../component-factory/component-factory";
+import {EditDeleteUserService} from "../../../services/edit-delete-user.service";
+import {Location} from "@angular/common";
 
 @Component({
   selector: 'app-user-info',
@@ -21,7 +22,9 @@ export class UserInfoComponent implements OnInit, AfterViewChecked {
   constructor(private route: ActivatedRoute,
               private userService: UserService,
               private cdr: ChangeDetectorRef,
-              private editDeleteUserService: EditDeleteUserService) {
+              private editDeleteUserService: EditDeleteUserService,
+              private router: Router,
+              private location: Location) {
      route.params.subscribe(params => { this.id = params['userId']; });
   }
 

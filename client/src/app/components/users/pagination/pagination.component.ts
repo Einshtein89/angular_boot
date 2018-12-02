@@ -1,9 +1,9 @@
 import {AfterContentInit, AfterViewChecked, Component, Input, OnInit, Output} from '@angular/core';
-import {UserService} from "../../services/user.service";
+import {UserService} from "../../../services/user.service";
 import {EntityList} from "../entity-list/entity-list.component";
-import {User} from "../../models/user.model";
+import {User} from "../../../models/user.model";
 import {Router} from "@angular/router";
-import {PaginationService} from "../../services/pagination.service";
+import {PaginationService} from "../../../services/pagination.service";
 
 @Component({
   selector: 'app-pagination',

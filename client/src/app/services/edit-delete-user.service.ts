@@ -2,8 +2,9 @@ import {PaginationService} from "./pagination.service";
 import {ChangeDetectorRef, Injectable, ViewContainerRef} from "@angular/core";
 import {UserService} from "./user.service";
 import {ComponentFactory} from "../component-factory/component-factory";
-import {AddEditEntityComponent} from "../components/add-edit-entity/add-edit-entity.component";
+import {AddEditEntityComponent} from "../components/users/add-edit-entity/add-edit-entity.component";
 import {User} from "../models/user.model";
+import {Router} from "@angular/router";
 declare var $ : any;
 
 @Injectable()
@@ -18,7 +19,6 @@ export class EditDeleteUserService {
     const expComponent =  this.componentFactory.getComponent(AddEditEntityComponent, editForm);
     expComponent.instance._ref = expComponent;
     expComponent.instance.options = options;
-    // expComponent.instance._isEdit = isEdit;
     expComponent.instance._currentUser = entity;
   }
 
@@ -46,6 +46,15 @@ export class EditDeleteUserService {
             self.userService.deleteUser(self.entity, self.entity["_links"].self.href)
               .subscribe(
                 () => {
+                  if (self.id) {
+                    const urlTree = self.router.parseUrl(self.router.url);
+                    const urlWithoutParams = urlTree.root.children['primary'].segments
+                      .filter(it => it.path !== self.id)
+                      .map(it => it.path).join('/');
+                    self.router.navigateByUrl(urlWithoutParams);
+                    // self.location.back(); - works slower
+                    return;
+                  }
                   if (!self.entityListComponent) {
                     self.getPageAfterRemove(0);
                   } else {
