@@ -38,6 +38,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { FooterComponent } from './components/common/footer/footer.component';
 import { HeaderComponent } from './components/common/header/header.component';
 import { CabinetComponent } from './components/cabinet/cabinet.component';
+import {FormCreateService } from './services/form-create.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -87,6 +88,7 @@ import { CabinetComponent } from './components/cabinet/cabinet.component';
     ComponentFactory,
     EditDeleteUserService,
     TokenStorage,
+    FormCreateService,
     {provide: HTTP_INTERCEPTORS,
       useClass: Interceptor,
       multi : true

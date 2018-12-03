@@ -10,6 +10,7 @@ import {LoginComponent} from "../components/login/login.component";
 import {LogoutComponent} from "../components/logout/logout.component";
 import {UserInfoComponent} from "../components/users/user-info/user-info.component";
 import {RegisterComponent} from "../components/register/register.component";
+import {CabinetComponent} from "../components/cabinet/cabinet.component";
 
 export const paginationRoutes: Routes = [
   { path: '', redirectTo: 'first', pathMatch: 'full' },
@@ -21,6 +22,7 @@ export const childRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent, pathMatch: 'full'},
   { path: 'second', component: SecondChildComponent, pathMatch: 'full' },
+  { path: 'myCabinet', component: CabinetComponent, canActivate: [AuthGuard] },
   { path: 'allUsers', component: EntityList, canActivate: [AuthGuard] },
   // { path: 'allUsers', redirectTo: 'allUsers/first', pathMatch: 'full' },d
   // { path: 'allUsers/first', component: EntityList },

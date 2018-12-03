@@ -49,6 +49,15 @@ export class UserService {
     return this.http.get(queryUrl)
       .catch(this._handleError);
   }
+  getUserByUserName(userName: string) {
+    let params: string = [
+      `email=${userName}`
+    ].join('&');
+    let queryUrl: string = `${this.userUrl}/search/findByEmail?${params}`;
+    return this.http.get(queryUrl)
+      .catch(this._handleError);
+  }
+
 
   updateUser(user: User, userUrl: string):Observable<User> {
     return this.http.put(userUrl, user, this.options)
@@ -87,6 +96,4 @@ export class UserService {
     console.error(error.message || error);
     return Observable.throw(error);
   }
-
-
 }

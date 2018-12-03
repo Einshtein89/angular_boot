@@ -7,6 +7,7 @@ const TOKEN_KEY = 'AuthToken';
 export class TokenStorage {
 
   public userRoles: string[];
+  public userName: string;
 
   constructor() { }
 
@@ -28,6 +29,12 @@ export class TokenStorage {
     let decodedJwtData = this._parseToken(sessionStorage.getItem(TOKEN_KEY));
     this.userRoles = decodedJwtData['scopes'] ? decodedJwtData['scopes'].split(',') : [];
     return this.userRoles;
+  }
+
+  public getUserId(): string {
+    let decodedJwtData = this._parseToken(sessionStorage.getItem(TOKEN_KEY));
+    this.userName = decodedJwtData['sub'] ? decodedJwtData['sub'] : "";
+    return this.userName;
   }
 
 

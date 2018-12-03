@@ -4,9 +4,8 @@ import {UserService} from "../../../services/user.service";
 import {User} from "../../../models/user.model";
 import {PaginationService} from "../../../services/pagination.service";
 import {EntityList} from "../entity-list/entity-list.component";
-import {ValidatorFn} from "@angular/forms/src/directives/validators";
-import {Router, RouterStateSnapshot} from "@angular/router";
 import {Location} from "@angular/common";
+import {FormCreateService} from "../../../services/form-create.service";
 
 declare var $ : any;
 
@@ -16,7 +15,7 @@ declare var $ : any;
   styleUrls: ['./add-edit-entity.component.css']
 })
 export class AddEditEntityComponent implements OnInit, OnDestroy {
-  private myForm: FormGroup;
+  public myForm: FormGroup;
   private firstName: FormControl;
   private lastName: FormControl;
   private email: FormControl;
@@ -25,21 +24,22 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
   private sex: FormControl;
   private confirmPassword: FormControl;
   userList: User[];
-  errorList: any;
-  _ref:any;
-  _currentUser: User;
-  _links: any;
-  _entityListComponent: EntityList;
-  _isRegister: boolean;
-  options: any;
-  isFirstNameRequired: boolean = true;
-  sexArray: any;
-  _isModal: boolean;
-  _isEdit: any;
+  private errorList: any;
+  private _ref:any;
+  private _currentUser: User;
+  private _links: any;
+  private _entityListComponent: EntityList;
+  private _isRegister: boolean;
+  private options: any;
+  private isFirstNameRequired: boolean = true;
+  private readonly sexArray: any;
+  private _isModal: boolean;
+  private _isEdit: any;
 
   constructor(private userService: UserService,
               private paginationService: PaginationService,
-              private location: Location) {
+              private location: Location,
+              private formCreateService: FormCreateService) {
     this.sexArray = ['man', 'woman'];
   }
 
@@ -48,9 +48,9 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
     this._isRegister = this.options._isRegister || false;
     this._isModal = this.options._isModal || false;
     this._isEdit = this.options._isEdit || false;
-    // this.initializeUserList();
-    this.createFormControls();
+
     this.createForm();
+
     if (this._isModal) {
       $("#addEditUserModal").modal(/*{backdrop: "static"}*/);
     } else {
@@ -61,38 +61,36 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
   }
 
-  removeModal(){
-    $("#addEditUserModal").modal('hide');
-    this._ref.destroy();
-    this.ngOnDestroy();
+  private createForm() {
+    this.myForm = new FormGroup({});
+    this.populateFieldsAndValidators().forEach((validators: any, fieldParameters: any) => {
+      this[fieldParameters['name']] = this.formCreateService
+        ._createFormControl(this._currentUser, fieldParameters, validators);
+      this.myForm.setControl(fieldParameters['name'], this[fieldParameters['name']]);
+    });
+    this.myForm.setValidators(this.populateFormValidators());
   }
 
-  goToPrevPage() {
-    this.myForm.reset();
-    this.location.back();
-  }
-
-  createFormControls() {
-    this.firstName = this._createFormControl(this._currentUser, "firstName", this.isFieldRequired());
-    this.lastName = this._createFormControl(this._currentUser, "lastName", Validators.required);
-    this.email = this._createFormControl(this._currentUser, "email", [
+  private populateFieldsAndValidators() {
+    let fieldsWithValidators = new Map();
+    fieldsWithValidators.set({name: "firstName", defaultValue: ''}, this.isFieldRequired());
+    fieldsWithValidators.set({name: "lastName", defaultValue: ''}, Validators.required);
+    fieldsWithValidators.set({name: "email", defaultValue: ''}, [
       Validators.required,
       Validators.email
     ]);
-    this.password = this._createFormControl(this._currentUser, "password", Validators.required);
-    this.confirmPassword = new FormControl();
-    this.phone = this._createFormControl(this._currentUser, "phone", [
+    fieldsWithValidators.set({name: "password", defaultValue: ''}, Validators.required);
+    fieldsWithValidators.set({name: "confirmPassword", defaultValue: ''}, null);
+    fieldsWithValidators.set({name: "phone", defaultValue: ''}, [
       Validators.required,
       Validators.pattern('^(\\+?(\\d{1}|\\d{2}|\\d{3})[- ]?)?\\d{3}[- ]?\\d{3}[- ]?\\d{4}$')
     ]);
-
-    this.sex = this._createFormControl(this._currentUser, "sex", Validators.required);
+    fieldsWithValidators.set({name: "sex", defaultValue: this.getDefaultSex()}, Validators.required);
+    return fieldsWithValidators;
   }
 
-  private _createFormControl(currentUser: User, fieldName: string, validators: any) {
-    return new FormControl(currentUser && currentUser[fieldName]
-      ? currentUser[fieldName]
-      : fieldName === "sex" ? this.getDefaultSex() : '', validators)
+  private populateFormValidators() {
+    return !this._isEdit ? this.MatchPassword : null;
   }
 
   //field can be required by condition
@@ -104,19 +102,18 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
     return this.sexArray[0];
   }
 
-  createForm() {
-    this.myForm = new FormGroup({
-      firstName: this.firstName,
-      lastName: this.lastName,
-      email: this.email,
-      password: this.password,
-      confirmPassword: this.confirmPassword,
-      phone: this.phone,
-      sex: this.sex
-    }, {validators: () => this.MatchPassword});
+  private removeModal(){
+    $("#addEditUserModal").modal('hide');
+    this._ref.destroy();
+    this.ngOnDestroy();
   }
 
-  onSubmit(user: User) {
+  private goToPrevPage() {
+    this.myForm.reset();
+    this.location.back();
+  }
+
+  private onSubmit(user: User) {
     if (!this.myForm.valid) {
       return false;
     }
@@ -177,16 +174,6 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
     this._entityListComponent.links = this._entityListComponent.extractLinks(data);
     this._entityListComponent.page = this._entityListComponent.extractPage(data);
   }
-
-  // private initializeUserList() {
-  //   if (this.userService.entityList) {
-  //     this.userList = this.userService.entityList;
-  //   } else {
-  //     this.userService.getAllUsers().subscribe(
-  //       data => this.userList = data["_embedded"].users
-  //     )
-  //   }
-  // }
 
   private _renderMessage(message) {
     $.confirm({
