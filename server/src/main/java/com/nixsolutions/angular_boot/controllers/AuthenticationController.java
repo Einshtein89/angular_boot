@@ -1,4 +1,4 @@
-package com.nixsolutions.angular_boot.controller;
+package com.nixsolutions.angular_boot.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nixsolutions.angular_boot.config.jwttoken.AuthToken;
-import com.nixsolutions.angular_boot.config.jwttoken.TokenProvider;
+import com.nixsolutions.angular_boot.configs.jwttoken.AuthToken;
+import com.nixsolutions.angular_boot.configs.jwttoken.TokenProvider;
 import com.nixsolutions.angular_boot.dao.UserRepository;
 import com.nixsolutions.angular_boot.entity.LoginUser;
 

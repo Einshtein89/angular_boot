@@ -1,4 +1,4 @@
-package com.nixsolutions.angular_boot.config;
+package com.nixsolutions.angular_boot.configs;
 
 import javax.annotation.Resource;
 
@@ -16,8 +16,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.nixsolutions.angular_boot.config.jwttoken.JwtAuthenticationEntryPoint;
-import com.nixsolutions.angular_boot.config.jwttoken.JwtAuthenticationFilter;
+import com.nixsolutions.angular_boot.configs.filters.LocaleConfigurerFilter;
+import com.nixsolutions.angular_boot.configs.jwttoken.JwtAuthenticationEntryPoint;
+import com.nixsolutions.angular_boot.configs.jwttoken.JwtAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -47,6 +48,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
   public JwtAuthenticationFilter authenticationTokenFilterBean() throws Exception {
     return new JwtAuthenticationFilter();
   }
+  
+//  @Bean
+//  public LocaleConfigurerFilter localeConfigurerFilter() throws Exception {
+//    return new LocaleConfigurerFilter();
+//  }
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
@@ -54,12 +60,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
         authorizeRequests()
         .antMatchers("/token/**").permitAll()
         .antMatchers("/signup/**").permitAll()
+        .antMatchers("/h2/**").permitAll()
+//        .antMatchers("/").permitAll()
         .anyRequest().authenticated()
         .and()
         .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     http
         .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+    
+    http.headers().frameOptions().disable();
+//        .addFilterAfter(localeConfigurerFilter(), JwtAuthenticationFilter.class);
   }
 
   @Bean

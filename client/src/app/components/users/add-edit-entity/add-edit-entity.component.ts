@@ -1,11 +1,12 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewChecked, ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FormGroup, FormControl, Validators, AbstractControl} from "@angular/forms";
 import {UserService} from "../../../services/user.service";
 import {User} from "../../../models/user.model";
 import {PaginationService} from "../../../services/pagination.service";
 import {EntityList} from "../entity-list/entity-list.component";
 import {Location} from "@angular/common";
-import {FormCreateService} from "../../../services/form-create.service";
+import {FormCreateService} from "../../../services/form.create.service";
+import {TranslateService} from "@ngx-translate/core";
 
 declare var $ : any;
 
@@ -14,7 +15,7 @@ declare var $ : any;
   templateUrl: './add-edit-entity.component.html',
   styleUrls: ['./add-edit-entity.component.css']
 })
-export class AddEditEntityComponent implements OnInit, OnDestroy {
+export class AddEditEntityComponent implements OnInit, OnDestroy, AfterViewChecked {
   public myForm: FormGroup;
   private firstName: FormControl;
   private lastName: FormControl;
@@ -32,15 +33,16 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
   private _isRegister: boolean;
   private options: any;
   private isFirstNameRequired: boolean = true;
-  private readonly sexArray: any;
+  private sexArray: Array<string>;
   private _isModal: boolean;
   private _isEdit: any;
 
   constructor(private userService: UserService,
               private paginationService: PaginationService,
               private location: Location,
-              private formCreateService: FormCreateService) {
-    this.sexArray = ['man', 'woman'];
+              private formCreateService: FormCreateService,
+              private translate: TranslateService,
+              private cdr: ChangeDetectorRef) {
   }
 
 
@@ -48,7 +50,7 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
     this._isRegister = this.options._isRegister || false;
     this._isModal = this.options._isModal || false;
     this._isEdit = this.options._isEdit || false;
-
+    this.populateTextMessages();
     this.createForm();
 
     if (this._isModal) {
@@ -73,8 +75,14 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
 
   private populateFieldsAndValidators() {
     let fieldsWithValidators = new Map();
-    fieldsWithValidators.set({name: "firstName", defaultValue: ''}, this.isFieldRequired());
-    fieldsWithValidators.set({name: "lastName", defaultValue: ''}, Validators.required);
+    fieldsWithValidators.set({name: "firstName", defaultValue: ''}, [
+      Validators.required,
+      Validators.maxLength(50)
+    ]);
+    fieldsWithValidators.set({name: "lastName", defaultValue: ''}, [
+      Validators.required,
+      Validators.maxLength(50)
+    ]);
     fieldsWithValidators.set({name: "email", defaultValue: ''}, [
       Validators.required,
       Validators.email
@@ -99,7 +107,15 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
   }
 
   private getDefaultSex(): string {
-    return this.sexArray[0];
+    return "";
+  }
+
+  private getKey(sex: string) {
+    return sex.substring(0, sex.indexOf(';'));
+  }
+
+  private getValue(sex: string) {
+    return sex.substring(sex.indexOf(';') + 1, sex.length);
   }
 
   private removeModal(){
@@ -130,7 +146,10 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
         () => {
           this.myForm.reset();
           this.removeModal();
-          this._renderMessage("User " + user.firstName + " was updated!");
+          this._renderMessage(this.translate.instant('user.form.actions.user.created.1')
+            + user.firstName
+            + this.translate.instant('user.form.actions.user.updated.2')
+          );
         },
         error => this.errorList = error.error
       );
@@ -142,7 +161,10 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
       .subscribe(
         () => {
           this.myForm.reset();
-          this._renderMessage("User " + user.firstName + " was created!");
+          this._renderMessage(this.translate.instant('user.form.actions.user.created.1')
+            + user.firstName
+            + this.translate.instant('user.form.actions.user.created.2')
+          );
           if (!this._isModal) {
             this.myForm.reset();
             this.location.back();
@@ -164,7 +186,7 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
           }
           this.removeModal();
         },
-        error => this.errorList = error.error
+        error => this.errorList = this.processErrors(error.error)
       );
     return false;
   }
@@ -175,11 +197,22 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
     this._entityListComponent.page = this._entityListComponent.extractPage(data);
   }
 
+  private populateTextMessages() {
+    this.sexArray = [this.translate.instant('user.form.actions.sex.man'),
+      this.translate.instant('user.form.actions.sex.woman')];
+  }
+
+  private processErrors(errors: Array<string>) {
+    let result = [];
+    errors.forEach((error) => result.push(this.translate.instant("backend.validation.errors." + error)));
+    return result;
+  }
+
   private _renderMessage(message) {
     $.confirm({
       animation: 'top',
       closeAnimation: 'top',
-      title: 'Confirm',
+      title: this.translate.instant('user.form.actions.confirm.popup.title'),
       content: message,
       draggable: false,
       closeIcon: true,
@@ -191,12 +224,17 @@ export class AddEditEntityComponent implements OnInit, OnDestroy {
   }
 
   private MatchPassword(AC: AbstractControl) {
-    let password = AC.get('password').value; // to get value in input tag
-    let confirmPassword = AC.get('confirmPassword').value; // to get value in input tag
+    let password = AC.get('password').value;
+    let confirmPassword = AC.get('confirmPassword').value;
     if(password != confirmPassword) {
       AC.get('confirmPassword').setErrors( {MatchPassword: true} )
     } else {
       return null
     }
+  }
+
+  ngAfterViewChecked(): void {
+    this.populateTextMessages();
+    this.cdr.detectChanges();
   }
 }

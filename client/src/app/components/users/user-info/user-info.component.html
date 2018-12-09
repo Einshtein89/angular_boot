@@ -9,8 +9,8 @@
         <a>{{ entity.phone }}</a>
       </div>
       <div class="center">
-        <button class="ui btn-default btn left floated" (click)="editUser()">Edit</button>
-        <button class="ui btn-danger btn right floated" (click)="removeUser()">Delete</button>
+        <button class="ui btn-default btn left floated" (click)="editUser()">{{ 'user.form.actions.edit.button' | translate}}</button>
+        <button class="ui btn-danger btn right floated" (click)="removeUser()">{{ 'user.form.actions.delete.button' | translate}}</button>
       </div>
     </div>
   </div>

@@ -1,7 +1,7 @@
 <div class="entitiesPerPage right floated">
   <!--<label for="entitiesPerPageDropdown">Entities per Page:</label>-->
   <mat-form-field>
-    <mat-select placeholder="Entities per Page"
+    <mat-select placeholder="{{ 'all.users.page.entities.per.page' | translate }}"
                 (change)="changePageSize($event.value)"
                 id="entitiesPerPageDropdown"
                 [value]="this.paginationService.currentPageSize">

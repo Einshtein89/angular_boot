@@ -1,19 +1,25 @@
 import {PaginationService} from "./pagination.service";
-import {ChangeDetectorRef, Injectable, ViewContainerRef} from "@angular/core";
+import {ChangeDetectorRef, Injectable, OnInit, ViewContainerRef} from "@angular/core";
 import {UserService} from "./user.service";
 import {ComponentFactory} from "../component-factory/component-factory";
 import {AddEditEntityComponent} from "../components/users/add-edit-entity/add-edit-entity.component";
 import {User} from "../models/user.model";
 import {Router} from "@angular/router";
+import {TranslateService} from "@ngx-translate/core";
 declare var $ : any;
 
 @Injectable()
-export class EditDeleteUserService {
+export class EditDeleteUserService implements OnInit {
 
   constructor(private userService: UserService,
               private paginationService: PaginationService,
-              private componentFactory: ComponentFactory) {}
+              private componentFactory: ComponentFactory,
+              private translate: TranslateService) {
 
+  }
+
+  ngOnInit(): void {
+  }
 
   showEditEntityForm (entity: User, editForm: ViewContainerRef, options: any) {
     const expComponent =  this.componentFactory.getComponent(AddEditEntityComponent, editForm);
@@ -34,13 +40,14 @@ export class EditDeleteUserService {
     $.confirm({
       animation: 'top',
       closeAnimation: 'top',
-      title: 'Delete Confirmation',
-      content: 'Do you really want to delete '
+      title: this.translate.instant('user.form.actions.delete.confirm.popup.title'),
+      content: this.translate.instant('user.form.actions.delete.confirm.popup.content')
       + '<text class="userName">' + self.entity.firstName + '</text>' + '?',
       draggable: false,
       closeIcon: true,
       buttons: {
         confirm: {
+          text: this.translate.instant('user.form.actions.delete.button'),
           btnClass: 'btn-danger',
           action: function () {
             self.userService.deleteUser(self.entity, self.entity["_links"].self.href)
@@ -72,6 +79,7 @@ export class EditDeleteUserService {
           }
         },
         cancel: {
+          text: this.translate.instant('user.form.actions.cancel.button'),
           btnClass: 'btn-default',
           action: function () {
           }

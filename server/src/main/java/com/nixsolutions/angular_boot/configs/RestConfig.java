@@ -1,4 +1,4 @@
-package com.nixsolutions.angular_boot.config;
+package com.nixsolutions.angular_boot.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

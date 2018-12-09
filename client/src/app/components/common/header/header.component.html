@@ -1,23 +1,32 @@
 <div class="ui inverted segment">
   <div class="ui inverted secondary pointing menu">
     <a class="item" [routerLink]="['./home']">
-      Home
+      {{ 'top.menu.first.page' | translate }}
     </a>
     <a class="item" [routerLink]="['./second']">
-      Second Page
+      {{ 'top.menu.second.page' | translate }}
     </a>
     <a class="item" [routerLink]="['./myCabinet']">
-      My Cabinet
+      {{ 'top.menu.my.cabinet' | translate }}
     </a>
     <a class="item" *ngIf="this.authService.isAdmin()" [routerLink]="['./allUsers']">
-      All Users
+      {{ 'top.menu.all.users' | translate }}
     </a>
     <div class="right menu" >
+      <div class="ui dropdown item" (mouseover)="showMenu()" (mouseout)="hideMenu()">
+        {{ 'top.menu.language' | translate }} <i class="dropdown icon"></i>
+        <div class="language_menu" >
+          <a *ngFor="let lang of translate.getLangs()" class="item"
+             (click)="makeTranslation(lang)" (mouseover)="showMenu()" (mouseout)="hideMenu()">
+            {{ getFullName(lang) }}
+          </a>
+        </div>
+      </div>
       <a class="item" (click)="logout()" *ngIf="this.authService.isLoggedIn()">
-        Log Out
+        {{ 'top.menu.log.out' | translate }}
       </a>
       <a class="item" [routerLink]="['./login']" *ngIf="!this.authService.isLoggedIn()">
-        Log In
+        {{ 'top.menu.log.in' | translate }}
       </a>
     </div>
   </div>

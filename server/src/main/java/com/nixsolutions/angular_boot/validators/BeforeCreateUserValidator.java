@@ -32,11 +32,11 @@ public class BeforeCreateUserValidator implements Validator
         repository.findByEmail(newUser.getEmail());
     if (!CollectionUtils.isEmpty(oldUsersByNames))
     {
-      errors.rejectValue("firstName", "User with such First Name or Last Name already exists!");
+      errors.rejectValue("firstName", "user.byNames.exists.error");
     }
     if (Objects.nonNull(oldUserByEmail))
     {
-      errors.rejectValue("email", "User with such E-mail already exists!");
+      errors.rejectValue("email", "user.byEmail.exists.error");
     }
   }
 }

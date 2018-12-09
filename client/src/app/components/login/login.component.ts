@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 import {ActivatedRoute, Router} from "@angular/router";
 import {TokenStorage} from "../../services/auth/token.storage";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,8 @@ export class LoginComponent {
   constructor(public authService: AuthService,
               private router: Router,
               private route: ActivatedRoute,
-              private tokenStorage: TokenStorage) {
+              private tokenStorage: TokenStorage,
+              public translate: TranslateService) {
     this.message = '';
     this.route.queryParams
       .subscribe(params => this.return = params['return'] || '/main/home');
@@ -30,7 +32,9 @@ export class LoginComponent {
       },
       err => {
         if (err.status === 401) {
-          this.message = 'Incorrect credentials.';
+          this.translate.get('login.page.form.incorrect.credentials.error').subscribe(
+            (value) => this.message = value
+          );
           setTimeout(function() {
             this.message = '';
           }.bind(this), 2500);

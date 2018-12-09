@@ -2,12 +2,12 @@
   <div class="ui dimmer">
     <div class="content">
       <div class="center">
-        <button class="ui inverted button" (click)="editUser()">Edit</button>
-        <button class="ui inverted button" (click)="removeUser()">Delete</button>
+        <button class="ui inverted button" (click)="editUser()">{{ 'user.form.actions.edit.button' | translate }}</button>
+        <button class="ui inverted button" (click)="removeUser()">{{ 'user.form.actions.delete.button' | translate }}</button>
         <br/>
         <br/>
         <a [routerLink]="['.', entity.id]">
-          <button class="ui inverted button">More ...</button>
+          <button class="ui inverted button">{{ 'user.form.actions.more.button' | translate }}</button>
         </a>
       </div>
     </div>

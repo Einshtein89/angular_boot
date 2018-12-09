@@ -2,22 +2,39 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../../services/auth/auth.service";
 import {Router} from "@angular/router";
 import {TokenStorage} from "../../../services/auth/token.storage";
+import {TranslateService} from "@ngx-translate/core";
+import {LanguageService} from "../../../services/language.service";
 
 @Component({
   selector: 'header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.less']
 })
 export class HeaderComponent implements OnInit {
 
-  private userRoles: string[];
+  // private userRoles: string[];
+  private languages: Map<string, string> = new Map<string, string>();
+  private localeUpdated: boolean;
 
   constructor(private authService: AuthService,
               private router: Router,
-              private tokenStorage: TokenStorage) { }
+              private tokenStorage: TokenStorage,
+              public translate: TranslateService,
+              private languageService: LanguageService) { }
 
   ngOnInit() {
-    this.userRoles = this.tokenStorage.getUserRoles();
+    // this.userRoles = this.tokenStorage.getUserRoles();
+    this.languages.set('en', 'English');
+    this.languages.set('ru', 'Russian');
+    let langShortNames = Array.from(this.languages.keys());
+    this.translate.addLangs(langShortNames);
+    this.translate.setDefaultLang('en');
+    if (!localStorage['language']) {
+      localStorage['language'] = "en"
+    }
+
+    const browserLang = localStorage['language'] || "";
+    this.translate.use(browserLang.match(/en|ru/) ? browserLang : 'en');
   }
 
   logout() {
@@ -25,4 +42,24 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/main/login']);
   }
 
+  private showMenu($event) {
+    $(".language_menu").addClass('visible');
+  }
+
+  private hideMenu() {
+    $(".language_menu").removeClass('visible');
+  }
+
+  getFullName(lang: string) {
+    return this.languages.get(lang);
+  }
+
+  makeTranslation(lang: string) {
+    this.translate.use(lang);
+    localStorage['language'] = lang;
+    // this.languageService.setLocale(lang).subscribe(
+    //   () => this.localeUpdated = true
+    // )
+    // this.router.navigateByUrl(this.router.url + '?lang=' + lang);
+  }
 }

@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {User} from "../../models/user.model";
-import {EditDeleteUserService} from "../../services/edit-delete-user.service";
+import {EditDeleteUserService} from "../../services/edit.delete.user.service";
 
 @Component({
   selector: 'app-register',

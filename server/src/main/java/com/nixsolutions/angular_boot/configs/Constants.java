@@ -1,4 +1,4 @@
-package com.nixsolutions.angular_boot.config;
+package com.nixsolutions.angular_boot.configs;
 
 public class Constants {
   public static final String USER_ROLE = "USER";

@@ -1,7 +1,7 @@
-package com.nixsolutions.angular_boot.config.jwttoken;
+package com.nixsolutions.angular_boot.configs.jwttoken;
 
-import static com.nixsolutions.angular_boot.config.Constants.HEADER_STRING;
-import static com.nixsolutions.angular_boot.config.Constants.TOKEN_PREFIX;
+import static com.nixsolutions.angular_boot.configs.Constants.HEADER_STRING;
+import static com.nixsolutions.angular_boot.configs.Constants.TOKEN_PREFIX;
 
 import java.io.IOException;
 

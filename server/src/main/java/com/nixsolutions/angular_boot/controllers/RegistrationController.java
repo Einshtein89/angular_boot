@@ -1,7 +1,10 @@
-package com.nixsolutions.angular_boot.controller;
+package com.nixsolutions.angular_boot.controllers;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -29,8 +32,8 @@ public class RegistrationController
   private BeforeCreateUserValidator validator;
 
   @PostMapping
-  public ResponseEntity<?> register(@RequestBody User user) {
-    BeanPropertyBindingResult beanPropertyBindingResult = new BeanPropertyBindingResult(user, "User");
+  public ResponseEntity<?> register(HttpServletRequest req, HttpServletResponse res, @RequestBody User user) {
+    BeanPropertyBindingResult beanPropertyBindingResult = new BeanPropertyBindingResult(user, "Registration");
     validator.validate(user, beanPropertyBindingResult);
     if (!beanPropertyBindingResult.hasErrors())
     {

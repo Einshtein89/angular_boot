@@ -1,8 +1,8 @@
-package com.nixsolutions.angular_boot.config.jwttoken;
+package com.nixsolutions.angular_boot.configs.jwttoken;
 
-import static com.nixsolutions.angular_boot.config.Constants.ACCESS_TOKEN_VALIDITY_SECONDS;
-import static com.nixsolutions.angular_boot.config.Constants.AUTHORITIES_KEY;
-import static com.nixsolutions.angular_boot.config.Constants.SIGNING_KEY;
+import static com.nixsolutions.angular_boot.configs.Constants.ACCESS_TOKEN_VALIDITY_SECONDS;
+import static com.nixsolutions.angular_boot.configs.Constants.AUTHORITIES_KEY;
+import static com.nixsolutions.angular_boot.configs.Constants.SIGNING_KEY;
 
 import java.io.Serializable;
 import java.util.Arrays;

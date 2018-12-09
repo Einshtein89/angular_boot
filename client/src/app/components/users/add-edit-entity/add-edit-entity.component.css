@@ -1,6 +1,9 @@
 .error {
   color: red;
 }
+.ui.main.text.container {
+  margin-bottom: 10px;
+}
 
 .has-success .form-control {
   border-color: #5cb85c;
@@ -8,14 +11,4 @@
 
 .has-danger .form-control {
   border-color: #d9534f;
-}
-.ui.main.text.container {
-  margin-bottom: 10px;
-}
-
-.header-centered {
-  text-align: center;
-}
-.ui.form select {
-  height: 34px;
 }

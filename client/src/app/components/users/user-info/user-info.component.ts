@@ -4,7 +4,7 @@ import {UserService} from "../../../services/user.service";
 import {User} from "../../../models/user.model";
 import {AddEditEntityComponent} from "../add-edit-entity/add-edit-entity.component";
 import {ComponentFactory} from "../../../component-factory/component-factory";
-import {EditDeleteUserService} from "../../../services/edit-delete-user.service";
+import {EditDeleteUserService} from "../../../services/edit.delete.user.service";
 import {Location} from "@angular/common";
 
 @Component({
@@ -38,7 +38,8 @@ export class UserInfoComponent implements OnInit, AfterViewChecked {
   }
 
   editUser() {
-    this.editDeleteUserService.showEditEntityForm(this.entity, this.addEditContainerRef, {_isEdit: true, _isModal: true});
+    this.editDeleteUserService.showEditEntityForm(this.entity, this.addEditContainerRef,
+      {_isEdit: true, _isModal: true});
     this.cdr.detectChanges();
   }
 

@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { EntityList } from './components/users/entity-list/entity-list.component';
@@ -31,14 +31,22 @@ import { SearchResultComponent } from './components/users/search/search-result/s
 import { SearchResultListComponent } from './components/users/search/search-result-list/search-result-list.component';
 import { UserInfoComponent } from './components/users/user-info/user-info.component';
 import { ComponentFactory } from './component-factory/component-factory';
-import {EditDeleteUserService} from "./services/edit-delete-user.service";
+import {EditDeleteUserService} from "./services/edit.delete.user.service";
 import {TokenStorage} from "./services/auth/token.storage";
 import {Interceptor} from "./services/auth/interceptor";
 import { RegisterComponent } from './components/register/register.component';
 import { FooterComponent } from './components/common/footer/footer.component';
 import { HeaderComponent } from './components/common/header/header.component';
 import { CabinetComponent } from './components/cabinet/cabinet.component';
-import {FormCreateService } from './services/form-create.service';
+import {FormCreateService } from './services/form.create.service';
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import {LanguageService} from 'app/services/language.service';
+
+export function HttpLoaderFactory(httpClient: HttpClient) {
+  return new TranslateHttpLoader(httpClient);
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -76,7 +84,14 @@ import {FormCreateService } from './services/form-create.service';
     MatIconModule,
     MatCardModule,
     MatSelectModule,
-    MatListModule
+    MatListModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [
     UserService,
@@ -89,6 +104,7 @@ import {FormCreateService } from './services/form-create.service';
     EditDeleteUserService,
     TokenStorage,
     FormCreateService,
+    LanguageService,
     {provide: HTTP_INTERCEPTORS,
       useClass: Interceptor,
       multi : true

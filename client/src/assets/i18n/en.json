@@ -1,0 +1,67 @@
+{
+  "top.menu": {
+    "first.page": "First Page",
+    "second.page": "Second Page",
+    "my.cabinet": "My Cabinet",
+    "all.users": "All Users",
+    "log.out": "Log Out",
+    "log.in": "Log In",
+    "language": "Language"
+  },
+  "login.page" : {
+    "form.welcome" : "Welcome!",
+    "form.email.label": "E-mail",
+    "form.password.label": "Password",
+    "form.login.button": "Login",
+    "form.register": "Register",
+    "form.incorrect.credentials.error" : "Incorrect credentials."
+  },
+  "all.users.page" : {
+    "add.button" : "Add User",
+    "entities.per.page" : "Entities per Page",
+    "sort.by": "Sort by...",
+    "sort.by.first.name.up" : "firstName,asc;First Name up",
+    "sort.by.first.name.down" : "firstName,desc;First Name down"
+  },
+  "user.form.actions" : {
+    "register.title": "Register",
+    "edit.title": "Edit user",
+    "add.title": "Add new user",
+    "first.name.label" : "First Name",
+    "last.name.label" : "Last Name",
+    "email.label" : "E-mail",
+    "phone.label" : "Phone",
+    "sex.label" : "Sex",
+    "sex.man" : "man;Man",
+    "sex.woman" : "woman;Woman",
+    "password.label" : "Password",
+    "confirm.password.label" : "Confirm Password",
+    "cancel.button" : "Cancel",
+    "back.button" : "Back",
+    "submit.button" : "Submit",
+    "edit.button" : "Edit",
+    "delete.button" : "Delete",
+    "more.button" : "More...",
+    "user.created.1" : "User ",
+    "user.created.2" : " was created!",
+    "user.updated.2" : " was updated!",
+    "confirm.popup.title" : "Confirm",
+    "delete.confirm.popup.title" : "Delete Confirmation",
+    "delete.confirm.popup.content" : "Do you really want to delete "
+  },
+  "my.cabinet" : {
+    "title" : "My Cabinet"
+  },
+  "field.error" : "Field",
+  "required.error" : "is required",
+  "maxlength.error" : "maxlength is ",
+  "field.format.invalid.error" : "has invalid format",
+  "password.doesnt.match.error" : "Password doesn't match",
+  "fill.all.fields.note" : "Please fill in all required fields and correct all errors before submitting the form",
+  "empty.property" : " ; ",
+  "backend.validation.errors" : {
+    "user.byNames.exists.error" : "User with such First Name or Last Name already exists!",
+    "user.byEmail.exists.error" : "User with such E-mail already exists!",
+    "user.doesn't.exists.error" : "No user to be updated!"
+  }
+}

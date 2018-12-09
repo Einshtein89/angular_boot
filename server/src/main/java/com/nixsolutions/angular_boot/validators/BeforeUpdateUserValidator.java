@@ -1,8 +1,5 @@
 package com.nixsolutions.angular_boot.validators;
 
-import java.util.Objects;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -27,12 +24,11 @@ public class BeforeUpdateUserValidator implements Validator
     User newUser = (User) obj;
     if (newUser.getId() <= 0)
     {
-      errors.rejectValue("id", "No such user in DB!");
+      errors.rejectValue("id", "user.doesn't.exists.error");
     }
-    User oldUser = repository.findOne(newUser.getId());
-    if (Objects.isNull(oldUser))
+    if (!repository.exists(newUser.getId()))
     {
-      errors.rejectValue("id", "No such user in DB!");
+      errors.rejectValue("id", "user.doesn't.exists.error");
     }
   }
 }

@@ -1,0 +1,66 @@
+{
+  "top.menu": {
+    "first.page": "Первая страница",
+    "second.page": "Вторая страница",
+    "my.cabinet": "Мой кабинет",
+    "all.users": "Все пользователи",
+    "log.out": "Выйти",
+    "log.in": "Войти",
+    "language": "Язык"
+  },
+  "login.page" : {
+    "form.welcome" : "Добро пожаловать!",
+    "form.email.label": "Эл. Почта",
+    "form.password.label": "Пароль",
+    "form.login.button": "Войти",
+    "form.register": "Регистрация",
+    "form.incorrect.credentials.error" : "Неверный логин или пароль!"
+  },
+  "all.users.page" : {
+    "add.button" : "Доб. Польз",
+    "entities.per.page" : "Сущностей на стран.",
+    "sort.by": "Сортировать по...",
+    "sort.by.first.name.up" : "firstName,asc;Имя по возрастанию",
+    "sort.by.first.name.down" : "firstName,desc;Имя по убыванию"
+  },
+  "user.form.actions" : {
+    "register.title": "Регистрация",
+    "edit.title": "Редактировать пользователя",
+    "add.title": "Добавить нового пользователя",
+    "first.name.label" : "Имя",
+    "last.name.label" : "Фамилия",
+    "email.label" : "Эл. Почта",
+    "phone.label" : "Телефон",
+    "sex.label" : "Пол",
+    "sex.man" : "man;Мужской",
+    "sex.woman" : "woman;Женский",
+    "password.label" : "Пароль",
+    "confirm.password.label" : "Подтверждение пароля",
+    "cancel.button" : "Отмена",
+    "back.button" : "Назад",
+    "submit.button" : "Отправить",
+    "edit.button" : "Ред-ть",
+    "delete.button" : "Удалить",
+    "more.button" : "Еще...",
+    "user.created.1" : "Пользователь ",
+    "user.created.2" : " был создан!",
+    "user.updated.2" : " был обновлен!",
+    "confirm.popup.title" : "Подтверждение",
+    "delete.confirm.popup.title" : "Подтверждение удаления",
+    "delete.confirm.popup.content" : "Вы действительно хотите удалить "
+  },
+  "my.cabinet" : {
+    "title" : "Мой Кабинет"
+  },
+  "field.error" : "Поле",
+  "required.error" : "обязательно",
+  "maxlength.error" : "не должно превышать ",
+  "field.format.invalid.error" : "имеет формат",
+  "password.doesnt.match.error" : "Пароли не совпадают",
+  "fill.all.fields.note" : "Пожалуйста, заполните все необходимые поля перед отправкой формы",
+  "backend.validation.errors" : {
+    "user.byNames.exists.error" : "Пользователь с таким именем и фамилией уже существует!",
+    "user.byEmail.exists.error" : "Пользователь с таким адресом эл. почты уже существует!",
+    "user.doesn't.exists.error" : "Нет пользователя для обновления!"
+  }
+}

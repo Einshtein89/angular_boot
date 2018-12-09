@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {EntityList} from "../entity-list/entity-list.component";
 import {PaginationService} from "../../../services/pagination.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'sorting-entities',
@@ -12,15 +13,14 @@ export class SortingComponent implements OnInit {
   @Input() entityListComponent: EntityList;
   sortOptions: Array<object>;
 
-  constructor(public paginationService: PaginationService) {
-    this.sortOptions = [
-      {displayName: "", name: ""},
-      {displayName: "First Name up", name: "firstName,asc"},
-      {displayName: "First Name down", name: "firstName,desc"}
-    ];
+  constructor(public paginationService: PaginationService,
+              private translate: TranslateService) {
   }
 
   ngOnInit() {
+    this.translate.get(['empty.property', 'all.users.page.sort.by.first.name.up',
+      'all.users.page.sort.by.first.name.down']).subscribe(
+        (res) => this.sortOptions = Object.values(res));
   }
 
   sortPage(value: any) {
@@ -31,5 +31,13 @@ export class SortingComponent implements OnInit {
         data => this.entityListComponent.populateEntities(data),
         errorCode =>  this.entityListComponent.statusCode = errorCode,
         () => this.entityListComponent.loading = false)
+  }
+
+  getKey(option: string) {
+    return option.substring(0, option.indexOf(';'));
+  }
+
+  getValue(option: string) {
+    return option.substring(option.indexOf(';') + 1, option.length);
   }
 }

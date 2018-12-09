@@ -12,7 +12,7 @@ import {AddEditEntityComponent} from "../add-edit-entity/add-edit-entity.compone
 import {EntityList} from "../entity-list/entity-list.component";
 import {PaginationService} from "../../../services/pagination.service";
 import {ComponentFactory} from "../../../component-factory/component-factory";
-import {EditDeleteUserService} from "../../../services/edit-delete-user.service";
+import {EditDeleteUserService} from "../../../services/edit.delete.user.service";
 declare var $ : any;
 
 @Component({

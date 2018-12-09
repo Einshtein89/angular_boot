@@ -1,4 +1,4 @@
-package com.nixsolutions.angular_boot.config.jwttoken;
+package com.nixsolutions.angular_boot.configs.jwttoken;
 
 public class AuthToken
 {
