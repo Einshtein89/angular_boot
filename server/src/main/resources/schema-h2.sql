@@ -28,3 +28,20 @@ CREATE TABLE `user_role` (
   `role_id` int(11) NOT NULL,
   PRIMARY KEY (`user_id`,`role_id`),
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `photo`;
+
+CREATE TABLE `photo` (
+ `photo_id` int(11) NOT NULL AUTO_INCREMENT,
+ `name` varchar (255),
+ `body` blob,
+ PRIMARY KEY (`photo_id`),
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `user_photo`;
+
+CREATE TABLE `user_photo` (
+ `user_id` int(11) NOT NULL,
+ `photo_id` int(11) NOT NULL,
+ PRIMARY KEY (`user_id`,`photo_id`),
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

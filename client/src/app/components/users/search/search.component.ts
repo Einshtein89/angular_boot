@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import {EntityList} from "../entity-list/entity-list.component";
 import {animate, state, style, transition, trigger} from "@angular/animations";
-import {UserService} from "../../../services/user.service";
+import {UserService} from "../../../services/user/user.service";
 import {PaginationService} from "../../../services/pagination.service";
 import {AddEditEntityComponent} from "../add-edit-entity/add-edit-entity.component";
 import {SearchResultListComponent} from "./search-result-list/search-result-list.component";

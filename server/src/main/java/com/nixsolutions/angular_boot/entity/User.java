@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -54,6 +55,9 @@ public class User {
   @ManyToMany(cascade = CascadeType.ALL)
   @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles;
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinTable(name = "user_photo", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "photo_id"))
+  private Photo photo;
   
   public String getPhone() {
     return phone;
@@ -127,4 +131,13 @@ public class User {
     this.roles = roles;
   }
   
+  public Photo getPhoto()
+  {
+    return photo;
+  }
+  
+  public void setPhoto(Photo photo)
+  {
+    this.photo = photo;
+  }
 }

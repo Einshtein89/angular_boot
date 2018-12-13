@@ -1,9 +1,9 @@
-import {PaginationService} from "./pagination.service";
+import {PaginationService} from "../pagination.service";
 import {ChangeDetectorRef, Injectable, OnInit, ViewContainerRef} from "@angular/core";
 import {UserService} from "./user.service";
-import {ComponentFactory} from "../component-factory/component-factory";
-import {AddEditEntityComponent} from "../components/users/add-edit-entity/add-edit-entity.component";
-import {User} from "../models/user.model";
+import {ComponentFactory} from "../../component-factory/component-factory";
+import {AddEditEntityComponent} from "../../components/users/add-edit-entity/add-edit-entity.component";
+import {User} from "../../models/user.model";
 import {Router} from "@angular/router";
 import {TranslateService} from "@ngx-translate/core";
 declare var $ : any;

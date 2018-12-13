@@ -32,6 +32,7 @@
     "email.label" : "Эл. Почта",
     "phone.label" : "Телефон",
     "sex.label" : "Пол",
+    "avatar.label" : "Фото",
     "sex.man" : "man;Мужской",
     "sex.woman" : "woman;Женский",
     "password.label" : "Пароль",
@@ -47,7 +48,9 @@
     "user.updated.2" : " был обновлен!",
     "confirm.popup.title" : "Подтверждение",
     "delete.confirm.popup.title" : "Подтверждение удаления",
-    "delete.confirm.popup.content" : "Вы действительно хотите удалить "
+    "delete.confirm.popup.content" : "Вы действительно хотите удалить ",
+    "photo.upload.button.label" : "Загрузить",
+    "photo.change.button.label" : "Изменить"
   },
   "my.cabinet" : {
     "title" : "Мой Кабинет"

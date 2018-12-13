@@ -9,8 +9,8 @@ import {AuthGuard} from "../services/auth/auth-guard.service";
 import {LoginComponent} from "../components/login/login.component";
 import {LogoutComponent} from "../components/logout/logout.component";
 import {UserInfoComponent} from "../components/users/user-info/user-info.component";
-import {RegisterComponent} from "../components/register/register.component";
-import {CabinetComponent} from "../components/cabinet/cabinet.component";
+import {RegisterComponent} from "../components/users/register/register.component";
+import {CabinetComponent} from "../components/users/cabinet/cabinet.component";
 
 export const paginationRoutes: Routes = [
   { path: '', redirectTo: 'first', pathMatch: 'full' },

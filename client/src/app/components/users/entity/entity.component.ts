@@ -7,12 +7,13 @@ import {
   ViewContainerRef
 } from '@angular/core';
 import {User} from "../../../models/user.model";
-import {UserService} from "../../../services/user.service";
+import {UserService} from "../../../services/user/user.service";
 import {AddEditEntityComponent} from "../add-edit-entity/add-edit-entity.component";
 import {EntityList} from "../entity-list/entity-list.component";
 import {PaginationService} from "../../../services/pagination.service";
 import {ComponentFactory} from "../../../component-factory/component-factory";
-import {EditDeleteUserService} from "../../../services/edit.delete.user.service";
+import {EditDeleteUserService} from "../../../services/user/edit.delete.user.service";
+import {ImageService} from "../../../services/user/image.service";
 declare var $ : any;
 
 @Component({
@@ -26,17 +27,20 @@ export class EntityComponent implements OnInit, OnDestroy, AfterViewChecked {
   @Input() entityListComponent: EntityList;
   updatedUser: User;
   errorList: any;
+  imgSrc: any;
 
   constructor(private userService: UserService,
               private paginationService: PaginationService,
               private cdr : ChangeDetectorRef,
-              private editDeleteUserService: EditDeleteUserService) {}
+              private editDeleteUserService: EditDeleteUserService,
+              private imageService: ImageService) {}
 
   ngOnInit() {
     this.userService.changedUser.subscribe(user => this.updatedUser = user);
     $('.special.cards .image').dimmer({
       on: 'hover'
     });
+    this.imgSrc = this.imageService.getImgSrc(this.entity);
   }
 
   ngOnDestroy() {
@@ -50,6 +54,11 @@ export class EntityComponent implements OnInit, OnDestroy, AfterViewChecked {
   removeUser() {
     this.editDeleteUserService.deleteUser(this);
   };
+
+
+  getUserPhoto() {
+    return this.imgSrc;
+  }
 
   private getPageAfterRemove(pageNumber: number) {
     this.paginationService.getPageByNumber(pageNumber)

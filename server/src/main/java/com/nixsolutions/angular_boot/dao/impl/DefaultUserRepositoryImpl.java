@@ -1,5 +1,7 @@
 package com.nixsolutions.angular_boot.dao.impl;
 
+import static com.nixsolutions.angular_boot.configs.Constants.PASSWORD_MAX_LENGTH;
+
 import java.util.HashSet;
 import java.util.List;
 
@@ -16,6 +18,8 @@ import com.nixsolutions.angular_boot.dao.RoleRepository;
 import com.nixsolutions.angular_boot.dao.UserRepository;
 import com.nixsolutions.angular_boot.entity.Role;
 import com.nixsolutions.angular_boot.entity.User;
+
+import io.jsonwebtoken.lang.Collections;
 
 @Component
 @Primary
@@ -50,11 +54,17 @@ public class DefaultUserRepositoryImpl implements UserRepository
   @Override
   public <S extends User> S save(S s)
   {
-    String encodedPassword = passwordEncoder.encode(s.getPassword());
-    s.setPassword(encodedPassword);
-    HashSet<Role> roles = new HashSet<>();
-    roles.add(roleRepository.findByRole("USER"));
-    s.setRoles(roles);
+    if (s.getPassword().length() <= PASSWORD_MAX_LENGTH)
+    {
+      String encodedPassword = passwordEncoder.encode(s.getPassword());
+      s.setPassword(encodedPassword);
+    }
+    if (Collections.isEmpty(s.getRoles()))
+    {
+      HashSet<Role> roles = new HashSet<>();
+      roles.add(roleRepository.findByRole("USER"));
+      s.setRoles(roles);
+    }
     return userRepository.save(s);
   }
   

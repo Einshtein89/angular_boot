@@ -8,6 +8,7 @@ export class User {
   public phone: string;
   public sex: string;
   public link: any;
+  public photo: any;
 
   constructor() {
   }

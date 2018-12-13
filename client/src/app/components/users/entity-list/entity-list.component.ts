@@ -10,7 +10,7 @@ import {
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 import {User} from "../../../models/user.model";
-import {UserService} from "../../../services/user.service";
+import {UserService} from "../../../services/user/user.service";
 import {AddEditEntityComponent} from "../add-edit-entity/add-edit-entity.component";
 import * as  _ from "underscore"
 import {ActivatedRoute, Router} from "@angular/router";

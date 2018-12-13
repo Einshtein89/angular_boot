@@ -1,12 +1,13 @@
 import {AfterViewChecked, ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FormGroup, FormControl, Validators, AbstractControl} from "@angular/forms";
-import {UserService} from "../../../services/user.service";
+import {UserService} from "../../../services/user/user.service";
 import {User} from "../../../models/user.model";
 import {PaginationService} from "../../../services/pagination.service";
 import {EntityList} from "../entity-list/entity-list.component";
 import {Location} from "@angular/common";
 import {FormCreateService} from "../../../services/form.create.service";
 import {TranslateService} from "@ngx-translate/core";
+import {ImageService} from "../../../services/user/image.service";
 
 declare var $ : any;
 
@@ -42,7 +43,8 @@ export class AddEditEntityComponent implements OnInit, OnDestroy, AfterViewCheck
               private location: Location,
               private formCreateService: FormCreateService,
               private translate: TranslateService,
-              private cdr: ChangeDetectorRef) {
+              private cdr: ChangeDetectorRef,
+              private imageService: ImageService) {
   }
 
 
@@ -150,8 +152,18 @@ export class AddEditEntityComponent implements OnInit, OnDestroy, AfterViewCheck
             + user.firstName
             + this.translate.instant('user.form.actions.user.updated.2')
           );
+          if (!this._currentUser.photo){
+            return;
+          }
+          this.imageService.postImage(this.imageService.convertByteArraytoFormData(this._currentUser.photo.body,
+            "image/jpg")).subscribe(
+              (res) => {
+                this.errorList = []
+              },
+              (error) => this.errorList.push(error.error)
+            );
         },
-        error => this.errorList = error.error
+        error => this.errorList.push(error.error)
       );
     return false;
   }

@@ -1,5 +1,7 @@
 package com.nixsolutions.angular_boot.controllers;
 
+import static com.nixsolutions.angular_boot.configs.Constants.REGISTRATION;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,7 +35,8 @@ public class RegistrationController
 
   @PostMapping
   public ResponseEntity<?> register(HttpServletRequest req, HttpServletResponse res, @RequestBody User user) {
-    BeanPropertyBindingResult beanPropertyBindingResult = new BeanPropertyBindingResult(user, "Registration");
+    BeanPropertyBindingResult beanPropertyBindingResult =
+        new BeanPropertyBindingResult(user, REGISTRATION);
     validator.validate(user, beanPropertyBindingResult);
     if (!beanPropertyBindingResult.hasErrors())
     {

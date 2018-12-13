@@ -1,7 +1,7 @@
 <div *ngIf="entity">
   <div class="ui card single_card">
     <a class="image">
-      <img src="../../assets/{{entity.sex}}.png">
+      <img [src]="getUserPhoto()">
     </a>
     <div class="content">
       <a class="header">{{entity.firstName}} {{entity.lastName}}</a>

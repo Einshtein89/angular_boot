@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
-import {User} from "../models/user.model";
+import {User} from "../../models/user.model";
 import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from "@angular/common/http";
 import {assign} from "rxjs/util/assign";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
@@ -19,8 +19,10 @@ export class UserService {
   private options = {headers: new HttpHeaders({ 'Content-Type': 'application/json' })};
   private newUser = new BehaviorSubject<User>(null);
   private updatedUser = new BehaviorSubject<any>(null);
+  private allUsers = new BehaviorSubject<any>(null);
   addedUser = this.newUser.asObservable();
   changedUser = this.updatedUser.asObservable();
+  allUsersAsObservable = this.allUsers.asObservable();
   public searchResults: User[];
   private registerUrl: string = REGISTER_API_URL;
 
@@ -35,6 +37,7 @@ export class UserService {
     ].join('&');
     let queryUrl: string = url ? url : `${this.userUrl}?${params}`;
     return this.http.get(queryUrl)
+      .do((res) => this.allUsers.next(this._extractData(res)))
       .catch(this._handleError)
   }
 
@@ -87,13 +90,11 @@ export class UserService {
     return _.find(this.searchResults, result => result.id == id)
   }
 
-  private _extractData(res: HttpResponse<any>) : any {
-    console.log(res);
+  private _extractData(res: any) : any {
     let body = res["_embedded"].users;
     return body;
 }
   private _handleError (error: HttpResponse<any> | any) {
-    console.error(error.message || error);
     return Observable.throw(error);
   }
 }

@@ -136,7 +136,7 @@
           </div>
         </div>
       </div>
-
+    <div class="two fields">
       <div class="field" [ngClass]="{
         'has-danger': sex.invalid && (sex.dirty || sex.touched),
         'has-success': sex.valid && (sex.dirty || sex.touched)
@@ -163,6 +163,28 @@
           </p>
         </div>
       </div>
+      <div class="field cabinet-avatar" *ngIf="user.photo || this.imgSrc">
+        <label #photoLabel for="userPhoto">{{ 'user.form.actions.avatar.label' | translate }}</label>
+        <img width="100px" height="100px" id="userPhoto" [src]="getUserPhoto()"
+             />
+        <image-upload id="imageUploader"
+                      (uploadFinished)="onUploadFinished($event)"
+                      (removed)="onRemoved($event)"
+
+                      [buttonCaption]="getTranslationForChangePhotoButton()"
+                      [dropBoxMessage]="''">
+        </image-upload>
+      </div>
+      <div class="field" *ngIf="!user.photo && !this.imgSrc">
+        <label #photoLabel for="userPhoto">{{ 'user.form.actions.avatar.label' | translate }}</label>
+        <image-upload
+          (uploadFinished)="onUploadFinished($event)"
+          (removed)="onRemoved($event)"
+          [buttonCaption]="getTranslationForUpdatePhotoButton()"
+          [dropBoxMessage]="''">
+        </image-upload>
+      </div>
+    </div>
       <div *ngIf="myForm.touched  && myForm.invalid"
            class="error">{{ 'fill.all.fields.note' | translate }}
       </div>

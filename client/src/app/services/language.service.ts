@@ -1,6 +1,6 @@
 import {Inject, Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
-import {DEFAULT_PAGE_SIZE, USERS_API_URL} from "./user.service";
+import {DEFAULT_PAGE_SIZE, USERS_API_URL} from "./user/user.service";
 import {User} from "../models/user.model";
 import {Observable} from "rxjs";
 

@@ -1,4 +1,4 @@
-import {USERS_API_URL, REGISTER_API_URL} from "../services/user.service";
+import {USERS_API_URL, REGISTER_API_URL} from "../services/user/user.service";
 import {DEFAULT_PAGE_SIZE, DEFAULT_SORT} from "../services/pagination.service";
 import {LANGUAGE_API_URL} from "../services/language.service";
 

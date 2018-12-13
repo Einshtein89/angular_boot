@@ -32,6 +32,7 @@
     "email.label" : "E-mail",
     "phone.label" : "Phone",
     "sex.label" : "Sex",
+    "avatar.label" : "Photo",
     "sex.man" : "man;Man",
     "sex.woman" : "woman;Woman",
     "password.label" : "Password",
@@ -47,7 +48,9 @@
     "user.updated.2" : " was updated!",
     "confirm.popup.title" : "Confirm",
     "delete.confirm.popup.title" : "Delete Confirmation",
-    "delete.confirm.popup.content" : "Do you really want to delete "
+    "delete.confirm.popup.content" : "Do you really want to delete ",
+    "photo.upload.button.label" : "Upload",
+    "photo.change.button.label" : "Change"
   },
   "my.cabinet" : {
     "title" : "My Cabinet"

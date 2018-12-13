@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { EntityList } from './components/users/entity-list/entity-list.component';
 import { EntityComponent } from './components/users/entity/entity.component';
 import { AddEditEntityComponent } from './components/users/add-edit-entity/add-edit-entity.component';
-import {UserService} from "./services/user.service";
+import {UserService} from "./services/user/user.service";
 import {constants} from "./constants/constants";
 import {AppRoutingModule} from "./router/router.module";
 import { HomeComponent } from './components/home-component/home.component';
@@ -31,17 +31,19 @@ import { SearchResultComponent } from './components/users/search/search-result/s
 import { SearchResultListComponent } from './components/users/search/search-result-list/search-result-list.component';
 import { UserInfoComponent } from './components/users/user-info/user-info.component';
 import { ComponentFactory } from './component-factory/component-factory';
-import {EditDeleteUserService} from "./services/edit.delete.user.service";
+import {EditDeleteUserService} from "./services/user/edit.delete.user.service";
 import {TokenStorage} from "./services/auth/token.storage";
 import {Interceptor} from "./services/auth/interceptor";
-import { RegisterComponent } from './components/register/register.component';
+import { RegisterComponent } from './components/users/register/register.component';
 import { FooterComponent } from './components/common/footer/footer.component';
 import { HeaderComponent } from './components/common/header/header.component';
-import { CabinetComponent } from './components/cabinet/cabinet.component';
+import { CabinetComponent } from './components/users/cabinet/cabinet.component';
 import {FormCreateService } from './services/form.create.service';
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {LanguageService} from 'app/services/language.service';
+import { ImageUploadModule } from "angular2-image-upload";
+import {ImageService} from "./services/user/image.service";
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
@@ -91,7 +93,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    })
+    }),
+    ImageUploadModule.forRoot(),
   ],
   providers: [
     UserService,
@@ -105,6 +108,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     TokenStorage,
     FormCreateService,
     LanguageService,
+    ImageService,
     {provide: HTTP_INTERCEPTORS,
       useClass: Interceptor,
       multi : true

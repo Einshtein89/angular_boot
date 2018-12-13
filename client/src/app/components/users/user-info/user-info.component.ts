@@ -1,11 +1,12 @@
 import {AfterViewChecked, ChangeDetectorRef, Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {UserService} from "../../../services/user.service";
+import {UserService} from "../../../services/user/user.service";
 import {User} from "../../../models/user.model";
 import {AddEditEntityComponent} from "../add-edit-entity/add-edit-entity.component";
 import {ComponentFactory} from "../../../component-factory/component-factory";
-import {EditDeleteUserService} from "../../../services/edit.delete.user.service";
+import {EditDeleteUserService} from "../../../services/user/edit.delete.user.service";
 import {Location} from "@angular/common";
+import {ImageService} from "../../../services/user/image.service";
 
 @Component({
   selector: 'app-user-info',
@@ -17,6 +18,7 @@ export class UserInfoComponent implements OnInit, AfterViewChecked {
   id: string;
   entity: User;
   updatedUser: User;
+  imgSrc: any;
   @ViewChild('addEditEntity', {read: ViewContainerRef}) addEditContainerRef;
 
   constructor(private route: ActivatedRoute,
@@ -24,16 +26,23 @@ export class UserInfoComponent implements OnInit, AfterViewChecked {
               private cdr: ChangeDetectorRef,
               private editDeleteUserService: EditDeleteUserService,
               private router: Router,
-              private location: Location) {
+              private location: Location,
+              private imageService: ImageService) {
      route.params.subscribe(params => { this.id = params['userId']; });
   }
 
   ngOnInit() {
-    this.userService.changedUser.subscribe(user => this.updatedUser = user);
+    this.userService.allUsersAsObservable.subscribe(user => this.updatedUser = user);
     this.entity = this.userService.getSearchResultUserById(this.id);
     if (!this.entity) {
       this.userService.getUserById(this.id)
-        .subscribe(data => this.entity = data);
+        .subscribe(data => {
+          this.entity = data;
+          this.imgSrc = this.imageService.getImgSrc(this.entity);
+        });
+    }
+    if (this.entity) {
+      this.imgSrc = this.imageService.getImgSrc(this.entity);
     }
   }
 
@@ -46,6 +55,11 @@ export class UserInfoComponent implements OnInit, AfterViewChecked {
   removeUser() {
     this.editDeleteUserService.deleteUser(this);
   }
+
+  getUserPhoto() {
+    return this.imgSrc;
+  }
+
 
   ngAfterViewChecked(): void {
     this.editDeleteUserService.updateCurrentUser(this);
