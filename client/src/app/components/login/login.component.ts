@@ -3,6 +3,7 @@ import { AuthService } from '../../services/auth/auth.service';
 import {ActivatedRoute, Router} from "@angular/router";
 import {TokenStorage} from "../../services/auth/token.storage";
 import {TranslateService} from "@ngx-translate/core";
+import {UserService} from "../../services/user/user.service";
 
 @Component({
   selector: 'app-login',
@@ -12,12 +13,14 @@ import {TranslateService} from "@ngx-translate/core";
 export class LoginComponent {
   message: string;
   return: string = '';
+  loggedInUser: any;
 
   constructor(public authService: AuthService,
               private router: Router,
               private route: ActivatedRoute,
               private tokenStorage: TokenStorage,
-              public translate: TranslateService) {
+              public translate: TranslateService,
+              private userService: UserService) {
     this.message = '';
     this.route.queryParams
       .subscribe(params => this.return = params['return'] || '/main/home');
@@ -28,6 +31,8 @@ export class LoginComponent {
     this.authService.login(username, password).subscribe(
       data => {
         this.tokenStorage.saveToken(data.token);
+        this.userService.getUserByUserName(this.tokenStorage.getUserId())
+          .subscribe((user) => this.loggedInUser = user);
         this.router.navigateByUrl(this.return);
       },
       err => {

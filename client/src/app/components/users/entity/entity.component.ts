@@ -36,7 +36,7 @@ export class EntityComponent implements OnInit, OnDestroy, AfterViewChecked {
               private imageService: ImageService) {}
 
   ngOnInit() {
-    this.userService.changedUser.subscribe(user => this.updatedUser = user);
+    this.userService.changedUserAsObservable.subscribe(user => this.updatedUser = user);
     $('.special.cards .image').dimmer({
       on: 'hover'
     });

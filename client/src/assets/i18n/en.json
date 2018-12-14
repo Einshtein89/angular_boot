@@ -36,6 +36,9 @@
     "sex.man" : "man;Man",
     "sex.woman" : "woman;Woman",
     "password.label" : "Password",
+    "change.password.label" : "Change Password",
+    "old.password.label" : "Old Password",
+    "new.password.label" : "New Password",
     "confirm.password.label" : "Confirm Password",
     "cancel.button" : "Cancel",
     "back.button" : "Back",
@@ -50,7 +53,9 @@
     "delete.confirm.popup.title" : "Delete Confirmation",
     "delete.confirm.popup.content" : "Do you really want to delete ",
     "photo.upload.button.label" : "Upload",
-    "photo.change.button.label" : "Change"
+    "photo.change.button.label" : "Change",
+    "cabinet.main.section.label" : "My Information"
+
   },
   "my.cabinet" : {
     "title" : "My Cabinet"

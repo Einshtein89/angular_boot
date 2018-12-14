@@ -55,7 +55,7 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
 
   ngOnInit() {
     this.paginationService.currentPageSize = this.paginationService.defaultPageSize;
-    this.userService.addedUser.subscribe(user => this.user = user);
+    this.userService.addedUserAsObservable.subscribe(user => this.user = user);
     // if(!this.userService.entityList) {
       this.getAllUsers();
     // } else {

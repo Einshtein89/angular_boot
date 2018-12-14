@@ -124,7 +124,7 @@
                       class="form-control"
                       formControlName="sex"
                       value ="myForm.sex">
-                <option *ngFor="let sex of sexArray" [value]="getKey(sex)">{{ getValue(sex) }}</option>
+                <option *ngFor="let sex of sexArray" [value]="userUtils.getKey(sex)">{{ userUtils.getValue(sex) }}</option>
               </select>
               <div class="error"
                    *ngIf="sex.errors && (sex.dirty || sex.touched)">

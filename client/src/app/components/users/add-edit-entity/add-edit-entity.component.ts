@@ -8,6 +8,7 @@ import {Location} from "@angular/common";
 import {FormCreateService} from "../../../services/form.create.service";
 import {TranslateService} from "@ngx-translate/core";
 import {ImageService} from "../../../services/user/image.service";
+import {UserUtils} from "../../../utils/users/user.utils";
 
 declare var $ : any;
 
@@ -44,7 +45,8 @@ export class AddEditEntityComponent implements OnInit, OnDestroy, AfterViewCheck
               private formCreateService: FormCreateService,
               private translate: TranslateService,
               private cdr: ChangeDetectorRef,
-              private imageService: ImageService) {
+              private imageService: ImageService,
+              private userUtils: UserUtils) {
   }
 
 
@@ -95,29 +97,17 @@ export class AddEditEntityComponent implements OnInit, OnDestroy, AfterViewCheck
       Validators.required,
       Validators.pattern('^(\\+?(\\d{1}|\\d{2}|\\d{3})[- ]?)?\\d{3}[- ]?\\d{3}[- ]?\\d{4}$')
     ]);
-    fieldsWithValidators.set({name: "sex", defaultValue: this.getDefaultSex()}, Validators.required);
+    fieldsWithValidators.set({name: "sex", defaultValue: this.userUtils.getDefaultSex()}, Validators.required);
     return fieldsWithValidators;
   }
 
   private populateFormValidators() {
-    return !this._isEdit ? this.MatchPassword : null;
+    return !this._isEdit ? this.userUtils.MatchPassword : null;
   }
 
   //field can be required by condition
   private isFieldRequired()  {
     return this.isFirstNameRequired ? Validators.required : null;
-  }
-
-  private getDefaultSex(): string {
-    return "";
-  }
-
-  private getKey(sex: string) {
-    return sex.substring(0, sex.indexOf(';'));
-  }
-
-  private getValue(sex: string) {
-    return sex.substring(sex.indexOf(';') + 1, sex.length);
   }
 
   private removeModal(){
@@ -148,7 +138,7 @@ export class AddEditEntityComponent implements OnInit, OnDestroy, AfterViewCheck
         () => {
           this.myForm.reset();
           this.removeModal();
-          this._renderMessage(this.translate.instant('user.form.actions.user.created.1')
+          this.userUtils.renderMessage(this.translate.instant('user.form.actions.user.created.1')
             + user.firstName
             + this.translate.instant('user.form.actions.user.updated.2')
           );
@@ -161,7 +151,7 @@ export class AddEditEntityComponent implements OnInit, OnDestroy, AfterViewCheck
                 this.errorList = []
               },
               (error) => this.errorList.push(error.error)
-            );
+          );
         },
         error => this.errorList.push(error.error)
       );
@@ -173,7 +163,7 @@ export class AddEditEntityComponent implements OnInit, OnDestroy, AfterViewCheck
       .subscribe(
         () => {
           this.myForm.reset();
-          this._renderMessage(this.translate.instant('user.form.actions.user.created.1')
+          this.userUtils.renderMessage(this.translate.instant('user.form.actions.user.created.1')
             + user.firstName
             + this.translate.instant('user.form.actions.user.created.2')
           );
@@ -218,31 +208,6 @@ export class AddEditEntityComponent implements OnInit, OnDestroy, AfterViewCheck
     let result = [];
     errors.forEach((error) => result.push(this.translate.instant("backend.validation.errors." + error)));
     return result;
-  }
-
-  private _renderMessage(message) {
-    $.confirm({
-      animation: 'top',
-      closeAnimation: 'top',
-      title: this.translate.instant('user.form.actions.confirm.popup.title'),
-      content: message,
-      draggable: false,
-      closeIcon: true,
-      buttons: {
-        ok: function () {
-        },
-      }
-    });
-  }
-
-  private MatchPassword(AC: AbstractControl) {
-    let password = AC.get('password').value;
-    let confirmPassword = AC.get('confirmPassword').value;
-    if(password != confirmPassword) {
-      AC.get('confirmPassword').setErrors( {MatchPassword: true} )
-    } else {
-      return null
-    }
   }
 
   ngAfterViewChecked(): void {

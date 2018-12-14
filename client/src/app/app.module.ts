@@ -44,6 +44,7 @@ import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {LanguageService} from 'app/services/language.service';
 import { ImageUploadModule } from "angular2-image-upload";
 import {ImageService} from "./services/user/image.service";
+import {UserUtils} from "./utils/users/user.utils";
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
@@ -109,6 +110,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     FormCreateService,
     LanguageService,
     ImageService,
+    UserUtils,
     {provide: HTTP_INTERCEPTORS,
       useClass: Interceptor,
       multi : true

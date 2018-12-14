@@ -21,3 +21,11 @@
 .modal-footer {
   margin-top: 50px;
 }
+
+.topbar {
+  border-top: 1px solid #e5e5e5;
+}
+
+.change-password-form {
+  padding: 10px;
+}

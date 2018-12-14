@@ -36,6 +36,9 @@
     "sex.man" : "man;Мужской",
     "sex.woman" : "woman;Женский",
     "password.label" : "Пароль",
+    "change.password.label" : "Сменить пароль",
+    "old.password.label" : "Старый пароль",
+    "new.password.label" : "Новый пароль",
     "confirm.password.label" : "Подтверждение пароля",
     "cancel.button" : "Отмена",
     "back.button" : "Назад",
@@ -50,7 +53,8 @@
     "delete.confirm.popup.title" : "Подтверждение удаления",
     "delete.confirm.popup.content" : "Вы действительно хотите удалить ",
     "photo.upload.button.label" : "Загрузить",
-    "photo.change.button.label" : "Изменить"
+    "photo.change.button.label" : "Изменить",
+    "cabinet.main.section.label" : "Мои данные"
   },
   "my.cabinet" : {
     "title" : "Мой Кабинет"

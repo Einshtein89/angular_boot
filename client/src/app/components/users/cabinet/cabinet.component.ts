@@ -10,6 +10,8 @@ import {FileHolder} from "angular2-image-upload";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ImageService} from "../../../services/user/image.service";
 import {Router} from "@angular/router";
+import * as  _ from "underscore"
+import {UserUtils} from "../../../utils/users/user.utils";
 
 declare var $ : any;
 
@@ -25,14 +27,18 @@ export class CabinetComponent implements OnInit, AfterViewChecked {
   private statusCode: string;
   private errorList: any;
 
-  private myForm: FormGroup;
+  private mainSectionForm: FormGroup;
   private firstName: FormControl;
   private lastName: FormControl;
   private email: FormControl;
   private phone: FormControl;
   private sex: FormControl;
   private photo: FormData = null;
-  private url: any;
+
+  private changePasswordForm: FormGroup;
+  private password: FormControl;
+  private oldPassword: FormControl;
+  private confirmPassword: FormControl;
 
   private sexArray: Array<string>;
   private editableFields: Map<string, boolean> = new Map<string, boolean>();
@@ -46,7 +52,8 @@ export class CabinetComponent implements OnInit, AfterViewChecked {
               private translate: TranslateService,
               private cdr: ChangeDetectorRef,
               private imageService: ImageService,
-              private router: Router) {
+              private router: Router,
+              private userUtils: UserUtils) {
   }
 
   ngOnInit() {
@@ -54,29 +61,46 @@ export class CabinetComponent implements OnInit, AfterViewChecked {
   }
 
   private getCurrentUser() {
-    this.loading = true;
-    this.userService.getUserByUserName(this.tokenStorage.getUserId())
-      .subscribe(
-        data => {
-          this.user = this.extractUsers(data);
-          this.populateTextMessages();
-          this.createForm();
-          this.imgSrc = this.imageService.getImgSrc(this.user);
-        },
-        errorCode =>  this.statusCode = errorCode,
-        () => this.loading = false
-      );
+    this.userService.loggedInUserAsObservable.subscribe(user => this.user = user);
+    if (this.user) {
+      this.prepareCabinetData();
+    }
+    if (!this.user) {
+      this.loading = true;
+      this.userService.getUserByUserName(this.tokenStorage.getUserId())
+        .subscribe(
+          data => {
+            this.user = this.extractUsers(data);
+            this.prepareCabinetData();
+          },
+          errorCode =>  this.statusCode = errorCode,
+          () => this.loading = false
+        );
+    }
+  }
+
+  private prepareCabinetData() {
+    this.populateTextMessages();
+    this.createForms();
+    this.imgSrc = this.imageService.getImgSrc(this.user);
   }
 
   private onSubmit(user: User) {
-    if (!this.myForm.valid) {
+    if (!this.mainSectionForm.valid) {
       return false;
     }
     this.updateUser(user)
   }
 
+  private onSubmitPasswordChange(value: any) {
+    if (!this.mainSectionForm.valid) {
+      return false;
+    }
+    this.changePassword(value);
+  }
+
   private goToPrevPage() {
-    this.myForm.reset();
+    this.mainSectionForm.reset();
     this.location.back();
   }
 
@@ -84,7 +108,7 @@ export class CabinetComponent implements OnInit, AfterViewChecked {
     this.userService.updateUser(user, this.user["_links"].self.href)
       .subscribe(
         () => {
-          this._renderMessage(this.translate.instant('user.form.actions.user.created.1')
+          this.userUtils.renderMessage(this.translate.instant('user.form.actions.user.created.1')
             + user.firstName
             + this.translate.instant('user.form.actions.user.updated.2')
           );
@@ -112,78 +136,68 @@ export class CabinetComponent implements OnInit, AfterViewChecked {
       );
     return false;
   }
-  private _renderMessage(message) {
-    $.confirm({
-      animation: 'top',
-      closeAnimation: 'top',
-      title: this.translate.instant('user.form.actions.confirm.popup.title'),
-      content: message,
-      draggable: false,
-      closeIcon: true,
-      buttons: {
-        ok: function () {
-        },
-      }
-    });
+
+  private changePassword(value: any) {
+
   }
 
   private extractUsers(data: any) {
     return data;
   }
 
-  private createForm() {
-    this.myForm = new FormGroup({});
+  private createForms() {
     this.formFields = this.populateFieldsAndValidators();
-    this.formFields.forEach((validators: any, fieldParameters: any) => {
-      this[fieldParameters['name']] = this.formCreateService
-        ._createFormControl(this.user, fieldParameters, validators);
-      this.myForm.setControl(fieldParameters['name'], this[fieldParameters['name']]);
-      this.editableFields.set(fieldParameters['name'], false);
-    });
-    this.myForm.setValidators(null);
+    this.mainSectionForm = this.createForm(this.mainSectionForm, this.formFields,
+      "mainSectionForm", null);
+    this.changePasswordForm = this.createForm(this.changePasswordForm, this.formFields,
+      "changePasswordForm", this.userUtils.MatchPassword);
+  }
+
+  private createForm(form: FormGroup, formFields: Map<any, any>, formName: string, formValidators: any) {
+    form = new FormGroup({});
+    Array.from(formFields.entries())
+      .filter((entry) => _.isEqual(entry[0], _.findWhere(entry, {formName: formName})))
+      .forEach((entry) => {
+        this[entry[0]['name']] = this.formCreateService
+          ._createFormControl(this.user, entry[0], entry[1]);
+        form.setControl(entry[0]['name'], this[entry[0]['name']]);
+        this.editableFields.set(entry[0]['name'], false);
+      });
+    form.setValidators(formValidators);
+    return form;
   }
 
   private populateFieldsAndValidators() {
     let fieldsWithValidators = new Map();
-    fieldsWithValidators.set({name: "firstName", defaultValue: ''}, [
+    fieldsWithValidators.set({name: "firstName", defaultValue: '', formName: "mainSectionForm"}, [
       Validators.required,
       Validators.maxLength(50)
     ]);
-    fieldsWithValidators.set({name: "lastName", defaultValue: ''}, [
+    fieldsWithValidators.set({name: "lastName", defaultValue: '', formName: "mainSectionForm"}, [
       Validators.required,
       Validators.maxLength(50)
     ]);
-    fieldsWithValidators.set({name: "email", defaultValue: ''}, [
+    fieldsWithValidators.set({name: "email", defaultValue: '', formName: "mainSectionForm"}, [
       Validators.required,
       Validators.email
     ]);
-    fieldsWithValidators.set({name: "password", defaultValue: ''}, null);
-    fieldsWithValidators.set({name: "phone", defaultValue: ''}, [
+    fieldsWithValidators.set({name: "password", defaultValue: '', formName: "mainSectionForm"}, null);
+    fieldsWithValidators.set({name: "phone", defaultValue: '', formName: "mainSectionForm"}, [
       Validators.required,
       Validators.pattern('^(\\+?(\\d{1}|\\d{2}|\\d{3})[- ]?)?\\d{3}[- ]?\\d{3}[- ]?\\d{4}$')
     ]);
-    fieldsWithValidators.set({name: "sex", defaultValue: this.getDefaultSex()}, Validators.required);
-    // fieldsWithValidators.set({name: "photo", defaultValue: ''}, null);
+    fieldsWithValidators.set({name: "sex", defaultValue: this.userUtils.getDefaultSex(), formName: "mainSectionForm"}, Validators.required);
+    fieldsWithValidators.set({name: "password", defaultValue: '', formName: "changePasswordForm"}, Validators.required);
+    fieldsWithValidators.set({name: "oldPassword", defaultValue: '', formName: "changePasswordForm"}, Validators.required);
+    fieldsWithValidators.set({name: "confirmPassword", defaultValue: '', formName: "changePasswordForm"}, Validators.required);
     return fieldsWithValidators;
-  }
-
-  private getDefaultSex(): string {
-    return this.sexArray[0];
-  }
-
-  private getKey(sex: string) {
-    return sex.substring(0, sex.indexOf(';'));
-  }
-
-  private getValue(sex: string) {
-    return sex.substring(sex.indexOf(';') + 1, sex.length);
   }
 
   private getUneditableSexValue(sex: string) {
     if (sex == "man") {
-      return this.getValue(this.translate.instant('user.form.actions.sex.man'));
+      return this.userUtils.getValue(this.translate.instant('user.form.actions.sex.man'));
     } else {
-      return this.getValue(this.translate.instant('user.form.actions.sex.woman'));
+      return this.userUtils.getValue(this.translate.instant('user.form.actions.sex.woman'));
     }
   }
 
@@ -201,23 +215,10 @@ export class CabinetComponent implements OnInit, AfterViewChecked {
 
   private onUploadFinished(event: FileHolder) {
     this.photo = this.imageService.prepareMultipartRequest(event);
-    // this.showImageUploader();
   }
 
   private getUserPhoto() {
     return this.imgSrc;
-  }
-
-  private showImageUploader() {
-    $('#imageUploader').css('display', 'inline');
-  }
-
-  private hideImageUploader() {
-    if ($('.img-ul-image').length > 0) {
-      $('.img-ul-image').css('display', 'block');
-    } else {
-      $('#imageUploader').css('display', 'none');
-    }
   }
 
   private getTranslationForChangePhotoButton() {
@@ -229,17 +230,11 @@ export class CabinetComponent implements OnInit, AfterViewChecked {
   }
 
   ngAfterViewChecked(): void {
-    // if ($('.img-ul-image').css('display') == 'block') {
-    //   $('.img-ul-file-upload').css('display', 'none');
-    // } else {
-    //   $('.img-ul-file-upload').css('display', 'block');
-    // }
     this.populateTextMessages();
     this.cdr.detectChanges();
   }
 
-  onRemoved() {
-    // this.photo = null;
-    // $('.img-ul-container').html = '';
+  private onRemoved() {
+    this.photo = null;
   }
 }

@@ -19,9 +19,11 @@ export class UserService {
   private options = {headers: new HttpHeaders({ 'Content-Type': 'application/json' })};
   private newUser = new BehaviorSubject<User>(null);
   private updatedUser = new BehaviorSubject<any>(null);
+  private loggedInUser = new BehaviorSubject<any>(null);
   private allUsers = new BehaviorSubject<any>(null);
-  addedUser = this.newUser.asObservable();
-  changedUser = this.updatedUser.asObservable();
+  addedUserAsObservable = this.newUser.asObservable();
+  changedUserAsObservable = this.updatedUser.asObservable();
+  loggedInUserAsObservable = this.loggedInUser.asObservable();
   allUsersAsObservable = this.allUsers.asObservable();
   public searchResults: User[];
   private registerUrl: string = REGISTER_API_URL;
@@ -58,6 +60,7 @@ export class UserService {
     ].join('&');
     let queryUrl: string = `${this.userUrl}/search/findByEmail?${params}`;
     return this.http.get(queryUrl)
+      .do((user) => this.loggedInUser.next(user))
       .catch(this._handleError);
   }
 

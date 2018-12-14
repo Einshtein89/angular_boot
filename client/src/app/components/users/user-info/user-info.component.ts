@@ -32,7 +32,6 @@ export class UserInfoComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
-    this.userService.allUsersAsObservable.subscribe(user => this.updatedUser = user);
     this.entity = this.userService.getSearchResultUserById(this.id);
     if (!this.entity) {
       this.userService.getUserById(this.id)
