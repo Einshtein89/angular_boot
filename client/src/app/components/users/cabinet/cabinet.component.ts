@@ -25,7 +25,7 @@ export class CabinetComponent implements OnInit, AfterViewChecked {
   private user: User;
   private loading: boolean;
   private statusCode: string;
-  private errorList: any;
+  private errorList: any = [];
 
   private mainSectionForm: FormGroup;
   private firstName: FormControl;
@@ -129,16 +129,23 @@ export class CabinetComponent implements OnInit, AfterViewChecked {
                   window.location.reload();
                 }.bind(this), 2000);
               },
-              (error) => this.errorList = error.error
+              (error) => this.errorList.push(error.error)
             );
         },
-        error => this.errorList = error.error
+        error => this.errorList.push(error.error)
       );
     return false;
   }
 
   private changePassword(value: any) {
-
+    this.userService.changePassword(value.oldPassword, value.password, this.user.id)
+      .subscribe(() => this.errorList = [],
+        (error) => {
+          this.errorList = [];
+          this.errorList.push(error.error);
+          this.errorList = this.userService.processErrors(this.errorList);
+        }
+        );
   }
 
   private extractUsers(data: any) {

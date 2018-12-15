@@ -1,6 +1,5 @@
 package com.nixsolutions.angular_boot.configs;
 
-import java.util.Arrays;
 import java.util.Locale;
 
 import org.springframework.context.MessageSource;
@@ -12,10 +11,8 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
-import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {

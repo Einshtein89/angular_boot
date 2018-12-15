@@ -107,25 +107,25 @@ public class DefaultUserRepositoryImpl implements UserRepository
   @Override
   public void delete(Long aLong)
   {
+    userRepository.delete(aLong);
   }
   
   @Override
-  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public void delete(User user)
   {
-  
+    userRepository.delete(user);
   }
   
   @Override
   public void delete(Iterable<? extends User> iterable)
   {
-  
+    userRepository.delete(iterable);
   }
   
   @Override
   public void deleteAll()
   {
-  
+    userRepository.deleteAll();
   }
   
   @Override

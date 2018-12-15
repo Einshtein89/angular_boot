@@ -16,9 +16,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.nixsolutions.angular_boot.configs.filters.LocaleConfigurerFilter;
 import com.nixsolutions.angular_boot.configs.jwttoken.JwtAuthenticationEntryPoint;
-import com.nixsolutions.angular_boot.configs.jwttoken.JwtAuthenticationFilter;
+import com.nixsolutions.angular_boot.configs.filters.JwtAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity

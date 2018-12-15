@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,44 +23,36 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.nixsolutions.angular_boot.configs.jwttoken.TokenProvider;
 import com.nixsolutions.angular_boot.dao.UserRepository;
+import com.nixsolutions.angular_boot.entity.PasswordChange;
 import com.nixsolutions.angular_boot.entity.Photo;
 import com.nixsolutions.angular_boot.entity.User;
 
 @RestController
-@RequestMapping("/userPhotoUpload")
-public class UserPhotoController
+@RequestMapping("/changePassword")
+public class ChangePasswordController
 {
   @Autowired
   private TokenProvider tokenProvider;
   @Autowired
   private UserRepository userRepository;
+  @Autowired
+  private BCryptPasswordEncoder bCryptPasswordEncoder;
   
   @PostMapping
-  public ResponseEntity<?> saveUserPhoto(
-      HttpServletRequest req,
-      HttpServletResponse res,
-      @RequestParam("image") MultipartFile photo)
+  public ResponseEntity<?> saveUserPhoto(@RequestBody PasswordChange passwordChange)
   {
-    String authorizationHeader = req.getHeader(HEADER_STRING_AUTHORIZATION);
-    String token = authorizationHeader.substring(authorizationHeader.indexOf(SPACE));
-    String usernameFromToken = tokenProvider.getUsernameFromToken(token);
-    User currentUser = userRepository.findByEmail(usernameFromToken);
-    if (Objects.isNull(currentUser))
+    long userId = passwordChange.getUserId();
+    if (userId <= 0)
     {
       return new ResponseEntity<>("user.doesn't.exists.error", new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
-    
-    try
+    User currentUser = userRepository.findOne(userId);
+    if (!bCryptPasswordEncoder.matches(passwordChange.getOldPassword(), currentUser.getPassword()))
     {
-      currentUser.setPhoto(new Photo(photo.getName(), photo.getBytes()));
+      return new ResponseEntity<>("old.password.doesn't.match.error", new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
-    catch (IOException e)
-    {
-      return new ResponseEntity<Object>(e, new HttpHeaders(), HttpStatus.BAD_REQUEST);
-    }
+    currentUser.setPassword(bCryptPasswordEncoder.encode(passwordChange.getNewPassword()));
     userRepository.save(currentUser);
-    
-    return ResponseEntity.ok(currentUser);
-    
+    return ResponseEntity.ok(passwordChange);
   }
 }

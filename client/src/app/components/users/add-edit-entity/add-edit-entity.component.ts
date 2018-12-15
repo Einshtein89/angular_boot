@@ -27,7 +27,7 @@ export class AddEditEntityComponent implements OnInit, OnDestroy, AfterViewCheck
   private sex: FormControl;
   private confirmPassword: FormControl;
   userList: User[];
-  private errorList: any;
+  private errorList: any = [];
   private _ref:any;
   private _currentUser: User;
   private _links: any;
@@ -145,15 +145,24 @@ export class AddEditEntityComponent implements OnInit, OnDestroy, AfterViewCheck
           if (!this._currentUser.photo){
             return;
           }
+          this.errorList = [];
           this.imageService.postImage(this.imageService.convertByteArraytoFormData(this._currentUser.photo.body,
             "image/jpg")).subscribe(
               (res) => {
                 this.errorList = []
               },
-              (error) => this.errorList.push(error.error)
+              (error) => {
+                this.errorList = [];
+                this.errorList.push(error.error);
+                this.errorList = this.userService.processErrors(this.errorList);
+              }
           );
         },
-        error => this.errorList.push(error.error)
+        error => {
+          this.errorList = [];
+          this.errorList.push(error.error);
+          this.errorList = this.userService.processErrors(this.errorList);
+        }
       );
     return false;
   }
@@ -187,8 +196,13 @@ export class AddEditEntityComponent implements OnInit, OnDestroy, AfterViewCheck
               );
           }
           this.removeModal();
+          this.errorList = [];
         },
-        error => this.errorList = this.processErrors(error.error)
+        error => {
+          this.errorList = [];
+          this.errorList.push(error.error);
+          this.errorList = this.userService.processErrors(this.errorList);
+        }
       );
     return false;
   }
@@ -202,12 +216,6 @@ export class AddEditEntityComponent implements OnInit, OnDestroy, AfterViewCheck
   private populateTextMessages() {
     this.sexArray = [this.translate.instant('user.form.actions.sex.man'),
       this.translate.instant('user.form.actions.sex.woman')];
-  }
-
-  private processErrors(errors: Array<string>) {
-    let result = [];
-    errors.forEach((error) => result.push(this.translate.instant("backend.validation.errors." + error)));
-    return result;
   }
 
   ngAfterViewChecked(): void {

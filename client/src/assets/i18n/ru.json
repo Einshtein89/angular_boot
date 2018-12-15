@@ -68,6 +68,7 @@
   "backend.validation.errors" : {
     "user.byNames.exists.error" : "Пользователь с таким именем и фамилией уже существует!",
     "user.byEmail.exists.error" : "Пользователь с таким адресом эл. почты уже существует!",
-    "user.doesn't.exists.error" : "Нет пользователя для обновления!"
+    "user.doesn't.exists.error" : "Нет пользователя для обновления!",
+    "old.password.doesn't.match.error" : "Старый пароль не соответствует!"
   }
 }

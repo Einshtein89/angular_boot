@@ -8,10 +8,12 @@ import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from "@angular/common
 import {assign} from "rxjs/util/assign";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import * as  _ from "underscore"
+import {TranslateService} from "@ngx-translate/core";
 
 export const USERS_API_URL = "";
 export const REGISTER_API_URL = 'http://localhost:3000/signup';
 export const DEFAULT_PAGE_SIZE = 0;
+const PASSWORD_CHANGE_URL = 'http://localhost:3000/changePassword';
 
 @Injectable()
 export class UserService {
@@ -28,7 +30,8 @@ export class UserService {
   public searchResults: User[];
   private registerUrl: string = REGISTER_API_URL;
 
-  constructor(private http:HttpClient,
+  constructor(private http: HttpClient,
+              private translate: TranslateService,
               @Inject(USERS_API_URL) private userUrl: string,
               @Inject(DEFAULT_PAGE_SIZE) private defaultPageSize: number) {
   }
@@ -91,6 +94,17 @@ export class UserService {
 
   getSearchResultUserById(id: string) : User {
     return _.find(this.searchResults, result => result.id == id)
+  }
+
+  changePassword(oldPassword: string, newPassword: string, userId: string): Observable<any> {
+    return this.http.post(PASSWORD_CHANGE_URL, {oldPassword, newPassword, userId})
+      .catch(this._handleError);
+  }
+
+  processErrors(errors: Array<string>) {
+    let result = [];
+    errors.forEach((error) => result.push(this.translate.instant("backend.validation.errors." + error)));
+    return result;
   }
 
   private _extractData(res: any) : any {

@@ -70,6 +70,7 @@
   "backend.validation.errors" : {
     "user.byNames.exists.error" : "User with such First Name or Last Name already exists!",
     "user.byEmail.exists.error" : "User with such E-mail already exists!",
-    "user.doesn't.exists.error" : "No user to be updated!"
+    "user.doesn't.exists.error" : "No user to be updated!",
+    "old.password.doesn't.match.error" : "Old password doesn't match!"
   }
 }

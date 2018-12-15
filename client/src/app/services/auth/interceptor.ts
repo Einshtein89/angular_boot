@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {
   HttpInterceptor, HttpRequest, HttpHandler, HttpSentEvent, HttpHeaderResponse, HttpProgressEvent,
-  HttpResponse, HttpUserEvent, HttpErrorResponse
+  HttpResponse, HttpUserEvent, HttpErrorResponse, HttpEvent
 } from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {Router} from '@angular/router';
@@ -17,16 +17,24 @@ export class Interceptor implements HttpInterceptor {
   constructor(private token: TokenStorage, private router: Router) {
   }
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpUserEvent<any>> {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let authReq = req;
     if (this.token.getToken() != null) {
       authReq = req.clone({headers: req.headers.set(TOKEN_HEADER_KEY, BEARER + this.token.getToken())});
     }
     return next.handle(authReq).do(
+      (event: HttpEvent<any>) => {
+        if (event instanceof HttpResponse) {
+          return event;
+        }
+      },
       (err: any) => {
-        if (err instanceof HttpErrorResponse || err.type == 0) {
-          if ((err.type && err.type == 0) || (err.status && err.status === 401)) {
-            this.router.navigate(['/login']);
+        if (err instanceof HttpErrorResponse) {
+          // if (err.type === 0) {
+          //   this.router.navigate(['/main/login']);
+          // }
+          if (err.status && err.status === 401) {
+            this.router.navigate(['/main/login']);
           }
         }
       }
