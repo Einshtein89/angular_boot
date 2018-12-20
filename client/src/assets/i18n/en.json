@@ -1,20 +1,40 @@
 {
   "top.menu": {
-    "first.page": "First Page",
-    "second.page": "Second Page",
+    "main.page": "Main",
+    "store.page": "Book Store",
     "my.cabinet": "My Cabinet",
     "all.users": "All Users",
     "log.out": "Log Out",
     "log.in": "Log In",
     "language": "Language"
   },
+  "footer" : {
+    "quick.links" : "Quick Links"
+  },
+  "main.page" : {
+    "go.to.store.button" : "Go To Store",
+    "first.card" : {
+      "title" : "Fast",
+      "text" : "Shopping in 3 clicks!"
+    },
+    "second.card" : {
+      "title" : "Easy",
+      "text" : "User-friendly interface!"
+    },
+    "third.card" : {
+      "title" : "Cheap",
+      "text" : "Best prices ever!"
+    }
+  },
   "login.page" : {
-    "form.welcome" : "Welcome!",
-    "form.email.label": "E-mail",
-    "form.password.label": "Password",
-    "form.login.button": "Login",
-    "form.register": "Register",
-    "form.incorrect.credentials.error" : "Incorrect credentials."
+    "form" : {
+      "welcome" : "Welcome!",
+      "email.label": "E-mail",
+      "password.label": "Password",
+      "login.button": "Login",
+      "register": "Register",
+      "incorrect.credentials.error" : "Incorrect credentials."
+    }
   },
   "all.users.page" : {
     "add.button" : "Add User",
@@ -57,8 +77,9 @@
     "cabinet.main.section.label" : "My Information"
 
   },
-  "my.cabinet" : {
-    "title" : "My Cabinet"
+  "my" : {
+    "orders.title" : "My Orders",
+    "cabinet.title" : "My Cabinet"
   },
   "field.error" : "Field",
   "required.error" : "is required",

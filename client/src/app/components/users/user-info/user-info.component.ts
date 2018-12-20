@@ -7,6 +7,7 @@ import {ComponentFactory} from "../../../component-factory/component-factory";
 import {EditDeleteUserService} from "../../../services/user/edit.delete.user.service";
 import {Location} from "@angular/common";
 import {ImageService} from "../../../services/user/image.service";
+import * as  _ from "underscore"
 
 @Component({
   selector: 'app-user-info',
@@ -17,6 +18,7 @@ export class UserInfoComponent implements OnInit, AfterViewChecked {
 
   id: string;
   entity: User;
+  entities: User[];
   updatedUser: User;
   imgSrc: any;
   @ViewChild('addEditEntity', {read: ViewContainerRef}) addEditContainerRef;
@@ -32,7 +34,12 @@ export class UserInfoComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
-    this.entity = this.userService.getSearchResultUserById(this.id);
+    this.userService.allUsersAsObservable.subscribe(users => this.entities = users);
+    this.userService.changedUserAsObservable.subscribe(user => this.updatedUser = user);
+    this.entity = _.find(this.entities, (entity) => entity.id == this.id);
+    if (!this.entity) {
+      this.entity = this.userService.getSearchResultUserById(this.id);
+    }
     if (!this.entity) {
       this.userService.getUserById(this.id)
         .subscribe(data => {

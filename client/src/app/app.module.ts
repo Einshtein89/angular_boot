@@ -10,7 +10,7 @@ import { AddEditEntityComponent } from './components/users/add-edit-entity/add-e
 import {UserService} from "./services/user/user.service";
 import {constants} from "./constants/constants";
 import {AppRoutingModule} from "./router/router.module";
-import { HomeComponent } from './components/home-component/home.component';
+import { MainPageComponent } from './components/main-page/main-page.component';
 import { SecondChildComponent } from './components/second-child-component/second-child.component';
 import { MainViewComponent } from './components/main-view/main-view.component';
 import * as bootstrap from "bootstrap";
@@ -21,7 +21,7 @@ import { EntitiesPerPageComponent } from './components/users/pagination/entities
 import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatSidenavModule, MatSelectModule } from '@angular/material';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatListModule} from '@angular/material/list';
-import {AuthGuard} from "./services/auth/auth-guard.service";
+import {AdminGuard} from "./services/auth/admin-guard.service";
 import {AuthService} from "./services/auth/auth.service";
 import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
@@ -37,7 +37,7 @@ import {Interceptor} from "./services/auth/interceptor";
 import { RegisterComponent } from './components/users/register/register.component';
 import { FooterComponent } from './components/common/footer/footer.component';
 import { HeaderComponent } from './components/common/header/header.component';
-import { CabinetComponent } from './components/users/cabinet/cabinet.component';
+import { CabinetComponent } from './components/users/cabinet/myCabinet/cabinet.component';
 import {FormCreateService } from './services/form.create.service';
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
@@ -45,6 +45,10 @@ import {LanguageService} from 'app/services/language.service';
 import { ImageUploadModule } from "angular2-image-upload";
 import {ImageService} from "./services/user/image.service";
 import {UserUtils} from "./utils/users/user.utils";
+import {UserGuard} from "./services/auth/user-guard.service";
+import { CabinetMainComponent } from './components/users/cabinet/cabinet-main/cabinet-main.component';
+import { MyOrdersComponent } from './components/users/cabinet/myOrders/my-orders.component';
+import {SlideshowModule} from "ng-simple-slideshow";
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
@@ -56,7 +60,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     EntityList,
     EntityComponent,
     AddEditEntityComponent,
-    HomeComponent,
+    MainPageComponent,
     SecondChildComponent,
     MainViewComponent,
     PaginationComponent,
@@ -71,7 +75,9 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     RegisterComponent,
     FooterComponent,
     HeaderComponent,
-    CabinetComponent
+    CabinetComponent,
+    CabinetMainComponent,
+    MyOrdersComponent
   ],
   imports: [
     BrowserModule,
@@ -96,6 +102,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
       }
     }),
     ImageUploadModule.forRoot(),
+    SlideshowModule
   ],
   providers: [
     UserService,
@@ -103,7 +110,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     EntityList,
     constants,
     AuthService,
-    AuthGuard,
+    AdminGuard,
+    UserGuard,
     ComponentFactory,
     EditDeleteUserService,
     TokenStorage,

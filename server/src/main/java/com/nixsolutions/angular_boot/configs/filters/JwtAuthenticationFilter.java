@@ -154,7 +154,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter
             } catch (IllegalArgumentException e) {
                 logger.error("an error occured during getting username from token", e);
             } catch (ExpiredJwtException e) {
-                res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+//                res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
                 logger.warn("the token is expired and not valid anymore", e);
             } catch(SignatureException e){
                 logger.error("Authentication Failed. Username or Password not valid.");

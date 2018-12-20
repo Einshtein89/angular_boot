@@ -29,12 +29,15 @@ export class EditDeleteUserService implements OnInit {
   }
 
   updateCurrentUser(component: any){
-    if (component.updatedUser && component.entity && component.entity["_links"].self.href == component.updatedUser.link) {
-      let links = component.entity["_links"];
-      let id = component.entity.id;
+    // if (component.updatedUser && component.entity && component.entity["_links"].self.href == component.updatedUser.link) {
+    //   let links = component.entity["_links"];
+    //   let id = component.entity.id;
+    //   component.entity = component.updatedUser;
+    //   component.entity["_links"] = links;
+    //   component.entity.id = id;
+    // }
+    if (component.updatedUser && component.entity.id == component.updatedUser.id) {
       component.entity = component.updatedUser;
-      component.entity["_links"] = links;
-      component.entity.id = id;
     }
   }
 

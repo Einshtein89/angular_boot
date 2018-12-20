@@ -15,7 +15,7 @@ declare var $ : any;
 @Component({
   selector: 'add-entity',
   templateUrl: './add-edit-entity.component.html',
-  styleUrls: ['./add-edit-entity.component.css']
+  styleUrls: ['./add-edit-entity.component.less']
 })
 export class AddEditEntityComponent implements OnInit, OnDestroy, AfterViewChecked {
   public myForm: FormGroup;

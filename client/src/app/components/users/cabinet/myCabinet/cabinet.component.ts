@@ -1,17 +1,17 @@
 import {AfterViewChecked, ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {UserService} from "../../../services/user/user.service";
-import {TokenStorage} from "../../../services/auth/token.storage";
-import {User} from "../../../models/user.model";
+import {UserService} from "../../../../services/user/user.service";
+import {TokenStorage} from "../../../../services/auth/token.storage";
+import {User} from "../../../../models/user.model";
 import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
-import {FormCreateService} from "../../../services/form.create.service";
+import {FormCreateService} from "../../../../services/form.create.service";
 import {TranslateService} from "@ngx-translate/core";
 import {Location} from "@angular/common";
 import {FileHolder} from "angular2-image-upload";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {ImageService} from "../../../services/user/image.service";
+import {ImageService} from "../../../../services/user/image.service";
 import {Router} from "@angular/router";
 import * as  _ from "underscore"
-import {UserUtils} from "../../../utils/users/user.utils";
+import {UserUtils} from "../../../../utils/users/user.utils";
 
 declare var $ : any;
 

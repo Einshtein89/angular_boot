@@ -38,7 +38,7 @@ export class ImageService implements OnInit {
   }
 
   private getDefaultImageSrc(user: User) {
-    return `../../assets/${user.sex}.png`;
+    return `../../assets/icons/${user.sex}.png`;
   }
 
   private b64toBlob(b64Data, contentType, sliceSize?) {

@@ -16,5 +16,5 @@ interface UserProjection
   String getPhone();
   String getSex();
   String getEmail();
-  Set<Role> getRoles();
+//  Set<Role> getRoles();
 }

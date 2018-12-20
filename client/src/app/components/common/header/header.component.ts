@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {TokenStorage} from "../../../services/auth/token.storage";
 import {TranslateService} from "@ngx-translate/core";
 import {LanguageService} from "../../../services/language.service";
+declare var $ : any;
 
 @Component({
   selector: 'header',
@@ -39,10 +40,10 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.tokenStorage.signOut();
-    this.router.navigate(['/main/login']);
+    this.router.navigate(['.']);
   }
 
-  private showMenu($event) {
+  private showMenu() {
     $(".language_menu").addClass('visible');
   }
 

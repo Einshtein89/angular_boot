@@ -8,10 +8,8 @@ import {
 } from '@angular/core';
 import {User} from "../../../models/user.model";
 import {UserService} from "../../../services/user/user.service";
-import {AddEditEntityComponent} from "../add-edit-entity/add-edit-entity.component";
 import {EntityList} from "../entity-list/entity-list.component";
 import {PaginationService} from "../../../services/pagination.service";
-import {ComponentFactory} from "../../../component-factory/component-factory";
 import {EditDeleteUserService} from "../../../services/user/edit.delete.user.service";
 import {ImageService} from "../../../services/user/image.service";
 declare var $ : any;

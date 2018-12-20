@@ -3,15 +3,10 @@
 @import '../node_modules/semantic-ui/dist/semantic.min.css';
 @import '../node_modules/jquery-confirm/dist/jquery-confirm.min.css';
 @import 'app/styles/confirm-modal.less';
-
-
-@modal-header-background-color:               green;
-@images-uploader-background:                  green;
-@background-color-default:                    #fff;
-@dropdown-selected-value:                     #000;
+@import "themes.less";
 
 .error {
-  color: red;
+  color: @error;
 }
 
 .ui.link.cards {
@@ -58,13 +53,13 @@
   background-color: @background-color-default;
   color: @background-color-default;
   height: available!important;
-  z-index: unset!important;
+  z-index: @unset;
 }
 
 .mat-drawer-content {
-  height: unset!important;
-  overflow: unset!important;
-  z-index: unset!important;
+  height: @unset;
+  overflow: @unset;
+  z-index: @unset;
 }
 
 .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
@@ -79,7 +74,7 @@
 }
 
 .searchItem {
-  border: 1px solid black!important;
+  border: @border-main!important;
   border-radius: 10px;
   &:hover {
     box-shadow: 0px 0px 30px 0px rgba(0, 000, 0, 0.67);
@@ -97,7 +92,7 @@
 }
 
 .field.noWidth {
-  width: unset!important;
+  width: @unset;
 }
 
 .img-ul {
@@ -110,7 +105,7 @@
 }
 
 .img-ul-container {
-  height: 0px!important;
+  height: @no-padding!important;
 }
 
 #imageUploader {
@@ -120,13 +115,13 @@
   //top: -35px;
 }
 .img-ul-file-upload {
-  padding: 0px!important;
+  padding: @no-padding!important;
 }
 .img-ul-drag-box-msg {
-  display: none!important;
+  display: @display-none!important;
 }
 .img-ul-clear.img-ul-button {
-  display: none!important;
+  display: @display-none!important;
 }
 .cabinet-avatar {
   height: 120px;

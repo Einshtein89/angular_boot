@@ -70,9 +70,9 @@ export class UserService {
 
   updateUser(user: User, userUrl: string):Observable<User> {
     return this.http.put(userUrl, user, this.options)
-      .do(() => {
+      .do((newUser) => {
         user.link = userUrl;
-        this.updatedUser.next(user)
+        this.updatedUser.next(newUser)
       })
       .catch(this._handleError);
   }

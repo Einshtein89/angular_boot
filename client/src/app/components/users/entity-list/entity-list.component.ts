@@ -27,7 +27,7 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
   entityList: User[] = [];
   loading: boolean;
   statusCode: number;
-  user: User;
+  updatedUser: User;
   links: any;
   page: any;
   _page: string;
@@ -55,7 +55,7 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
 
   ngOnInit() {
     this.paginationService.currentPageSize = this.paginationService.defaultPageSize;
-    this.userService.addedUserAsObservable.subscribe(user => this.user = user);
+    this.userService.changedUserAsObservable.subscribe(user => this.updatedUser = user);
     // if(!this.userService.entityList) {
       this.getAllUsers();
     // } else {
@@ -103,8 +103,13 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngAfterViewChecked(): void {
-    // if (this.user && !_.contains(this.entityList, this.user)) {
-    //   this.entityList.push(this.user);
+    // if (this.updatedUser) {
+    //   let user = _.find(this.entityList, (entity) => entity.id == this.updatedUser.id);
+    //   this.entityList.forEach((entity, index) => {
+    //     if (entity.id == this.updatedUser.id) {
+    //       this.entityList[index] = this.updatedUser;
+    //     }
+    //   })
     // }
     this.cdr.detectChanges();
   }

@@ -1,20 +1,40 @@
 {
   "top.menu": {
-    "first.page": "Первая страница",
-    "second.page": "Вторая страница",
+    "main.page": "Главная",
+    "store.page": "Магазин",
     "my.cabinet": "Мой кабинет",
     "all.users": "Все пользователи",
     "log.out": "Выйти",
     "log.in": "Войти",
     "language": "Язык"
   },
+  "footer" : {
+    "quick.links" : "Быстрые Ссылки"
+  },
+  "main.page" : {
+    "go.to.store.button" : "В Магазин",
+    "first.card" : {
+      "title" : "Быстро",
+      "text" : "Покупка в 3 клика!"
+    },
+    "second.card" : {
+      "title" : "Легко",
+      "text" : "Удобный интерфейс!"
+    },
+    "third.card" : {
+      "title" : "Дешего",
+      "text" : "Лучшие цены!"
+    }
+  },
   "login.page" : {
-    "form.welcome" : "Добро пожаловать!",
-    "form.email.label": "Эл. Почта",
-    "form.password.label": "Пароль",
-    "form.login.button": "Войти",
-    "form.register": "Регистрация",
-    "form.incorrect.credentials.error" : "Неверный логин или пароль!"
+    "form" : {
+      "welcome" : "Добро пожаловать!",
+      "email.label": "Эл. Почта",
+      "password.label": "Пароль",
+      "login.button": "Войти",
+      "register": "Регистрация",
+      "incorrect.credentials.error" : "Неверный логин или пароль!"
+    }
   },
   "all.users.page" : {
     "add.button" : "Доб. Польз",
@@ -56,8 +76,9 @@
     "photo.change.button.label" : "Изменить",
     "cabinet.main.section.label" : "Мои данные"
   },
-  "my.cabinet" : {
-    "title" : "Мой Кабинет"
+  "my" : {
+    "orders.title" : "Мои Заказы",
+    "cabinet.title" : "Мой Кабинет"
   },
   "field.error" : "Поле",
   "required.error" : "обязательно",

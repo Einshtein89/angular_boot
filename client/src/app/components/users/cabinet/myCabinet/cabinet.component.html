@@ -5,7 +5,7 @@
     <h2 class="title" class="header-centered">{{ 'my.cabinet.title' | translate }}</h2>
   </div>
   <br/>
-  <form class="ui large equal width form segment" novalidate
+  <form class="ui large equal width form" novalidate
         [formGroup]="mainSectionForm"
         (ngSubmit)="onSubmit(mainSectionForm.value)">
     <h3>{{ 'user.form.actions.cabinet.main.section.label' | translate }}</h3>
