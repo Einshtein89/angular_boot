@@ -21,8 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.nixsolutions.angular_boot.configs.jwttoken.TokenProvider;
 import com.nixsolutions.angular_boot.dao.UserRepository;
-import com.nixsolutions.angular_boot.entity.Photo;
-import com.nixsolutions.angular_boot.entity.User;
+import com.nixsolutions.angular_boot.entity.users.Photo;
+import com.nixsolutions.angular_boot.entity.users.User;
 
 @RestController
 @RequestMapping("/userPhotoUpload")

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nixsolutions.angular_boot.configs.jwttoken.AuthToken;
 import com.nixsolutions.angular_boot.configs.jwttoken.TokenProvider;
 import com.nixsolutions.angular_boot.dao.UserRepository;
-import com.nixsolutions.angular_boot.entity.LoginUser;
+import com.nixsolutions.angular_boot.entity.users.LoginUser;
 
 @RestController
 @RequestMapping("/token")

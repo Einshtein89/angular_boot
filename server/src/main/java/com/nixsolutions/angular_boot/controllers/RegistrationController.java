@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nixsolutions.angular_boot.dao.UserRepository;
-import com.nixsolutions.angular_boot.entity.User;
+import com.nixsolutions.angular_boot.entity.users.User;
 import com.nixsolutions.angular_boot.validators.BeforeCreateUserValidator;
 
 @RestController

@@ -10,6 +10,7 @@ export class User {
   public link: any;
   public photo: any;
 
-  constructor() {
+  constructor(user: any) {
+    Object.keys(user).forEach((key) => this[key] = user[key]);
   }
 }

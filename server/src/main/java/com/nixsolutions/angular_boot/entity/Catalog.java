@@ -10,28 +10,19 @@ import javax.persistence.Table;
 import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
-@Table(name="photo")
+@Table(name = "catalog")
 @DynamicUpdate
-public class Photo
-{
+public class Catalog {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name="photo_id")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "category_id")
   private long id;
+  @Column(name = "category_name")
   private String name;
-  private byte[] body;
-  
-  public Photo() {}
-  
-  public Photo(String name, byte[] body)
-  {
-    this.name = name;
-    this.body = body;
-  }
   
   public long getId()
   {
-    return this.id;
+    return id;
   }
   
   public void setId(long id)
@@ -41,21 +32,11 @@ public class Photo
   
   public String getName()
   {
-    return this.name;
+    return name;
   }
   
   public void setName(String name)
   {
     this.name = name;
-  }
-  
-  public byte[] getBody()
-  {
-    return this.body;
-  }
-  
-  public void setBody(byte[] body)
-  {
-    this.body = body;
   }
 }

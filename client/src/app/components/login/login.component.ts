@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {TokenStorage} from "../../services/auth/token.storage";
 import {TranslateService} from "@ngx-translate/core";
 import {UserService} from "../../services/user/user.service";
+import {User} from "../../models/user.model";
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ import {UserService} from "../../services/user/user.service";
 export class LoginComponent {
   message: string;
   return: string = '';
-  loggedInUser: any;
+  loggedInUser: User;
 
   constructor(public authService: AuthService,
               private router: Router,
@@ -32,7 +33,7 @@ export class LoginComponent {
       data => {
         this.tokenStorage.saveToken(data.token);
         this.userService.getUserByUserName(this.tokenStorage.getUserId())
-          .subscribe((user) => this.loggedInUser = user);
+          .subscribe((user) => this.loggedInUser = new User(user));
         this.router.navigateByUrl(this.return);
       },
       err => {

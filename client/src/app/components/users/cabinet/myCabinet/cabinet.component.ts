@@ -64,8 +64,8 @@ export class CabinetComponent implements OnInit, AfterViewChecked {
     this.userService.loggedInUserAsObservable.subscribe(user => this.user = user);
     if (this.user) {
       this.prepareCabinetData();
+      return;
     }
-    if (!this.user) {
       this.loading = true;
       this.userService.getUserByUserName(this.tokenStorage.getUserId())
         .subscribe(
@@ -76,7 +76,6 @@ export class CabinetComponent implements OnInit, AfterViewChecked {
           errorCode =>  this.statusCode = errorCode,
           () => this.loading = false
         );
-    }
   }
 
   private prepareCabinetData() {

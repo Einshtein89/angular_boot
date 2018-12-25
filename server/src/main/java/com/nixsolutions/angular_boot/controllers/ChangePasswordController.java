@@ -1,14 +1,5 @@
 package com.nixsolutions.angular_boot.controllers;
 
-import static com.nixsolutions.angular_boot.configs.Constants.HEADER_STRING_AUTHORIZATION;
-import static org.apache.commons.lang3.StringUtils.SPACE;
-
-import java.io.IOException;
-import java.util.Objects;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -17,15 +8,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.nixsolutions.angular_boot.configs.jwttoken.TokenProvider;
 import com.nixsolutions.angular_boot.dao.UserRepository;
-import com.nixsolutions.angular_boot.entity.PasswordChange;
-import com.nixsolutions.angular_boot.entity.Photo;
-import com.nixsolutions.angular_boot.entity.User;
+import com.nixsolutions.angular_boot.entity.users.PasswordChange;
+import com.nixsolutions.angular_boot.entity.users.User;
 
 @RestController
 @RequestMapping("/changePassword")

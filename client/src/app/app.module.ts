@@ -11,7 +11,7 @@ import {UserService} from "./services/user/user.service";
 import {constants} from "./constants/constants";
 import {AppRoutingModule} from "./router/router.module";
 import { MainPageComponent } from './components/main-page/main-page.component';
-import { SecondChildComponent } from './components/second-child-component/second-child.component';
+import { StoreMainComponent } from './components/store/store-main/store-main.component';
 import { MainViewComponent } from './components/main-view/main-view.component';
 import * as bootstrap from "bootstrap";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -49,6 +49,11 @@ import {UserGuard} from "./services/auth/user-guard.service";
 import { CabinetMainComponent } from './components/users/cabinet/cabinet-main/cabinet-main.component';
 import { MyOrdersComponent } from './components/users/cabinet/myOrders/my-orders.component';
 import {SlideshowModule} from "ng-simple-slideshow";
+import {BookService} from "./services/book/book.service";
+import { BooksList } from './components/books/books-list/books-list.component';
+import { BookSingleComponent } from './components/books/book-single/book-single.component';
+import { StoreBookListComponent } from './components/store/store-book-list/store-book-list.component';
+import {CatalogService} from "./services/book/catalog.service";
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
@@ -61,7 +66,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     EntityComponent,
     AddEditEntityComponent,
     MainPageComponent,
-    SecondChildComponent,
+    StoreMainComponent,
     MainViewComponent,
     PaginationComponent,
     EntitiesPerPageComponent,
@@ -77,7 +82,10 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     HeaderComponent,
     CabinetComponent,
     CabinetMainComponent,
-    MyOrdersComponent
+    MyOrdersComponent,
+    BooksList,
+    BookSingleComponent,
+    StoreBookListComponent
   ],
   imports: [
     BrowserModule,
@@ -107,6 +115,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
   providers: [
     UserService,
     PaginationService,
+    BookService,
+    CatalogService,
     EntityList,
     constants,
     AuthService,

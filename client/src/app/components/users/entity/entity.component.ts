@@ -59,12 +59,12 @@ export class EntityComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   private getPageAfterRemove(pageNumber: number) {
-    this.paginationService.getPageByNumber(pageNumber)
+    this.paginationService.getPageByNumber(pageNumber, 'user')
       .subscribe(
         data => {
-          this.entityListComponent.entityList = this.entityListComponent.extractUsers(data);
-          this.entityListComponent.links = this.entityListComponent.extractLinks(data);
-          this.entityListComponent.page = this.entityListComponent.extractPage(data);
+          this.entityListComponent.entityList = this.userService.extractUsers(data);
+          this.entityListComponent.links = this.userService.extractLinks(data);
+          this.entityListComponent.page = this.userService.extractPage(data);
         },
         () => error => this.errorList = error.error,
       )

@@ -1,0 +1,14 @@
+<div class="ui grid top-margin">
+  <div class="four wide column left-menu">
+    <div class="ui vertical fluid tabular menu" *ngFor="let catalog of catalogs">
+      <a class="item" (click)="makeActive($event)" [routerLink]="['.']">
+        {{ catalog.name }}
+      </a>
+    </div>
+  </div>
+  <div class="twelve wide stretched column right-content">
+    <div class="ui segment">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

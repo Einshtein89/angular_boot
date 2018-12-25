@@ -10,14 +10,13 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.nixsolutions.angular_boot.dao.RoleRepository;
 import com.nixsolutions.angular_boot.dao.UserRepository;
-import com.nixsolutions.angular_boot.entity.Role;
-import com.nixsolutions.angular_boot.entity.User;
+import com.nixsolutions.angular_boot.entity.users.Role;
+import com.nixsolutions.angular_boot.entity.users.User;
 
 import io.jsonwebtoken.lang.Collections;
 

@@ -31,8 +31,10 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
   links: any;
   page: any;
   _page: string;
+  name: string = 'user';
 
   @ViewChild('addEditEntity', {read: ViewContainerRef}) addEditContainerRef;
+
   // @ViewChild(PaginationComponent) pagination: PaginationComponent;
 
   constructor(private userService: UserService,
@@ -72,9 +74,7 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
     this.userService.getAllUsers()
       .subscribe(
         data => {
-          this.entityList = this.extractUsers(data);
-          this.links = this.extractLinks(data);
-          this.page = this.extractPage(data);
+          this.populateEntities(data)
           },
         errorCode =>  this.statusCode = errorCode,
         () => this.loading = false
@@ -82,24 +82,9 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   populateEntities(data: Object) {
-    this.entityList = this.extractUsers(data);
-    this.links = this.extractLinks(data);
-    this.page = this.extractPage(data);
-  }
-
-  extractUsers(data: any) {
-    let users = data["_embedded"].users;
-    return users;
-  }
-
-  extractLinks(data: any) {
-    let links = data["_links"];
-    return links;
-  }
-
-  extractPage(data: any) {
-    let page = data["page"];
-    return page;
+    this.entityList = this.userService.extractUsers(data);
+    this.links = this.userService.extractLinks(data);
+    this.page = this.userService.extractPage(data);
   }
 
   ngAfterViewChecked(): void {

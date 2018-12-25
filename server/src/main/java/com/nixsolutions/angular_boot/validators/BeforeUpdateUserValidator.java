@@ -6,7 +6,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import com.nixsolutions.angular_boot.dao.UserRepository;
-import com.nixsolutions.angular_boot.entity.User;
+import com.nixsolutions.angular_boot.entity.users.User;
 
 @Component("beforeSaveUserValidator")
 public class BeforeUpdateUserValidator implements Validator

@@ -185,7 +185,7 @@ export class AddEditEntityComponent implements OnInit, OnDestroy, AfterViewCheck
           if (this._entityListComponent.entityList.length / this._entityListComponent.page.size === 1
             && usersOnLastPage === 0)
           {
-            this.paginationService.getPageByNumber(this._entityListComponent.page.totalPages)
+            this.paginationService.getPageByNumber(this._entityListComponent.page.totalPages, 'user')
               .subscribe(
                 data => this._populateEntities(data)
               );
@@ -208,9 +208,9 @@ export class AddEditEntityComponent implements OnInit, OnDestroy, AfterViewCheck
   }
 
   private _populateEntities(data: Object) {
-    this._entityListComponent.entityList = this._entityListComponent.extractUsers(data);
-    this._entityListComponent.links = this._entityListComponent.extractLinks(data);
-    this._entityListComponent.page = this._entityListComponent.extractPage(data);
+    this._entityListComponent.entityList = this.userService.extractUsers(data);
+    this._entityListComponent.links = this.userService.extractLinks(data);
+    this._entityListComponent.page = this.userService.extractPage(data);
   }
 
   private populateTextMessages() {

@@ -8,7 +8,7 @@
     </li>
     <!--{#pages}-->
     <li *ngFor="let page of pageArray" [ngClass]="{active:this.entityListComponent.page.number === page}">
-      <a (click)="getPage(page)">{{ page + 1 }}</a>
+      <a (click)="getPage(page, this.entityListComponent.name)">{{ page + 1 }}</a>
     </li>
     <!--{/pages}-->
     <li *ngIf="this.entityListComponent.page.number !== this.entityListComponent.page.totalPages - 1">

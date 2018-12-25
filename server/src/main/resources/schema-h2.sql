@@ -45,3 +45,53 @@ CREATE TABLE `user_photo` (
  `photo_id` int(11) NOT NULL,
  PRIMARY KEY (`user_id`,`photo_id`),
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `book`;
+
+CREATE TABLE `book` (
+`book_id` int(11) NOT NULL,
+`author` varchar (255),
+`title` varchar (255),
+`price` float (10),
+PRIMARY KEY (`book_id`),
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `book_photo`;
+
+CREATE TABLE `book_photo` (
+`book_id` int(11) NOT NULL,
+`photo_id` int(11) NOT NULL,
+PRIMARY KEY (`book_id`,`photo_id`),
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `order`;
+
+CREATE TABLE `order` (
+`order_id` int(11) NOT NULL,
+`book_id` int(11) NOT NULL,
+PRIMARY KEY (`order_id`),
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `user_order`;
+
+CREATE TABLE `user_order` (
+`order_id` int(11) NOT NULL,
+`user_id` int(11) NOT NULL,
+PRIMARY KEY (`order_id`, `user_id`),
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `catalog`;
+
+CREATE TABLE `catalog` (
+`category_id` int(11) NOT NULL,
+`category_name` varchar (255),
+PRIMARY KEY (`category_id`),
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `book_catalog`;
+
+CREATE TABLE `book_catalog` (
+`book_id` int(11) NOT NULL,
+`category_id` int(11) NOT NULL,
+PRIMARY KEY (`book_id`,`category_id`),
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

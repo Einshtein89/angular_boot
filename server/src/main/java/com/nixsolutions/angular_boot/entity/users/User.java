@@ -1,4 +1,4 @@
-package com.nixsolutions.angular_boot.entity;
+package com.nixsolutions.angular_boot.entity.users;
 
 import java.util.Set;
 
@@ -11,11 +11,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.DynamicUpdate;
+
+import com.nixsolutions.angular_boot.entity.Order;
 
 @Entity
 @Table(name = "user", uniqueConstraints = {@UniqueConstraint(columnNames = { "email" }) })
@@ -58,6 +61,9 @@ public class User {
   @OneToOne(cascade = CascadeType.ALL)
   @JoinTable(name = "user_photo", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "photo_id"))
   private Photo photo;
+  @ManyToOne(cascade = CascadeType.ALL, targetEntity = Order.class)
+  @JoinTable(name = "user_order", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "order_id"))
+  private Set<Order> orders;
   
   public String getPhone() {
     return phone;
@@ -139,5 +145,15 @@ public class User {
   public void setPhoto(Photo photo)
   {
     this.photo = photo;
+  }
+  
+  public Set<Order> getOrders()
+  {
+    return orders;
+  }
+  
+  public void setOrders(Set<Order> orders)
+  {
+    this.orders = orders;
   }
 }

@@ -39,3 +39,12 @@ INSERT INTO role VALUES (2,'USER');
 
 INSERT INTO user_role VALUES (1, 1);
 INSERT INTO user_role VALUES (34, 2);
+
+INSERT INTO book VALUES (1, 'John Snow', 'I know nothing', 200.99);
+INSERT INTO book VALUES (2, 'Steve Jobs', 'Eat Apples', 600.99);
+
+INSERT INTO catalog VALUES (1, 'Sci-Fi');
+INSERT INTO catalog VALUES (2, 'Fantasy');
+
+INSERT INTO book_catalog VALUES (1, 2);
+INSERT INTO book_catalog VALUES (2, 1);

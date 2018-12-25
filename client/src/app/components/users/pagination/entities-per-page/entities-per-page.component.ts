@@ -22,7 +22,7 @@ export class EntitiesPerPageComponent implements OnInit {
     this.entityListComponent.loading = true;
     this.paginationService.currentPageSize = value;
     this.paginationService.sortBy = "";
-    this.paginationService.getPageByNumber(0)
+    this.paginationService.getPageByNumber(0, 'user')
       .subscribe(
         data => this.entityListComponent.populateEntities(data),
         errorCode =>  this.entityListComponent.statusCode = errorCode,

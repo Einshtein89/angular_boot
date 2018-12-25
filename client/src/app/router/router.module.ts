@@ -2,7 +2,7 @@ import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {EntityList} from "../components/users/entity-list/entity-list.component";
 import {MainPageComponent} from "../components/main-page/main-page.component";
-import {SecondChildComponent} from "../components/second-child-component/second-child.component";
+import {StoreMainComponent} from "../components/store/store-main/store-main.component";
 import {MainViewComponent} from "../components/main-view/main-view.component";
 import {AdminGuard} from "../services/auth/admin-guard.service";
 import {LoginComponent} from "../components/login/login.component";
@@ -13,6 +13,7 @@ import {CabinetComponent} from "../components/users/cabinet/myCabinet/cabinet.co
 import {UserGuard} from "../services/auth/user-guard.service";
 import {CabinetMainComponent} from "../components/users/cabinet/cabinet-main/cabinet-main.component";
 import {MyOrdersComponent} from "../components/users/cabinet/myOrders/my-orders.component";
+import {StoreBookListComponent} from "../components/store/store-book-list/store-book-list.component";
 
 export const cabinetRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -20,10 +21,15 @@ export const cabinetRoutes: Routes = [
   { path: 'orders', component: MyOrdersComponent, pathMatch: 'full'}
 ];
 
-export const userRoutes: Routes = [
+export const storeRoutes: Routes = [
+  { path: '', redirectTo: 'all', pathMatch: 'full'},
+  { path: 'all', component: StoreBookListComponent, pathMatch: 'full'}
+];
+
+export const mainRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: MainPageComponent, pathMatch: 'full'},
-  { path: 'store', component: SecondChildComponent, pathMatch: 'full' },
+  { path: 'store', component: StoreMainComponent, children: storeRoutes },
   { path: 'myCabinet', component: CabinetMainComponent, canActivate: [UserGuard], children: cabinetRoutes },
   { path: 'allUsers', component: EntityList, canActivate: [AdminGuard] },
   { path: 'allUsers/:userId', component: UserInfoComponent, canActivate: [UserGuard] },
@@ -35,7 +41,7 @@ export const userRoutes: Routes = [
 const routes: Routes = [
   { path: '', redirectTo: '/main/home', pathMatch: 'full' },
   { path: 'store', redirectTo: 'main/store', pathMatch: 'full' },
-  { path: 'main', component: MainViewComponent, children: userRoutes }
+  { path: 'main', component: MainViewComponent, children: mainRoutes }
 ];
 
 @NgModule({

@@ -1,0 +1,12 @@
+<div *ngIf="loading"><img class="spinner" src="assets/ajax-loader.gif"></div>
+<div *ngIf="!loading">
+  <div class="ui special link cards">
+    <book-single class="card"
+                   *ngFor="let book of books"
+                   [book]="book"
+                   [editForm] = "addEditContainerRef"
+                   [bookListComponent]="this">
+    </book-single>
+  </div>
+  <pagination [entityListComponent]="this" ></pagination>
+</div>

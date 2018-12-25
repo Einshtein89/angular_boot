@@ -1,4 +1,4 @@
-package com.nixsolutions.angular_boot.entity;
+package com.nixsolutions.angular_boot.entity.users;
 
 public class LoginUser
 {

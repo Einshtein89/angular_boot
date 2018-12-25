@@ -13,7 +13,7 @@ import {TranslateService} from "@ngx-translate/core";
 export const USERS_API_URL = "";
 export const REGISTER_API_URL = 'http://localhost:3000/signup';
 export const DEFAULT_PAGE_SIZE = 0;
-const PASSWORD_CHANGE_URL = 'http://localhost:3000/changePassword';
+export const PASSWORD_CHANGE_URL = 'http://localhost:3000/changePassword';
 
 @Injectable()
 export class UserService {
@@ -42,7 +42,7 @@ export class UserService {
     ].join('&');
     let queryUrl: string = url ? url : `${this.userUrl}?${params}`;
     return this.http.get(queryUrl)
-      .do((res) => this.allUsers.next(this._extractData(res)))
+      .do((res) => this.allUsers.next(this.extractUsers(res)))
       .catch(this._handleError)
   }
 
@@ -107,10 +107,24 @@ export class UserService {
     return result;
   }
 
-  private _extractData(res: any) : any {
+  public extractUsers(res: any) : any {
     let body = res["_embedded"].users;
-    return body;
-}
+    let result = [];
+    if (body instanceof Array) {
+      body.forEach((user) => result.push(new User(user)))
+    }
+    return result;
+  }
+
+  extractLinks(data: any) {
+    let links = data["_links"];
+    return links;
+  }
+
+  extractPage(data: any) {
+    let page = data["page"];
+    return page;
+  }
   private _handleError (error: HttpResponse<any> | any) {
     return Observable.throw(error);
   }

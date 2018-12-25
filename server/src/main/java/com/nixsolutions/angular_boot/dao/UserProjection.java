@@ -1,11 +1,8 @@
 package com.nixsolutions.angular_boot.dao;
 
-import java.util.Set;
-
 import org.springframework.data.rest.core.config.Projection;
 
-import com.nixsolutions.angular_boot.entity.Role;
-import com.nixsolutions.angular_boot.entity.User;
+import com.nixsolutions.angular_boot.entity.users.User;
 
 @Projection(name = "userFields", types = { User.class })
 interface UserProjection

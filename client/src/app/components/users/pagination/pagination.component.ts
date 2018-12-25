@@ -4,9 +4,10 @@ import {EntityList} from "../entity-list/entity-list.component";
 import {User} from "../../../models/user.model";
 import {Router} from "@angular/router";
 import {PaginationService} from "../../../services/pagination.service";
+import {BooksList} from "../../books/books-list/books-list.component";
 
 @Component({
-  selector: 'app-pagination',
+  selector: 'pagination',
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.css']
 })
@@ -18,7 +19,7 @@ export class PaginationComponent implements OnInit, AfterViewChecked {
   // user: User;
   // @Input() links: any;
 
-  @Input() entityListComponent: EntityList;
+  @Input() entityListComponent: any;
   // _currentPath: string;
   private pageArray: any[];
 
@@ -45,8 +46,8 @@ export class PaginationComponent implements OnInit, AfterViewChecked {
     this._getPage("prev");
   }
 
-  getPage(pageNumber: number) {
-    this.paginationService.getPageByNumber(pageNumber, this.paginationService.sortBy)
+  getPage(pageNumber: number, name: string) {
+    this.paginationService.getPageByNumber(pageNumber, name, this.paginationService.sortBy)
       .subscribe(
         data => this.entityListComponent.populateEntities(data),
         errorCode =>  this.entityListComponent.statusCode = errorCode,

@@ -2,6 +2,7 @@ import {Injectable, OnInit} from "@angular/core";
 import {HttpClient, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {User} from "../../models/user.model";
+import {Book} from "../../models/book.model";
 
 const IMAGE_POST_URL = 'http://localhost:3000/userPhotoUpload';
 
@@ -33,12 +34,15 @@ export class ImageService implements OnInit {
     return formDataToUpload;
   }
 
-  public getImgSrc(user: User) {
-    return user.photo ? 'data:image/jpg;base64,' + user.photo.body : this.getDefaultImageSrc(user);
+  public getImgSrc(entity: any) {
+    return entity.photo ? 'data:image/jpg;base64,' + entity.photo.body : this.getDefaultImageSrc(entity);
   }
 
-  private getDefaultImageSrc(user: User) {
-    return `../../assets/icons/${user.sex}.png`;
+  private getDefaultImageSrc(entity: any) {
+    if (entity instanceof User) {
+      return `../../assets/icons/${entity.sex}.png`;
+    }
+    return `../../assets/icons/book_icon_default.png`;
   }
 
   private b64toBlob(b64Data, contentType, sliceSize?) {
