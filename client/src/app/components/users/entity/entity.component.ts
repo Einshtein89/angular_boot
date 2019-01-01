@@ -22,7 +22,7 @@ declare var $ : any;
 export class EntityComponent implements OnInit, OnDestroy, AfterViewChecked {
   @Input() entity: User;
   @Input() editForm: ViewContainerRef;
-  @Input() entityListComponent: EntityList;
+  @Input() entityListComponent: any;
   updatedUser: User;
   errorList: any;
   imgSrc: any;
@@ -59,7 +59,7 @@ export class EntityComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   private getPageAfterRemove(pageNumber: number) {
-    this.paginationService.getPageByNumber(pageNumber, 'user')
+    this.paginationService.getPageByNumber(pageNumber, this.entityListComponent.name)
       .subscribe(
         data => {
           this.entityListComponent.entityList = this.userService.extractUsers(data);

@@ -64,9 +64,9 @@ CREATE TABLE `book_photo` (
 PRIMARY KEY (`book_id`,`photo_id`),
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `order`;
+DROP TABLE IF EXISTS `orders`;
 
-CREATE TABLE `order` (
+CREATE TABLE `orders` (
 `order_id` int(11) NOT NULL,
 `book_id` int(11) NOT NULL,
 PRIMARY KEY (`order_id`),

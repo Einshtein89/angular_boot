@@ -1,7 +1,7 @@
 <div class="ui grid top-margin">
   <div class="four wide column left-menu">
-    <div class="ui vertical fluid tabular menu" *ngFor="let catalog of catalogs">
-      <a class="item" (click)="makeActive($event)" [routerLink]="['.']">
+    <div class="ui vertical fluid tabular menu">
+      <a class="item" *ngFor="let catalog of catalogs" (click)="filterByCategory(catalog.id); makeActive($event)" [routerLink]="['./', catalog.name]">
         {{ catalog.name }}
       </a>
     </div>

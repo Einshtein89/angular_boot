@@ -20,9 +20,9 @@ export class UserService {
   public entityList: User[];
   private options = {headers: new HttpHeaders({ 'Content-Type': 'application/json' })};
   private newUser = new BehaviorSubject<User>(null);
-  private updatedUser = new BehaviorSubject<any>(null);
-  private loggedInUser = new BehaviorSubject<any>(null);
-  private allUsers = new BehaviorSubject<any>(null);
+  private updatedUser = new BehaviorSubject<User>(null);
+  private loggedInUser = new BehaviorSubject<User>(null);
+  private allUsers = new BehaviorSubject<User[]>(null);
   addedUserAsObservable = this.newUser.asObservable();
   changedUserAsObservable = this.updatedUser.asObservable();
   loggedInUserAsObservable = this.loggedInUser.asObservable();
@@ -41,20 +41,20 @@ export class UserService {
       `size=${this.defaultPageSize}`
     ].join('&');
     let queryUrl: string = url ? url : `${this.userUrl}?${params}`;
-    return this.http.get(queryUrl)
+    return this.http.get<User[]>(queryUrl)
       .do((res) => this.allUsers.next(this.extractUsers(res)))
       .catch(this._handleError)
   }
 
   createUser(user: User, isRegister: boolean):Observable<User> {
-    return this.http.post(isRegister ? this.registerUrl : this.userUrl, user, this.options)
-      .do(() => this.newUser.next(user))
+    return this.http.post<User>(isRegister ? this.registerUrl : this.userUrl, user, this.options)
+      .do(() => this.newUser.next(new User(user)))
       .catch(this._handleError);
   }
 
   getUserById(userId: string): Observable<User> {
     let queryUrl: string = `${this.userUrl}/${userId}`;
-    return this.http.get(queryUrl)
+    return this.http.get<User>(queryUrl)
       .catch(this._handleError);
   }
   getUserByUserName(userName: string) {
@@ -62,14 +62,14 @@ export class UserService {
       `email=${userName}`
     ].join('&');
     let queryUrl: string = `${this.userUrl}/search/findByEmail?${params}`;
-    return this.http.get(queryUrl)
-      .do((user) => this.loggedInUser.next(user))
+    return this.http.get<User>(queryUrl)
+      .do((user) => this.loggedInUser.next(new User(user)))
       .catch(this._handleError);
   }
 
 
   updateUser(user: User, userUrl: string):Observable<User> {
-    return this.http.put(userUrl, user, this.options)
+    return this.http.put<User>(userUrl, user, this.options)
       .do((newUser) => {
         user.link = userUrl;
         this.updatedUser.next(newUser)
@@ -107,13 +107,17 @@ export class UserService {
     return result;
   }
 
-  public extractUsers(res: any) : any {
+  public extractUsers(res: any) : User[] {
     let body = res["_embedded"].users;
     let result = [];
     if (body instanceof Array) {
       body.forEach((user) => result.push(new User(user)))
     }
     return result;
+  }
+
+  public extractSingleUser(res: any) : User {
+    return new User(res);
   }
 
   extractLinks(data: any) {

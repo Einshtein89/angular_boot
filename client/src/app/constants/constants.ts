@@ -6,3 +6,7 @@ export var constants: Array<any> = [
   {provide: USERS_API_URL, useValue: 'http://localhost:3000/users'},
   {provide: DEFAULT_PAGE_SIZE, useValue: 10}
 ];
+
+export class Constants {
+  public static hostUrl: string = 'http://localhost:3000'
+}

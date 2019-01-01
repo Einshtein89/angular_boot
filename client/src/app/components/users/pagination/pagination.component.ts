@@ -1,4 +1,4 @@
-import {AfterContentInit, AfterViewChecked, Component, Input, OnInit, Output} from '@angular/core';
+import {AfterContentInit, AfterViewChecked, ChangeDetectorRef, Component, Input, OnInit, Output} from '@angular/core';
 import {UserService} from "../../../services/user/user.service";
 import {EntityList} from "../entity-list/entity-list.component";
 import {User} from "../../../models/user.model";
@@ -20,11 +20,13 @@ export class PaginationComponent implements OnInit, AfterViewChecked {
   // @Input() links: any;
 
   @Input() entityListComponent: any;
+  @Input() isSpecialLinkForPageByNumber: boolean;
   // _currentPath: string;
   private pageArray: any[];
 
   constructor(private userService: UserService,
-              private paginationService: PaginationService) {
+              private paginationService: PaginationService,
+              private cdr: ChangeDetectorRef) {
     // this.paginationService.currentPageSize = 10;
   }
 
@@ -47,9 +49,10 @@ export class PaginationComponent implements OnInit, AfterViewChecked {
   }
 
   getPage(pageNumber: number, name: string) {
-    this.paginationService.getPageByNumber(pageNumber, name, this.paginationService.sortBy)
+    this.paginationService.getPageByNumber(pageNumber, name, this.paginationService.sortBy,
+      this.createLinkForPageByNumber(pageNumber))
       .subscribe(
-        data => this.entityListComponent.populateEntities(data),
+        data => this.entityListComponent.populateEntities(data, true),
         errorCode =>  this.entityListComponent.statusCode = errorCode,
         () => this.entityListComponent.loading = false
       );
@@ -59,15 +62,22 @@ export class PaginationComponent implements OnInit, AfterViewChecked {
     if (this.entityListComponent.page) {
       this.pageArray = Array.from(Array(this.entityListComponent.page.totalPages).keys());
     }
+    this.cdr.detectChanges();
   }
 
   private _getPage(pageName: string) {
     this.entityListComponent.loading = true;
     this.paginationService.getPageByLink(this.entityListComponent.links[pageName].href)
       .subscribe(
-        data => this.entityListComponent.populateEntities(data),
+        data => this.entityListComponent.populateEntities(data, true),
         errorCode => this.entityListComponent.statusCode = errorCode,
         () => this.entityListComponent.loading = false
       );
+  }
+
+  private createLinkForPageByNumber(pageNumber: number) {
+    if (this.isSpecialLinkForPageByNumber) {
+      return this.entityListComponent.links.first.href.replace('&page=0', `&page=${pageNumber}`)
+    }
   }
 }

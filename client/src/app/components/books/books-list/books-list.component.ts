@@ -1,33 +1,65 @@
-import {AfterViewChecked, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {AfterViewChecked, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {Book} from "../../../models/book.model";
 import {BookService} from "../../../services/book/book.service";
 import {CatalogService} from "../../../services/book/catalog.service";
+import {PaginationService} from "../../../services/pagination.service";
 
 @Component({
   selector: 'books-list',
   templateUrl: './books-list.component.html',
-  styleUrls: ['./books-list.component.css']
+  styleUrls: ['./books-list.component.less']
 })
 export class BooksList implements OnInit, AfterViewChecked {
   private loading: boolean;
   private statusCode: number;
   private books: Array<Book> = [];
+  private booksByCategory: Array<Book> = [];
   private links: any;
   private page: any;
   name: string = 'book';
+  @Input() category: string;
+  private pageAll: any;
 
   constructor(private bookService: BookService,
               private catalogService: CatalogService,
+              private paginationService: PaginationService,
               private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.getAllBooks();
+    this.paginationService.currentPageSize = 3;
+    this.bookService.allBooksAsObservable.subscribe(books => this.books = books);
+    this.bookService.allBooksByCategoryAsObservable.subscribe(booksByCategory =>
+      this.booksByCategory = booksByCategory);
+    if (!this.category) {
+      this.bookService.pageAsObservable.subscribe(page => this.page = page);
+      this.bookService.linksForAllBooksAsObservable.subscribe(links => this.links = links);
+    } else {
+      this.bookService.pageByCategoryAsObservable.subscribe(page => this.page = page);
+      this.bookService.linksForCategoriesAsObservable.subscribe(links => this.links = links);
+    }
+    if (!this.booksByCategory && this.category) {
+      this.getAllBooks(true);
+      return;
+    }
+    if (!this.books) {
+      this.getAllBooks(false);
+      this.pageAll = this.page;
+      return;
+    }
   }
 
-  private getAllBooks() {
-    this.bookService.allBooksAsObservable.subscribe(books => this.books = books);
-    if (!this.books) {
-      this.loading = true;
+  private getAllBooks(isCategoryDefined: boolean) {
+    this.loading = true;
+    if (isCategoryDefined) {
+      this.bookService.getBooksByCategoryName(this.category).subscribe(data => {
+          this.populateEntities(data);
+          this.populateCatalogs();
+        },
+        errorCode =>  this.statusCode = errorCode,
+        () => this.loading = false
+      );
+      return;
+    } else {
       this.bookService.getAllBooks().subscribe(data => {
           this.populateEntities(data);
           this.populateCatalogs();
@@ -36,12 +68,25 @@ export class BooksList implements OnInit, AfterViewChecked {
         () => this.loading = false
       );
     }
+    this.loading = false
   }
 
-  private populateEntities(data: Object) {
+  public populateEntities(data: Object, isAdditionalDataNeeded?: boolean) {
     this.books = this.bookService.extractBooks(data);
     this.links = this.bookService.extractLinks(data);
-    this.page = this.bookService.extractPage(data);
+    let extractedPage = this.bookService.extractPage(data);
+    if (this.refreshView(extractedPage)) {
+      this.bookService.refreshFilteredView = true;
+    }
+    this.page = extractedPage;
+    if (isAdditionalDataNeeded) {
+      this.populateCatalogs();
+    }
+  }
+
+  private refreshView(extractedPage) {
+    return this.category && (extractedPage.number != this.page.number
+      || extractedPage.size != this.page.size);
   }
 
   private populateCatalogs() {
@@ -55,6 +100,9 @@ export class BooksList implements OnInit, AfterViewChecked {
   }
 
   ngAfterViewChecked(): void {
+    if (this.booksByCategory && this.category && !this.bookService.refreshFilteredView) {
+      this.books = this.booksByCategory;
+    }
     this.cdr.detectChanges();
   }
 }

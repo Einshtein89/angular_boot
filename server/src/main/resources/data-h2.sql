@@ -42,9 +42,21 @@ INSERT INTO user_role VALUES (34, 2);
 
 INSERT INTO book VALUES (1, 'John Snow', 'I know nothing', 200.99);
 INSERT INTO book VALUES (2, 'Steve Jobs', 'Eat Apples', 600.99);
+INSERT INTO book VALUES (3, 'Jack London', 'Moby Dick', 300.99);
+INSERT INTO book VALUES (4, 'Isaak Newton', '3-rd Law', 500.99);
+INSERT INTO book VALUES (5, 'Hue Jackman', 'Van Helsing', 250.99);
+INSERT INTO book VALUES (6, 'Andrew Belyanin', 'Sword without a name', 199.99);
+INSERT INTO book VALUES (7, 'Serg Lukyanenko', 'Night Watch', 255.99);
 
 INSERT INTO catalog VALUES (1, 'Sci-Fi');
 INSERT INTO catalog VALUES (2, 'Fantasy');
+INSERT INTO catalog VALUES (3, 'Novel');
+INSERT INTO catalog VALUES (4, 'Physics');
 
 INSERT INTO book_catalog VALUES (1, 2);
 INSERT INTO book_catalog VALUES (2, 1);
+INSERT INTO book_catalog VALUES (3, 3);
+INSERT INTO book_catalog VALUES (4, 4);
+INSERT INTO book_catalog VALUES (5, 2);
+INSERT INTO book_catalog VALUES (6, 2);
+INSERT INTO book_catalog VALUES (7, 2);

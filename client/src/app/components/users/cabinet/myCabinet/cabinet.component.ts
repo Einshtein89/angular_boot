@@ -70,7 +70,7 @@ export class CabinetComponent implements OnInit, AfterViewChecked {
       this.userService.getUserByUserName(this.tokenStorage.getUserId())
         .subscribe(
           data => {
-            this.user = this.extractUsers(data);
+            this.user = this.userService.extractSingleUser(data);
             this.prepareCabinetData();
           },
           errorCode =>  this.statusCode = errorCode,
@@ -145,10 +145,6 @@ export class CabinetComponent implements OnInit, AfterViewChecked {
           this.errorList = this.userService.processErrors(this.errorList);
         }
         );
-  }
-
-  private extractUsers(data: any) {
-    return data;
   }
 
   private createForms() {

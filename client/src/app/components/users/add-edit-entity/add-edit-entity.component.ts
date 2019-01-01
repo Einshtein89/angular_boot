@@ -185,7 +185,7 @@ export class AddEditEntityComponent implements OnInit, OnDestroy, AfterViewCheck
           if (this._entityListComponent.entityList.length / this._entityListComponent.page.size === 1
             && usersOnLastPage === 0)
           {
-            this.paginationService.getPageByNumber(this._entityListComponent.page.totalPages, 'user')
+            this.paginationService.getPageByNumber(this._entityListComponent.page.totalPages, this._entityListComponent.name)
               .subscribe(
                 data => this._populateEntities(data)
               );

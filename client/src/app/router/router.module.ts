@@ -23,7 +23,8 @@ export const cabinetRoutes: Routes = [
 
 export const storeRoutes: Routes = [
   { path: '', redirectTo: 'all', pathMatch: 'full'},
-  { path: 'all', component: StoreBookListComponent, pathMatch: 'full'}
+  { path: 'all', component: StoreBookListComponent, pathMatch: 'full'},
+  { path: ':category', component: StoreBookListComponent, pathMatch: 'full'}
 ];
 
 export const mainRoutes: Routes = [

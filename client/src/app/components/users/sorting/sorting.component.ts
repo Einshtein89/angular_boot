@@ -10,7 +10,7 @@ import {TranslateService} from "@ngx-translate/core";
 })
 export class SortingComponent implements OnInit {
 
-  @Input() entityListComponent: EntityList;
+  @Input() entityListComponent: any;
   sortOptions: Array<object>;
 
   constructor(public paginationService: PaginationService,

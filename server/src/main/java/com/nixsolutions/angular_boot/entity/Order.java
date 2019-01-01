@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 @DynamicUpdate
 public class Order
 {

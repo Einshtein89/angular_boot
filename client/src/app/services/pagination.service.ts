@@ -19,13 +19,13 @@ export class PaginationService {
     this.urls();
   }
 
-  getPageByNumber(page: number, key: string, sortOption?:string) {
+  getPageByNumber(page: number, key: string, sortOption?:string, specialLink?: string) {
     let params: string = [
       `size=${this.currentPageSize ? this.currentPageSize : this.defaultPageSize}`,
       `page=${page}`,
       `sort=${sortOption}`
     ].join('&');
-    let queryUrl: string =`${this.urls().get(key)}?${params}`;
+    let queryUrl: string = specialLink ? specialLink : `${this.urls().get(key)}?${params}`;
     return this.http.get(queryUrl);
   }
 
