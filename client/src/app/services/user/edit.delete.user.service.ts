@@ -7,6 +7,7 @@ import {User} from "../../models/user.model";
 import {Router} from "@angular/router";
 import {TranslateService} from "@ngx-translate/core";
 declare var $ : any;
+import * as  _ from "underscore"
 
 @Injectable()
 export class EditDeleteUserService implements OnInit {
@@ -15,7 +16,6 @@ export class EditDeleteUserService implements OnInit {
               private paginationService: PaginationService,
               private componentFactory: ComponentFactory,
               private translate: TranslateService) {
-
   }
 
   ngOnInit(): void {
@@ -29,13 +29,6 @@ export class EditDeleteUserService implements OnInit {
   }
 
   updateCurrentUser(component: any){
-    // if (component.updatedUser && component.entity && component.entity["_links"].self.href == component.updatedUser.link) {
-    //   let links = component.entity["_links"];
-    //   let id = component.entity.id;
-    //   component.entity = component.updatedUser;
-    //   component.entity["_links"] = links;
-    //   component.entity.id = id;
-    // }
     if (component.updatedUser && component.entity.id == component.updatedUser.id) {
       component.entity = component.updatedUser;
     }
@@ -55,7 +48,7 @@ export class EditDeleteUserService implements OnInit {
           text: this.translate.instant('user.form.actions.delete.button'),
           btnClass: 'btn-danger',
           action: function () {
-            self.userService.deleteUser(self.entity, self.entity["_links"].self.href)
+            self.userService.deleteUser(self.entity["_links"].self.href)
               .subscribe(
                 () => {
                   if (self.id) {
@@ -70,12 +63,14 @@ export class EditDeleteUserService implements OnInit {
                   if (!self.entityListComponent) {
                     self.getPageAfterRemove(0);
                   } else {
-                    let lastUserOnPage = self.entityListComponent.entityList.length === 1;
+                    let users = self.entityListComponent.entityList;
+                    let lastUserOnPage = users.length === 1;
                     if (!lastUserOnPage) {
-                      // self._removeUserFromUi();
-                      self.getPageAfterRemove(self.entityListComponent.page.number);
+                      self.entityListComponent.page.totalElements -= 1;
+                      self.entityListComponent.entityList =
+                        _.reject(users, (entity: User) => entity.id == self.entity.id);
                     } else {
-                      self.getPageAfterRemove(self.entityListComponent.page.number -1);
+                      self.getPageAfterRemove(self.entityListComponent.page.number - 1);
                     }
                   }
                 },

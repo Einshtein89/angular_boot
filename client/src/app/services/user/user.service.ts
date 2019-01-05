@@ -9,11 +9,9 @@ import {assign} from "rxjs/util/assign";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import * as  _ from "underscore"
 import {TranslateService} from "@ngx-translate/core";
+import {Constants} from "../../constants/constants";
 
-export const USERS_API_URL = "";
-export const REGISTER_API_URL = 'http://localhost:3000/signup';
-export const DEFAULT_PAGE_SIZE = 0;
-export const PASSWORD_CHANGE_URL = 'http://localhost:3000/changePassword';
+export const PASSWORD_CHANGE_URL = `${Constants.hostUrl}${Constants.changePassword}`;
 
 @Injectable()
 export class UserService {
@@ -28,12 +26,13 @@ export class UserService {
   loggedInUserAsObservable = this.loggedInUser.asObservable();
   allUsersAsObservable = this.allUsers.asObservable();
   public searchResults: User[];
-  private registerUrl: string = REGISTER_API_URL;
+  private registerUrl: string = `${Constants.hostUrl}${Constants.signUp}`;
+  private userUrl: string = `${Constants.hostUrl}${Constants.users}`;
+  private defaultPageSize: number = Constants.defaultPageSize;
 
   constructor(private http: HttpClient,
               private translate: TranslateService,
-              @Inject(USERS_API_URL) private userUrl: string,
-              @Inject(DEFAULT_PAGE_SIZE) private defaultPageSize: number) {
+              ) {
   }
 
   getAllUsers(url?: string): Observable<any> {
@@ -77,7 +76,7 @@ export class UserService {
       .catch(this._handleError);
   }
 
-  deleteUser(user: User, userUrl: string): Observable<User> {
+  deleteUser(userUrl: string): Observable<User> {
     return this.http.delete(userUrl, this.options)
       .catch(this._handleError);
   }
@@ -101,7 +100,7 @@ export class UserService {
       .catch(this._handleError);
   }
 
-  processErrors(errors: Array<string>) {
+  processErrors(errors: Array<string>) : Array<string> {
     let result = [];
     errors.forEach((error) => result.push(this.translate.instant("backend.validation.errors." + error)));
     return result;

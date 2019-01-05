@@ -1,21 +1,19 @@
 import {Inject, Injectable, OnDestroy, OnInit} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
+import {Constants} from "../constants/constants";
 
-export const USERS_API_URL = "";
-export const DEFAULT_PAGE_SIZE = 0;
-export const DEFAULT_SORT = "";
-export const BOOKS_API_URL = 'http://localhost:3000/books';
+
 
 @Injectable()
 export class PaginationService {
 
-  currentPageSize: number = this.defaultPageSize;
   sortBy: string = "";
-  booksUrl: string = BOOKS_API_URL;
+  private userUrl: string = `${Constants.hostUrl}${Constants.users}`;
+  private booksUrl: string = `${Constants.hostUrl}${Constants.books}`;
+  public defaultPageSize: number = Constants.defaultPageSize;
+  currentPageSize: number = this.defaultPageSize;
 
-  constructor(private http:HttpClient,
-              @Inject(USERS_API_URL) private userUrl: string,
-              @Inject(DEFAULT_PAGE_SIZE) public defaultPageSize: number) {
+  constructor(private http:HttpClient) {
     this.urls();
   }
 

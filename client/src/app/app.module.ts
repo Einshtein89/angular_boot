@@ -8,7 +8,6 @@ import { EntityList } from './components/users/entity-list/entity-list.component
 import { EntityComponent } from './components/users/entity/entity.component';
 import { AddEditEntityComponent } from './components/users/add-edit-entity/add-edit-entity.component';
 import {UserService} from "./services/user/user.service";
-import {constants} from "./constants/constants";
 import {AppRoutingModule} from "./router/router.module";
 import { MainPageComponent } from './components/main-page/main-page.component';
 import { StoreMainComponent } from './components/store/store-main/store-main.component';
@@ -41,7 +40,6 @@ import { CabinetComponent } from './components/users/cabinet/myCabinet/cabinet.c
 import {FormCreateService } from './services/form.create.service';
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
-import {LanguageService} from 'app/services/language.service';
 import { ImageUploadModule } from "angular2-image-upload";
 import {ImageService} from "./services/user/image.service";
 import {UserUtils} from "./utils/users/user.utils";
@@ -55,6 +53,7 @@ import { BookSingleComponent } from './components/books/book-single/book-single.
 import { StoreBookListComponent } from './components/store/store-book-list/store-book-list.component';
 import {CatalogService} from "./services/book/catalog.service";
 import {ActivatedRoute, Router, RouterStateSnapshot} from "@angular/router";
+import {Constants} from "./constants/constants";
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
@@ -119,7 +118,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     BookService,
     CatalogService,
     EntityList,
-    constants,
     AuthService,
     AdminGuard,
     UserGuard,
@@ -127,9 +125,9 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     EditDeleteUserService,
     TokenStorage,
     FormCreateService,
-    LanguageService,
     ImageService,
     UserUtils,
+    Constants,
     {provide: HTTP_INTERCEPTORS,
       useClass: Interceptor,
       deps: [TokenStorage, Router, ActivatedRoute],

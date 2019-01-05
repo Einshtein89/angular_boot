@@ -3,7 +3,6 @@ import {AuthService} from "../../../services/auth/auth.service";
 import {Router} from "@angular/router";
 import {TokenStorage} from "../../../services/auth/token.storage";
 import {TranslateService} from "@ngx-translate/core";
-import {LanguageService} from "../../../services/language.service";
 declare var $ : any;
 
 @Component({
@@ -20,8 +19,7 @@ export class HeaderComponent implements OnInit {
   constructor(private authService: AuthService,
               private router: Router,
               private tokenStorage: TokenStorage,
-              public translate: TranslateService,
-              private languageService: LanguageService) { }
+              public translate: TranslateService) { }
 
   ngOnInit() {
     // this.userRoles = this.tokenStorage.getUserRoles();
