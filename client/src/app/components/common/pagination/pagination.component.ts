@@ -1,6 +1,6 @@
 import {AfterContentInit, AfterViewChecked, ChangeDetectorRef, Component, Input, OnInit, Output} from '@angular/core';
 import {UserService} from "../../../services/user/user.service";
-import {EntityList} from "../entity-list/entity-list.component";
+import {EntityList} from "../../users/entity-list/entity-list.component";
 import {User} from "../../../models/user.model";
 import {Router} from "@angular/router";
 import {PaginationService} from "../../../services/pagination.service";

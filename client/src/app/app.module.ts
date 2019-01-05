@@ -15,9 +15,9 @@ import { StoreMainComponent } from './components/store/store-main/store-main.com
 import { MainViewComponent } from './components/main-view/main-view.component';
 import * as bootstrap from "bootstrap";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { PaginationComponent } from './components/users/pagination/pagination.component';
+import { PaginationComponent } from './components/common/pagination/pagination.component';
 import {PaginationService} from "./services/pagination.service";
-import { EntitiesPerPageComponent } from './components/users/pagination/entities-per-page/entities-per-page.component';
+import { EntitiesPerPageComponent } from './components/common/pagination/entities-per-page/entities-per-page.component';
 import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatSidenavModule, MatSelectModule } from '@angular/material';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatListModule} from '@angular/material/list';
@@ -25,7 +25,7 @@ import {AdminGuard} from "./services/auth/admin-guard.service";
 import {AuthService} from "./services/auth/auth.service";
 import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
-import { SortingComponent } from './components/users/sorting/sorting.component';
+import { SortingComponent } from './components/common/sorting/sorting.component';
 import { SearchComponent } from './components/users/search/search.component';
 import { SearchResultComponent } from './components/users/search/search-result/search-result.component';
 import { SearchResultListComponent } from './components/users/search/search-result-list/search-result-list.component';
@@ -54,6 +54,7 @@ import { BooksList } from './components/books/books-list/books-list.component';
 import { BookSingleComponent } from './components/books/book-single/book-single.component';
 import { StoreBookListComponent } from './components/store/store-book-list/store-book-list.component';
 import {CatalogService} from "./services/book/catalog.service";
+import {ActivatedRoute, Router, RouterStateSnapshot} from "@angular/router";
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
@@ -131,6 +132,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     UserUtils,
     {provide: HTTP_INTERCEPTORS,
       useClass: Interceptor,
+      deps: [TokenStorage, Router, ActivatedRoute],
       multi : true
     }],
   bootstrap: [AppComponent],

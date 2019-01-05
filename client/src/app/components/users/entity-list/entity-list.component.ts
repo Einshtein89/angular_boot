@@ -16,6 +16,7 @@ import * as  _ from "underscore"
 import {ActivatedRoute, Router} from "@angular/router";
 import {PaginationService} from "../../../services/pagination.service";
 import {ComponentFactory} from "../../../component-factory/component-factory";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'entity-list',
@@ -42,7 +43,8 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
               private cdr: ChangeDetectorRef,
               public router: Router,
               public route: ActivatedRoute,
-              private componentFactory: ComponentFactory) {
+              private componentFactory: ComponentFactory,
+              private translate: TranslateService) {
     route.params.subscribe(params => { this._page = params['page']; });
   }
 
@@ -85,6 +87,11 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
     this.entityList = this.userService.extractUsers(data);
     this.links = this.userService.extractLinks(data);
     this.page = this.userService.extractPage(data);
+  }
+
+  private getSortOptions() {
+    return Object.values(this.translate.instant(['empty.property', 'all.users.page.sort.by.first.name.up',
+      'all.users.page.sort.by.first.name.down']));
   }
 
   ngAfterViewChecked(): void {

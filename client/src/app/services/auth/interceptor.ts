@@ -4,7 +4,7 @@ import {
   HttpResponse, HttpUserEvent, HttpErrorResponse, HttpEvent
 } from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
-import {Router} from '@angular/router';
+import {Router, RouterStateSnapshot} from '@angular/router';
 import {TokenStorage} from './token.storage';
 import 'rxjs/add/operator/do';
 
@@ -14,7 +14,7 @@ const BEARER = 'Bearer ';
 @Injectable()
 export class Interceptor implements HttpInterceptor {
 
-  constructor(private token: TokenStorage, private router: Router) {
+  constructor(private token: TokenStorage, private router: Router, private state: RouterStateSnapshot) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -34,7 +34,11 @@ export class Interceptor implements HttpInterceptor {
           //   this.router.navigate(['/main/login']);
           // }
           if (err.status && err.status === 401) {
-            this.router.navigate(['/main/login']);
+            this.router.navigate(['/main/login'], {
+              queryParams: {
+                return: document.location.pathname
+              }
+            });
           }
         }
       }

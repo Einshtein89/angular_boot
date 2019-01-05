@@ -36,6 +36,11 @@
       "incorrect.credentials.error" : "Incorrect credentials."
     }
   },
+  "store.page" : {
+    "sort.by": "Sort by...",
+    "sort.by.price.from.lowest" : "price,asc;Price from lowest",
+    "sort.by.price.from.highest" : "price,desc;Price from highest"
+  },
   "all.users.page" : {
     "add.button" : "Add User",
     "entities.per.page" : "Entities per Page",

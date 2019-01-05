@@ -8,5 +8,9 @@ export var constants: Array<any> = [
 ];
 
 export class Constants {
-  public static hostUrl: string = 'http://localhost:3000'
+  public static hostUrl: string = 'http://localhost:3000';
+  public static books: string = '/books';
+  public static getBookByCatalogName: string = '/search/getBookByCatalog_Name';
+  public static catalogName: string = 'catalogName=';
+  public static getBookByCatalogId: string = '/search/getBookByCatalog_Id';
 }

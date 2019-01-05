@@ -8,9 +8,10 @@ import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from "@angular/common
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import {Book} from "../../models/book.model";
 import {CatalogService} from "./catalog.service";
+import {Constants} from "../../constants/constants";
 
-export const BOOKS_API_URL = 'http://localhost:3000/books';
-export const DEFAULT_PAGE_SIZE = 10;
+// export const BOOKS_API_URL = 'http://localhost:3000/books';
+// export const DEFAULT_PAGE_SIZE = 10;
 
 @Injectable()
 export class BookService {
@@ -27,7 +28,7 @@ export class BookService {
   public pageByCategoryAsObservable = this.pageByCategory.asObservable();
   public linksForCategoriesAsObservable = this.linksForCategories.asObservable();
   public linksForAllBooksAsObservable = this.linksForAllBooks.asObservable();
-  private bookUrl: string = BOOKS_API_URL;
+  // private bookUrl: string = BOOKS_API_URL;
   private defaultPageSize: number = 3;
   private getBooksByCatalogLink: any;
   refreshFilteredView: boolean;
@@ -41,7 +42,7 @@ export class BookService {
       // `size=${this.defaultPageSize}`
       `size=3`
     ].join('&');
-    return this.http.get<Book[]>(this.bookUrl + `?${params}`)
+    return this.http.get<Book[]>(`${Constants.hostUrl}${Constants.books}?${params}`)
       .do((res) => {
         this.populateBooks(res, false);
         this.linksForAllBooks.next(res["_links"]);
@@ -55,7 +56,7 @@ export class BookService {
       `catalogId=${catalogId}`,
       `size=${this.defaultPageSize}`
     ].join('&');
-    let queryUrl: string = `${this.bookUrl}/search/getBookByCatalog_Id?${params}`;
+    let queryUrl: string = `${Constants.hostUrl}${Constants.books}${Constants.getBookByCatalogId}?${params}`;
     return this.http.get<Book[]>(queryUrl)
       .do((res) => {
         this.populateBooks(res, true);
@@ -69,7 +70,7 @@ export class BookService {
       `catalogName=${catalogName}`,
       `size=${this.defaultPageSize}`
     ].join('&');
-    let queryUrl: string = `${this.bookUrl}/search/getBookByCatalog_Name?${params}`;
+    let queryUrl: string = `${Constants.hostUrl}${Constants.books}${Constants.getBookByCatalogName}?${params}`;
     return this.http.get<Book[]>(queryUrl)
       .do((res) => {
         this.populateBooks(res, true);

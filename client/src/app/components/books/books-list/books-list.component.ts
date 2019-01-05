@@ -3,6 +3,7 @@ import {Book} from "../../../models/book.model";
 import {BookService} from "../../../services/book/book.service";
 import {CatalogService} from "../../../services/book/catalog.service";
 import {PaginationService} from "../../../services/pagination.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'books-list',
@@ -23,7 +24,8 @@ export class BooksList implements OnInit, AfterViewChecked {
   constructor(private bookService: BookService,
               private catalogService: CatalogService,
               private paginationService: PaginationService,
-              private cdr: ChangeDetectorRef) { }
+              private cdr: ChangeDetectorRef,
+              private translate: TranslateService) { }
 
   ngOnInit() {
     this.paginationService.currentPageSize = 3;
@@ -97,6 +99,11 @@ export class BooksList implements OnInit, AfterViewChecked {
         }
     );
     })
+  }
+
+  private getSortOptions() {
+    return Object.values(this.translate.instant(['empty.property', 'store.page.sort.by.price.from.lowest',
+      'store.page.sort.by.price.from.highest']));
   }
 
   ngAfterViewChecked(): void {

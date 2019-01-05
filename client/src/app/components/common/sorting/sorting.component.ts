@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {EntityList} from "../entity-list/entity-list.component";
+import {EntityList} from "../../users/entity-list/entity-list.component";
 import {PaginationService} from "../../../services/pagination.service";
 import {TranslateService} from "@ngx-translate/core";
 
@@ -11,17 +11,12 @@ import {TranslateService} from "@ngx-translate/core";
 export class SortingComponent implements OnInit {
 
   @Input() entityListComponent: any;
-  sortOptions: Array<object>;
+  @Input() sortOptions: Array<object>;
 
-  constructor(public paginationService: PaginationService,
-              private translate: TranslateService) {
+  constructor(public paginationService: PaginationService) {
   }
 
-  ngOnInit() {
-    this.translate.get(['empty.property', 'all.users.page.sort.by.first.name.up',
-      'all.users.page.sort.by.first.name.down']).subscribe(
-        (res) => this.sortOptions = Object.values(res));
-  }
+  ngOnInit() {}
 
   sortPage(value: any) {
     this.entityListComponent.loading = true;

@@ -2,8 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import {HttpClient} from "@angular/common/http";
 import {TokenStorage} from "./token.storage";
-
-const APP_URL = "http://localhost:3000";
+import {Constants} from "../../constants/constants";
 
 @Injectable()
 export class AuthService {
@@ -13,7 +12,7 @@ export class AuthService {
 
   login(email: string, password: string): Observable<any> {
     const credentials = {username: email, password: password};
-    return this.http.post(APP_URL + '/token/generate-token', credentials);
+    return this.http.post(`${Constants.hostUrl}/token/generate-token`, credentials);
   }
 
   isLoggedIn(): boolean {

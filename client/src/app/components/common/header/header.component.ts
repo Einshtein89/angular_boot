@@ -63,4 +63,10 @@ export class HeaderComponent implements OnInit {
     // )
     // this.router.navigateByUrl(this.router.url + '?lang=' + lang);
   }
+
+  removeActiveFromCatalogList() {
+    if ($("#categoryName").length != 0) {
+      $('.ui.vertical.menu').children().removeClass('active')
+    }
+  }
 }

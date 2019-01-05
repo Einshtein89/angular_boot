@@ -36,6 +36,11 @@
       "incorrect.credentials.error" : "Неверный логин или пароль!"
     }
   },
+  "store.page" : {
+    "sort.by": "Сортировать по...",
+    "sort.by.price.from.lowest" : "price,asc;По цене от дешевых к дорогим",
+    "sort.by.price.from.highest" : "price,desc;По цене от дорогих к дешевым"
+  },
   "all.users.page" : {
     "add.button" : "Доб. Польз",
     "entities.per.page" : "Сущностей на стран.",

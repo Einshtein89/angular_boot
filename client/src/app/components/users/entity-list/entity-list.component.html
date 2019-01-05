@@ -13,7 +13,7 @@
           <entities-per-page [entityListComponent]="this"></entities-per-page>
         </mat-list-item>
         <mat-list-item>
-          <sorting-entities [entityListComponent]="this"></sorting-entities>
+          <sorting-entities [entityListComponent]="this" [sortOptions]="getSortOptions()"></sorting-entities>
         </mat-list-item>
       </mat-list>
     </mat-sidenav>

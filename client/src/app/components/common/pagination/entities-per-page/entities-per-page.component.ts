@@ -43,6 +43,6 @@ export class EntitiesPerPageComponent implements OnInit {
   }
 
   private defaultLinkForPageBySize(pageSize: number) {
-    return `${Constants.hostUrl}/books/search/getBookByCatalog_Name?catalogName=${this.category}&page=0&size=${pageSize}`
+    return `${Constants.hostUrl}${Constants.books}${Constants.getBookByCatalogName}?${Constants.catalogName}${this.category}&page=0&size=${pageSize}`
   }
 }
