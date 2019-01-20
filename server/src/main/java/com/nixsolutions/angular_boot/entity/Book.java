@@ -1,5 +1,7 @@
 package com.nixsolutions.angular_boot.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,9 +21,10 @@ import com.nixsolutions.angular_boot.entity.users.Photo;
 @Entity
 @Table(name = "book")
 @DynamicUpdate
-public class Book {
+public class Book implements Serializable
+{
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "book_id")
   private long id;
   @Column(name = "author")

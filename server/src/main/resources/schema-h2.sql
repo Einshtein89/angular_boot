@@ -16,7 +16,7 @@ DROP TABLE IF EXISTS `role`;
 
 CREATE TABLE `role` (
   `role_id` int(11) NOT NULL AUTO_INCREMENT,
-  `role` varchar(255) DEFAULT NULL,
+  `role` varchar(255) DEFAULT NOT NULL,
   PRIMARY KEY (`role_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
@@ -67,23 +67,27 @@ PRIMARY KEY (`book_id`,`photo_id`),
 DROP TABLE IF EXISTS `orders`;
 
 CREATE TABLE `orders` (
-`order_id` int(11) NOT NULL,
+`order_id` int(11) NOT NULL AUTO_INCREMENT,
+`unique_id` BIGINT (15) NOT NULL,
+`user_id` int(11) NOT NULL,
 `book_id` int(11) NOT NULL,
+`amount` int(11) NOT NULL,
+`date` timestamp NOT NULL,
 PRIMARY KEY (`order_id`),
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `user_order`;
-
-CREATE TABLE `user_order` (
-`order_id` int(11) NOT NULL,
-`user_id` int(11) NOT NULL,
-PRIMARY KEY (`order_id`, `user_id`),
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+-- DROP TABLE IF EXISTS `user_order`;
+--
+-- CREATE TABLE `user_order` (
+-- `order_id` int(11) NOT NULL,
+-- `user_id` int(11) NOT NULL,
+-- PRIMARY KEY (`order_id`, `user_id`),
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `catalog`;
 
 CREATE TABLE `catalog` (
-`category_id` int(11) NOT NULL,
+`category_id` int(11) NOT NULL AUTO_INCREMENT,
 `category_name` varchar (255),
 PRIMARY KEY (`category_id`),
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

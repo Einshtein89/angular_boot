@@ -8,7 +8,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {Location} from "@angular/common";
 import {FileHolder} from "angular2-image-upload";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {ImageService} from "../../../../services/user/image.service";
+import {ImageService} from "../../../../services/image.service";
 import {Router} from "@angular/router";
 import * as  _ from "underscore"
 import {UserUtils} from "../../../../utils/users/user.utils";

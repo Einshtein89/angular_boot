@@ -1,0 +1,85 @@
+<div class="main text container">
+  <h2 class="header-centered">{{ 'cart.page.header.confirmation' | translate }}</h2>
+  <div *ngIf="authService.isLoggedIn() && booksInCart.size > 0">
+    <hr/>
+    <h3>Order Details</h3>
+    <table class="content-holder">
+      <tr>
+        <td>№</td>
+        <td>{{ 'store.page.popup.cover' | translate }}</td>
+        <td>{{ 'store.page.popup.category' | translate }}</td>
+        <td>{{ 'store.page.popup.author' | translate }}</td>
+        <td>{{ 'store.page.popup.title' | translate }}</td>
+        <td>{{ 'store.page.popup.price' | translate }}</td>
+        <td>{{ 'store.page.popup.amount' | translate }}</td>
+      </tr>
+      <tr *ngFor="let book of booksInCart.keys(); let i = index" style="height:50px;">
+        <td>
+          {{ i + 1 }}
+        </td>
+        <td>
+          <div class="blurring dimmable image">
+            <img width="50px" height="50px" [src]="imageService.getImgSrc(book)">
+          </div>
+        </td>
+        <td>
+          <div>
+            <a *ngIf="book.catalog">{{ book.catalog.name }}</a>
+          </div>
+        </td>
+        <td>
+          <div>
+            {{ book.author }}
+          </div>
+        </td>
+        <td>
+          <div>
+            {{ book.title }}
+          </div>
+        </td>
+        <td>
+          <div>
+            {{ book.price | currency  }}
+          </div>
+        </td>
+        <td>
+          <div>
+            {{ booksInCart.get(book) }}
+          </div>
+        </td>
+      </tr>
+    </table>
+    <div class="left-float">Total
+      Amount: {{ cartService.getTotalAmount(booksInCart) | currency }}</div>
+    <br/>
+    <hr/>
+    <h3>User Details</h3>
+    <div *ngIf="user">
+      <table class="user-details">
+        <tr>
+          <td>Name: </td>
+          <td> {{ user.firstName }}</td>
+        </tr>
+        <tr>
+          <td>Last Name: </td>
+          <td> {{ user.lastName }}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+<p *ngIf="booksInCart.size == 0">{{ 'store.page.popup.empty.cart' | translate }}</p>
+<div class="modal-footer">
+  <button [routerLink]="['../confirmation']"
+          class="ui positive left floated button">{{ 'cart.page.back.button' | translate }}
+  </button>
+
+  <button *ngIf="authService.isLoggedIn()" (click)="getOrders()"
+          class="ui positive right floated button">GET ORDERS
+  </button>
+
+
+  <button *ngIf="authService.isLoggedIn() && booksInCart.size > 0" (click)="placeOrder(cartService.booksInCart.getValue())"
+          class="ui positive right floated button">{{ 'cart.page.order.confirm' | translate }}
+  </button>
+</div>

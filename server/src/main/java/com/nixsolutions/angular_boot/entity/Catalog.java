@@ -1,5 +1,7 @@
 package com.nixsolutions.angular_boot.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,9 +14,10 @@ import org.hibernate.annotations.DynamicUpdate;
 @Entity
 @Table(name = "catalog")
 @DynamicUpdate
-public class Catalog {
+public class Catalog implements Serializable
+{
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "category_id")
   private long id;
   @Column(name = "category_name")

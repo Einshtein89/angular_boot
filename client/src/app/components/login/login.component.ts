@@ -14,7 +14,7 @@ import {User} from "../../models/user.model";
 export class LoginComponent {
   message: string;
   return: string = '';
-  loggedInUser: User;
+  // loggedInUser: User;
 
   constructor(public authService: AuthService,
               private router: Router,
@@ -24,7 +24,7 @@ export class LoginComponent {
               private userService: UserService) {
     this.message = '';
     this.route.queryParams
-      .subscribe(params => this.return = params['return'] || '/main/home');
+      .subscribe(params => this.return = params['return'] || '/home');
   }
 
   login(username: string, password: string): void {
@@ -32,15 +32,13 @@ export class LoginComponent {
     this.authService.login(username, password).subscribe(
       data => {
         this.tokenStorage.saveToken(data.token);
-        this.userService.getUserByUserName(this.tokenStorage.getUserId())
-          .subscribe((user) => this.loggedInUser = new User(user));
+        // this.userService.getUserByUserName(this.tokenStorage.getUserId())
+        //   .subscribe((user) => this.loggedInUser = new User(user));
         this.router.navigateByUrl(this.return);
       },
       err => {
         if (err.status === 401) {
-          this.translate.get('login.page.form.incorrect.credentials.error').subscribe(
-            (value) => this.message = value
-          );
+          this.message = this.translate.instant('login.page.form.incorrect.credentials.error');
           setTimeout(function() {
             this.message = '';
           }.bind(this), 2500);

@@ -41,7 +41,7 @@ import {FormCreateService } from './services/form.create.service';
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import { ImageUploadModule } from "angular2-image-upload";
-import {ImageService} from "./services/user/image.service";
+import {ImageService} from "./services/image.service";
 import {UserUtils} from "./utils/users/user.utils";
 import {UserGuard} from "./services/auth/user-guard.service";
 import { CabinetMainComponent } from './components/users/cabinet/cabinet-main/cabinet-main.component';
@@ -54,6 +54,16 @@ import { StoreBookListComponent } from './components/store/store-book-list/store
 import {CatalogService} from "./services/book/catalog.service";
 import {ActivatedRoute, Router, RouterStateSnapshot} from "@angular/router";
 import {Constants} from "./constants/constants";
+import {CartService} from "./services/cart/cart.service";
+import { AddToCartPopupComponent } from './components/store/cart/add-to-cart/add-to-cart-popup.component';
+import { CartComponent } from './components/store/cart/cart.component';
+import {CartGuard} from "./services/cart/cart-guard.service";
+import { CartOrderComponent } from './components/store/cart/cart-order/cart-order.component';
+import { CartAuthorizationComponent } from './components/store/cart/cart-authorization/cart-authorization.component';
+import {MenuUtils} from "./utils/menu/menu.utils";
+import { CartConfirmationComponent } from './components/store/cart/cart-confirmation/cart-confirmation.component';
+import {CartConfirmationGuardService} from "./services/cart/cart-confirmation-guard.service";
+import {OrderService} from "./services/order/order.service";
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
@@ -85,7 +95,12 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     MyOrdersComponent,
     BooksList,
     BookSingleComponent,
-    StoreBookListComponent
+    StoreBookListComponent,
+    AddToCartPopupComponent,
+    CartComponent,
+    CartOrderComponent,
+    CartAuthorizationComponent,
+    CartConfirmationComponent
   ],
   imports: [
     BrowserModule,
@@ -121,12 +136,17 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     AuthService,
     AdminGuard,
     UserGuard,
+    CartGuard,
+    CartConfirmationGuardService,
     ComponentFactory,
     EditDeleteUserService,
     TokenStorage,
     FormCreateService,
     ImageService,
+    CartService,
+    OrderService,
     UserUtils,
+    MenuUtils,
     Constants,
     {provide: HTTP_INTERCEPTORS,
       useClass: Interceptor,
@@ -134,6 +154,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
       multi : true
     }],
   bootstrap: [AppComponent],
-  entryComponents: [AddEditEntityComponent, SearchResultListComponent]
+  entryComponents: [AddEditEntityComponent, SearchResultListComponent, AddToCartPopupComponent]
 })
 export class AppModule { }

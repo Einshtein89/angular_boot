@@ -1,10 +1,10 @@
 import {Injectable, OnInit} from "@angular/core";
 import {HttpClient, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {User} from "../../models/user.model";
-import {Constants} from "../../constants/constants";
+import {User} from "../models/user.model";
+import {Constants} from "../constants/constants";
 
-const IMAGE_POST_URL = `${Constants.hostUrl}${Constants.books}`;
+const IMAGE_POST_URL = `${Constants.hostUrl}${Constants.photo}`;
 
 @Injectable()
 export class ImageService implements OnInit {

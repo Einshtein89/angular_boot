@@ -7,7 +7,7 @@ import {EntityList} from "../entity-list/entity-list.component";
 import {Location} from "@angular/common";
 import {FormCreateService} from "../../../services/form.create.service";
 import {TranslateService} from "@ngx-translate/core";
-import {ImageService} from "../../../services/user/image.service";
+import {ImageService} from "../../../services/image.service";
 import {UserUtils} from "../../../utils/users/user.utils";
 
 declare var $ : any;

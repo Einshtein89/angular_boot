@@ -6,7 +6,7 @@ import {AddEditEntityComponent} from "../add-edit-entity/add-edit-entity.compone
 import {ComponentFactory} from "../../../component-factory/component-factory";
 import {EditDeleteUserService} from "../../../services/user/edit.delete.user.service";
 import {Location} from "@angular/common";
-import {ImageService} from "../../../services/user/image.service";
+import {ImageService} from "../../../services/image.service";
 import * as  _ from "underscore"
 
 @Component({

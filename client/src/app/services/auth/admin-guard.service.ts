@@ -16,7 +16,7 @@ export class AdminGuard implements CanActivate {
     if (this.auth.isLoggedIn() && this.auth.isAdmin()) {
       return true;
     } else {
-      this.router.navigate(['/main/login'], {
+      this.router.navigate(['/login'], {
         queryParams: {
           return: state.url
         }

@@ -20,11 +20,14 @@
     <book-single class="card"
                    *ngFor="let book of books"
                    [book]="book"
-                   [editForm] = "addEditContainerRef"
+                   [addToCartPopup]="addEditContainerRef"
                    [bookListComponent]="this">
     </book-single>
   </div>
   <pagination [entityListComponent]="this"
               [isSpecialLinkForPageByNumber] = "this.category">
   </pagination>
+
+  <template #addToCartPopup></template>
+
 </div>

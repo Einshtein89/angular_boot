@@ -23,7 +23,7 @@ export class UserGuard implements CanActivate {
     if (this.auth.isLoggedIn() && this.isUserAllowedToEnter(pathId)) {
       return true;
     } else {
-      this.router.navigate(['/main/login'], {
+      this.router.navigate(['/login'], {
         queryParams: {
           return: state.url
         }

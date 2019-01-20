@@ -2,13 +2,7 @@
   <div class="ui dimmer">
     <div class="content">
       <div class="center">
-        <button class="ui inverted button" (click)="editUser()">{{ 'user.form.actions.edit.button' | translate }}</button>
-        <button class="ui inverted button" (click)="removeUser()">{{ 'user.form.actions.delete.button' | translate }}</button>
-        <br/>
-        <br/>
-        <a [routerLink]="['.', book.id]">
-          <button class="ui inverted button">{{ 'user.form.actions.more.button' | translate }}</button>
-        </a>
+        <button class="ui inverted button" (click)="openAddToCartPopup()">{{ 'store.page.add.to.cart' | translate }}</button>
       </div>
     </div>
   </div>
@@ -19,7 +13,4 @@
   {{ book.author }}<br/>
   {{ book.title }}
 </a>
-<div class="meta">{{ book.price }}</div>
-
-
-
+<div class="meta">{{ book.price | currency }}</div>

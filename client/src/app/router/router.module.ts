@@ -14,6 +14,10 @@ import {UserGuard} from "../services/auth/user-guard.service";
 import {CabinetMainComponent} from "../components/users/cabinet/cabinet-main/cabinet-main.component";
 import {MyOrdersComponent} from "../components/users/cabinet/myOrders/my-orders.component";
 import {StoreBookListComponent} from "../components/store/store-book-list/store-book-list.component";
+import {CartComponent} from "../components/store/cart/cart.component";
+import {CartOrderComponent} from "../components/store/cart/cart-order/cart-order.component";
+import {CartAuthorizationComponent} from "../components/store/cart/cart-authorization/cart-authorization.component";
+import {CartConfirmationComponent} from "../components/store/cart/cart-confirmation/cart-confirmation.component";
 
 export const cabinetRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -27,10 +31,18 @@ export const storeRoutes: Routes = [
   { path: ':category', component: StoreBookListComponent, pathMatch: 'full'}
 ];
 
+export const cartRoutes: Routes = [
+  { path: '', redirectTo: 'check', pathMatch: 'full'},
+  { path: 'check', component: CartOrderComponent, pathMatch: 'full'},
+  { path: 'authorization', component: CartAuthorizationComponent, pathMatch: 'full'},
+  { path: 'confirmation', component: CartConfirmationComponent, canActivate: [UserGuard] }
+];
+
 export const mainRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: MainPageComponent, pathMatch: 'full'},
   { path: 'store', component: StoreMainComponent, children: storeRoutes },
+  { path: 'cart', component: CartComponent, children: cartRoutes},
   { path: 'myCabinet', component: CabinetMainComponent, canActivate: [UserGuard], children: cabinetRoutes },
   { path: 'allUsers', component: EntityList, canActivate: [AdminGuard] },
   { path: 'allUsers/:userId', component: UserInfoComponent, canActivate: [UserGuard] },
@@ -40,9 +52,9 @@ export const mainRoutes: Routes = [
 ];
 
 const routes: Routes = [
-  { path: '', redirectTo: '/main/home', pathMatch: 'full' },
-  { path: 'store', redirectTo: 'main/store', pathMatch: 'full' },
-  { path: 'main', component: MainViewComponent, children: mainRoutes }
+  // { path: '', redirectTo: '/main/home', pathMatch: 'full' },
+  { path: 'store', redirectTo: './store', pathMatch: 'full' },
+  { path: '', component: MainViewComponent, children: mainRoutes }
 ];
 
 @NgModule({

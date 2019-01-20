@@ -23,16 +23,16 @@ export class SortingComponent implements OnInit {
     this.paginationService.sortBy = value;
     this.paginationService.getPageByNumber(0, this.entityListComponent.name, value)
       .subscribe(
-        data => this.entityListComponent.populateEntities(data),
+        data => this.entityListComponent.populateEntities(data, true),
         errorCode =>  this.entityListComponent.statusCode = errorCode,
         () => this.entityListComponent.loading = false)
   }
 
-  getKey(option: string) {
+  private getKey(option: string) {
     return option.substring(0, option.indexOf(';'));
   }
 
-  getValue(option: string) {
+  private getValue(option: string) {
     return option.substring(option.indexOf(';') + 1, option.length);
   }
 }

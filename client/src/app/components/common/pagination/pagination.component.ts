@@ -49,6 +49,9 @@ export class PaginationComponent implements OnInit, AfterViewChecked {
   }
 
   getPage(pageNumber: number, name: string) {
+    if (this.entityListComponent.page.totalPages == 1) {
+      return;
+    }
     this.paginationService.getPageByNumber(pageNumber, name, this.paginationService.sortBy,
       this.createLinkForPageByNumber(pageNumber))
       .subscribe(
@@ -76,7 +79,7 @@ export class PaginationComponent implements OnInit, AfterViewChecked {
   }
 
   private createLinkForPageByNumber(pageNumber: number) {
-    if (this.isSpecialLinkForPageByNumber) {
+    if (this.isSpecialLinkForPageByNumber && this.entityListComponent.links.first) {
       return this.entityListComponent.links.first.href.replace('&page=0', `&page=${pageNumber}`)
     }
   }

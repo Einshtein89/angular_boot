@@ -7,6 +7,7 @@ import {Observable} from 'rxjs/Observable';
 import {Router, RouterStateSnapshot} from '@angular/router';
 import {TokenStorage} from './token.storage';
 import 'rxjs/add/operator/do';
+import {Constants} from "../../constants/constants";
 
 const TOKEN_HEADER_KEY = 'Authorization';
 const BEARER = 'Bearer ';
@@ -30,11 +31,8 @@ export class Interceptor implements HttpInterceptor {
       },
       (err: any) => {
         if (err instanceof HttpErrorResponse) {
-          // if (err.type === 0) {
-          //   this.router.navigate(['/main/login']);
-          // }
-          if (err.status && err.status === 401) {
-            this.router.navigate(['/main/login'], {
+          if (err.status && err.status === 401 && !Constants.urlsWithoutRedirect.includes(this.router.url)) {
+            this.router.navigate(['/login'], {
               queryParams: {
                 return: document.location.pathname
               }

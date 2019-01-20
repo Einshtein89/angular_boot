@@ -11,7 +11,7 @@ import {UserService} from "../../../services/user/user.service";
 import {EntityList} from "../entity-list/entity-list.component";
 import {PaginationService} from "../../../services/pagination.service";
 import {EditDeleteUserService} from "../../../services/user/edit.delete.user.service";
-import {ImageService} from "../../../services/user/image.service";
+import {ImageService} from "../../../services/image.service";
 declare var $ : any;
 
 @Component({

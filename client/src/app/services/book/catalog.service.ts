@@ -18,8 +18,10 @@ export class CatalogService {
   private options = {headers: new HttpHeaders({ 'Content-Type': 'application/json' })};
   private allCatalogs = new BehaviorSubject<any>(null);
   private bookCatalog = new BehaviorSubject<any>(null);
+  public currentCategory = new BehaviorSubject<string>(null);
   public allCatalogsAsObservable = this.allCatalogs.asObservable();
   public bookCatalogsAsObservable = this.bookCatalog.asObservable();
+  public currentCategoryAsObservable = this.currentCategory.asObservable();
   public searchResults: User[];
   private catalogUrl: string = CATALOG_API_URL;
   private defaultPageSize: number = DEFAULT_PAGE_SIZE;

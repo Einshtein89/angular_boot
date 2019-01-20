@@ -19,7 +19,7 @@
     <button class="btn btn-lg btn-primary btn-block"
             name="Submit" value="{{ 'login.page.form.login.button' | translate }}" type="Submit"
             (click)="login(username.value, password.value)">{{ 'login.page.form.login.button' | translate }}</button>
-    <a class="item" [routerLink]="['/main/register']">
+    <a class="item" [routerLink]="['/register']">
       {{ 'login.page.form.register' | translate }}
     </a>
   </form>

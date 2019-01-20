@@ -61,9 +61,9 @@ public class User {
   @OneToOne(cascade = CascadeType.ALL)
   @JoinTable(name = "user_photo", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "photo_id"))
   private Photo photo;
-  @ManyToOne(cascade = CascadeType.ALL, targetEntity = Order.class)
-  @JoinTable(name = "user_order", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "order_id"))
-  private Set<Order> orders;
+//  @ManyToOne(cascade = CascadeType.ALL, targetEntity = Order.class)
+//  @JoinTable(name = "user_order", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "order_id"))
+//  private Set<Order> orders;
   
   public String getPhone() {
     return phone;
@@ -147,13 +147,13 @@ public class User {
     this.photo = photo;
   }
   
-  public Set<Order> getOrders()
-  {
-    return orders;
-  }
-  
-  public void setOrders(Set<Order> orders)
-  {
-    this.orders = orders;
-  }
+//  public Set<Order> getOrders()
+//  {
+//    return orders;
+//  }
+//
+//  public void setOrders(Set<Order> orders)
+//  {
+//    this.orders = orders;
+//  }
 }

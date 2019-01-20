@@ -1,4 +1,12 @@
-import {AfterViewChecked, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
+import {
+  AfterViewChecked, AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+  ViewContainerRef
+} from '@angular/core';
 import {Book} from "../../../models/book.model";
 import {BookService} from "../../../services/book/book.service";
 import {CatalogService} from "../../../services/book/catalog.service";
@@ -20,6 +28,7 @@ export class BooksList implements OnInit, AfterViewChecked {
   name: string = 'book';
   @Input() category: string;
   private pageAll: any;
+  @ViewChild('addToCartPopup', {read: ViewContainerRef}) addEditContainerRef;
 
   constructor(private bookService: BookService,
               private catalogService: CatalogService,
