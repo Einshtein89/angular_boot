@@ -13,6 +13,54 @@
   margin-top: 10px;
 }
 
+.ui.items .item .image {
+  position: relative;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+  display: block;
+  float: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ui.items .item .image+[class*="middle aligned"].content {
+  align-self: center;
+}
+
+.ui.items .item .image+.content {
+  min-width: 0;
+  width: auto;
+  display: block;
+  margin-left: 0;
+  padding-left: 1.5em;
+}
+
+.ui.items .item .content {
+  -webkit-box-flex: 1;
+  flex: 1 1 auto;
+  background: 0 0;
+  margin: 0;
+  padding: 0;
+  box-shadow: none;
+  font-size: 1em;
+  border: none;
+  border-radius: 0;
+}
+
+.ui.items .item {
+  display: flex;
+  margin: 1em 0;
+  width: 100%;
+  min-height: 0;
+  background: 0 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  transition: box-shadow .1s ease,-webkit-box-shadow .1s ease;
+}
+
 .spinner{
   position: absolute;
   top: 50%;
@@ -172,4 +220,8 @@ store-book-list {
 
 .right-float {
   float: right;
+}
+
+.even-row {
+  background-color: rgba(0, 93, 128, 0.19);
 }

@@ -39,7 +39,7 @@
         </td>
         <td>
           <div>
-            {{ book.price | currency  }}
+            {{ book.price | localizedCurrency  }}
           </div>
         </td>
         <td>
@@ -64,11 +64,13 @@
         </td>
       </tr>
     </table>
-    <div class="left-float">Total Amount: {{ cartService.getTotalAmount(booksMap) | currency }}</div>
+    <div class="right-float" style="margin-right: 120px;">{{ 'my.orders.total.amount' | translate }}: {{ cartService.getTotalAmount(booksMap) | localizedCurrency }}</div>
   </div>
 </div>
-<button *ngIf="allBooksInCart.length > 0" type="submit" class="ui positive right floated button"
+<button *ngIf="allBooksInCart.length > 0" type="submit" class="ui positive right floated button continue"
         [routerLink]="['../authorization']">{{ 'cart.page.next.button' | translate }}
 </button>
 <p *ngIf="allBooksInCart.length == 0">{{ 'store.page.popup.empty.cart' | translate }}</p>
-
+<button *ngIf="allBooksInCart.length == 0" [routerLink]="['/store']"
+        class="ui positive left floated button">{{ 'cart.page.back.to.shopping' | translate }}
+</button>

@@ -18,6 +18,7 @@ import {CartComponent} from "../components/store/cart/cart.component";
 import {CartOrderComponent} from "../components/store/cart/cart-order/cart-order.component";
 import {CartAuthorizationComponent} from "../components/store/cart/cart-authorization/cart-authorization.component";
 import {CartConfirmationComponent} from "../components/store/cart/cart-confirmation/cart-confirmation.component";
+import {OrderSuccessfullComponent} from "../components/store/cart/order-successfull/order-successfull.component";
 
 export const cabinetRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -35,7 +36,8 @@ export const cartRoutes: Routes = [
   { path: '', redirectTo: 'check', pathMatch: 'full'},
   { path: 'check', component: CartOrderComponent, pathMatch: 'full'},
   { path: 'authorization', component: CartAuthorizationComponent, pathMatch: 'full'},
-  { path: 'confirmation', component: CartConfirmationComponent, canActivate: [UserGuard] }
+  { path: 'confirmation', component: CartConfirmationComponent, canActivate: [UserGuard] },
+  { path: 'successfull', component: OrderSuccessfullComponent, canActivate: [UserGuard] }
 ];
 
 export const mainRoutes: Routes = [

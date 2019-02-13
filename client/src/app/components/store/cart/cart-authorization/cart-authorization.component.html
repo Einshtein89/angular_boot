@@ -1,6 +1,6 @@
-<div *ngIf="!authService.isLoggedIn() && cartService.booksInCart.getValue().size > 0">
-  <div class="container">
-    <h2 class="form-signin-heading">{{ 'cart.page.login.header.message' | translate }}</h2>
+<div class="container">
+  <h2 class="form-signin-heading">{{ 'cart.page.login.header.message' | translate }}</h2>
+  <div *ngIf="!authService.isLoggedIn() && cartService.booksInCart.getValue().size > 0">
     <h4>{{ 'cart.page.login.choose.text' | translate }}</h4>
     <form class="form-signin" style="float: left;">
       <div class="alert alert-danger" role="alert" *ngIf="message">
@@ -30,14 +30,15 @@
   </div>
 </div>
 <div *ngIf="authService.isLoggedIn() && cartService.booksInCart.getValue().size > 0">
-  Hi, <b>{{ loggedInUser ? loggedInUser.firstName : '' }}</b>! As you are registered user, you may now proceed!
+  {{ 'my.orders.authorization.hi' | translate }}, <b>{{ loggedInUser ? loggedInUser.firstName : '' }}</b>! {{ 'my.orders.authorization.registered.may.proceed' | translate }}
 </div>
 <p *ngIf="cartService.booksInCart.getValue().size == 0">{{ 'store.page.popup.empty.cart' | translate }}</p>
 <div class="modal-footer">
   <button [routerLink]="['/cart']"
           class="ui positive left floated button">{{ 'cart.page.back.button' | translate }}
   </button>
-  <button [routerLink]="['../confirmation']" *ngIf="authService.isLoggedIn() && cartService.booksInCart.getValue().size > 0"
+  <button [routerLink]="['../confirmation']"
+          *ngIf="authService.isLoggedIn() && cartService.booksInCart.getValue().size > 0"
           class="ui positive right floated button">{{ 'cart.page.next.button' | translate }}
   </button>
 </div>

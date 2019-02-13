@@ -9,8 +9,10 @@ import {User} from "../../models/user.model";
 export class OrderService {
   private ordersUrl = `${Constants.hostUrl}${Constants.orders}`;
   private options = {headers: new HttpHeaders({ 'Content-Type': 'application/json' })};
-  private userOrders = new BehaviorSubject<Map<Book, number>>(null);
+  public userOrders = new BehaviorSubject<any>(null);
   public userOrdersAsObservable = this.userOrders.asObservable();
+  public ordersUpdated = new BehaviorSubject<any>(true);
+  public ordersUpdatedAsObservable = this.ordersUpdated.asObservable();
 
   constructor(private http: HttpClient){}
 
@@ -22,13 +24,13 @@ export class OrderService {
       convertedMap[val + "_" +index++] = key;
     });
     return this.http.post(this.ordersUrl, convertedMap, this.options)
-      .do(() => this.userOrders.next(ordersMap))
+      .do(() => this.ordersUpdated.next(true))
       .catch(this._handleError)
   }
 
   public getOrder(userId: string) : Observable<any> {
     return this.http.get(`${this.ordersUrl}?userId=${userId}`)
-      // .do(() => this.userOrders.next(ordersMap))
+      .do((res) => this.userOrders.next(res))
       .catch(this._handleError)
   }
 

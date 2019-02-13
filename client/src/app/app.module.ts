@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 
@@ -17,7 +17,15 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { PaginationComponent } from './components/common/pagination/pagination.component';
 import {PaginationService} from "./services/pagination.service";
 import { EntitiesPerPageComponent } from './components/common/pagination/entities-per-page/entities-per-page.component';
-import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatSidenavModule, MatSelectModule } from '@angular/material';
+import {
+  MatMenuModule,
+  MatButtonModule,
+  MatIconModule,
+  MatCardModule,
+  MatSidenavModule,
+  MatSelectModule,
+  MatCheckboxModule
+} from '@angular/material';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatListModule} from '@angular/material/list';
 import {AdminGuard} from "./services/auth/admin-guard.service";
@@ -38,7 +46,7 @@ import { FooterComponent } from './components/common/footer/footer.component';
 import { HeaderComponent } from './components/common/header/header.component';
 import { CabinetComponent } from './components/users/cabinet/myCabinet/cabinet.component';
 import {FormCreateService } from './services/form.create.service';
-import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {TranslateLoader, TranslateModule, TranslateService} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import { ImageUploadModule } from "angular2-image-upload";
 import {ImageService} from "./services/image.service";
@@ -64,10 +72,24 @@ import {MenuUtils} from "./utils/menu/menu.utils";
 import { CartConfirmationComponent } from './components/store/cart/cart-confirmation/cart-confirmation.component';
 import {CartConfirmationGuardService} from "./services/cart/cart-confirmation-guard.service";
 import {OrderService} from "./services/order/order.service";
+import {LoadingUtils} from "./utils/loading/loading.utils";
+import {LocalizedDatePipe} from "./services/pipes/localized.date.pipe";
+import {registerLocaleData} from "@angular/common";
+import localeRussian from '@angular/common/locales/ru';
+import {LocalizedCurrencyPipe} from "./services/pipes/localized.currency.pipe";
+import { OrderSuccessfullComponent } from './components/store/cart/order-successfull/order-successfull.component';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
 }
+
+const PIPES = [
+  LocalizedDatePipe,
+  LocalizedCurrencyPipe
+];
+
+registerLocaleData(localeRussian);
+
 
 @NgModule({
   declarations: [
@@ -100,7 +122,9 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     CartComponent,
     CartOrderComponent,
     CartAuthorizationComponent,
-    CartConfirmationComponent
+    CartConfirmationComponent,
+    PIPES,
+    OrderSuccessfullComponent
   ],
   imports: [
     BrowserModule,
@@ -117,6 +141,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     MatCardModule,
     MatSelectModule,
     MatListModule,
+    MatCheckboxModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -147,11 +172,17 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     OrderService,
     UserUtils,
     MenuUtils,
+    LoadingUtils,
     Constants,
     {provide: HTTP_INTERCEPTORS,
       useClass: Interceptor,
       deps: [TokenStorage, Router, ActivatedRoute],
       multi : true
+    },
+    {
+      provide: LOCALE_ID,
+      deps: [TranslateService],
+      useFactory: (translateService) => translateService.currentLang
     }],
   bootstrap: [AppComponent],
   entryComponents: [AddEditEntityComponent, SearchResultListComponent, AddToCartPopupComponent]

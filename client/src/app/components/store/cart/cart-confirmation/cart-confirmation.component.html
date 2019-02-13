@@ -1,8 +1,13 @@
 <div class="main text container">
+  <div class="error" *ngIf="errorList">
+    <p *ngFor="let error of errorList">
+      {{error}}
+    </p>
+  </div>
   <h2 class="header-centered">{{ 'cart.page.header.confirmation' | translate }}</h2>
-  <div *ngIf="authService.isLoggedIn() && booksInCart.size > 0">
+  <ng-container *ngIf="authService.isLoggedIn() && booksInCart.size > 0">
     <hr/>
-    <h3>Order Details</h3>
+    <h3>{{ 'cart.page.order.details' | translate }}</h3>
     <table class="content-holder">
       <tr>
         <td>№</td>
@@ -13,7 +18,7 @@
         <td>{{ 'store.page.popup.price' | translate }}</td>
         <td>{{ 'store.page.popup.amount' | translate }}</td>
       </tr>
-      <tr *ngFor="let book of booksInCart.keys(); let i = index" style="height:50px;">
+      <tr *ngFor="let book of booksInCartKeys; let i = index" style="height:50px;">
         <td>
           {{ i + 1 }}
         </td>
@@ -39,7 +44,7 @@
         </td>
         <td>
           <div>
-            {{ book.price | currency  }}
+            {{ book.price | localizedCurrency  }}
           </div>
         </td>
         <td>
@@ -49,37 +54,31 @@
         </td>
       </tr>
     </table>
-    <div class="left-float">Total
-      Amount: {{ cartService.getTotalAmount(booksInCart) | currency }}</div>
+    <div class="right-float" style="margin-right: 120px;">{{ 'my.orders.total.amount' | translate }}: {{ cartService.getTotalAmount(booksInCart) | localizedCurrency }}</div>
     <br/>
     <hr/>
-    <h3>User Details</h3>
+    <h3>{{ 'cart.page.user.details' | translate }}</h3>
     <div *ngIf="user">
       <table class="user-details">
         <tr>
-          <td>Name: </td>
+          <td>{{'user.form.actions.first.name.label' | translate }}: </td>
           <td> {{ user.firstName }}</td>
         </tr>
         <tr>
-          <td>Last Name: </td>
+          <td>{{'user.form.actions.last.name.label' | translate }}: </td>
           <td> {{ user.lastName }}</td>
         </tr>
       </table>
     </div>
-  </div>
+  </ng-container>
 </div>
 <p *ngIf="booksInCart.size == 0">{{ 'store.page.popup.empty.cart' | translate }}</p>
 <div class="modal-footer">
-  <button [routerLink]="['../confirmation']"
+  <button [routerLink]="['../authorization']"
           class="ui positive left floated button">{{ 'cart.page.back.button' | translate }}
   </button>
 
-  <button *ngIf="authService.isLoggedIn()" (click)="getOrders()"
-          class="ui positive right floated button">GET ORDERS
-  </button>
-
-
   <button *ngIf="authService.isLoggedIn() && booksInCart.size > 0" (click)="placeOrder(cartService.booksInCart.getValue())"
-          class="ui positive right floated button">{{ 'cart.page.order.confirm' | translate }}
+          class="ui positive right floated button">{{ 'cart.page.order.confirm.button' | translate }}
   </button>
 </div>

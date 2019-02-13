@@ -89,10 +89,6 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
   private makeTranslation(lang: string) {
     this.translate.use(lang);
     localStorage['language'] = lang;
-    // this.languageService.setLocale(lang).subscribe(
-    //   () => this.localeUpdated = true
-    // )
-    // this.router.navigateByUrl(this.router.url + '?lang=' + lang);
   }
 
   private removeActiveFromCatalogList() {

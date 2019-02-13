@@ -73,7 +73,10 @@
       "back.button": "Назад",
       "login.header.message" : "Авторизация",
       "login.choose.text" : "Пожалуйста, выполните одно из следующих действий, чтобы продолжить:",
-      "order.confirm" : "Заказать"
+      "order.confirm.button" : "Заказать",
+      "order.details" : "Подробности заказа",
+      "back.to.shopping" : "Назад в магазин",
+      "user.details" : "Данные пользователя"
     }
   },
   "all.users.page": {
@@ -117,7 +120,17 @@
     "cabinet.main.section.label": "Мои данные"
   },
   "my": {
-    "orders.title": "Мои Заказы",
+    "orders": {
+      "authorization" : {
+        "hi" : "Здравствуйте",
+        "registered.may.proceed" : "Так как Вы зарегистрированный пользователь, Вы можете продолжить!"
+      },
+      "title": "Мои Заказы",
+      "no.orders": "У Вас еще нет заказов!",
+      "order.id.header": "№ Заказа",
+      "position.number.header" : "№ Позиции",
+      "total.amount" : "Общая сумма"
+    },
     "cabinet.title": "Мой Кабинет"
   },
   "field.error": "Поле",
@@ -131,5 +144,6 @@
     "user.byEmail.exists.error": "Пользователь с таким адресом эл. почты уже существует!",
     "user.doesn't.exists.error": "Нет пользователя для обновления!",
     "old.password.doesn't.match.error": "Старый пароль не соответствует!"
-  }
+  },
+  "loading.message": "Пожалуйста, подождите"
 }

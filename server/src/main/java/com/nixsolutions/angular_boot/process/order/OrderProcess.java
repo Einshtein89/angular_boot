@@ -67,7 +67,7 @@ public class OrderProcess
     if (!CollectionUtils.isEmpty(orders))
     {
       orderRepository.save(orders);
-      return ok(orderMap);
+      return ok(uniqueId);
     }
     return ResponseEntity.badRequest().build();
   }

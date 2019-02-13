@@ -15,6 +15,8 @@ import {ImageService} from "../../../../services/image.service";
 import {User} from "../../../../models/user.model";
 import {OrderService} from "../../../../services/order/order.service";
 import {Book} from "../../../../models/book.model";
+import {LoadingUtils} from "../../../../utils/loading/loading.utils";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-cart-confirmation',
@@ -24,21 +26,28 @@ import {Book} from "../../../../models/book.model";
 export class CartConfirmationComponent implements OnInit {
   private user: User;
   private booksInCart: Map<Book, number> = new Map();
+  private booksInCartKeys: Array<Book>;
+  private errorList: any[];
 
-  constructor(private authService: AuthService,
+  constructor(private router: Router,
+              private authService: AuthService,
               private tokenStorage: TokenStorage,
               private translate: TranslateService,
               private userService: UserService,
               private cartService: CartService,
               private imageService: ImageService,
               private cdr: ChangeDetectorRef,
-              private orderService: OrderService) {
+              private orderService: OrderService,
+              private loadingUtils: LoadingUtils) {
   }
 
   ngOnInit() {
     if (this.booksInCart.size == 0) {
       this.cartService.booksInCartAsObservable.delay(0)
-        .subscribe(booksInCart => this.booksInCart = booksInCart);
+        .subscribe(booksInCart => {
+          this.booksInCart = booksInCart;
+          this.booksInCartKeys = Array.from(this.booksInCart.keys());
+        });
     }
     this.userService.loggedInUserAsObservable.subscribe(user => this.user = user);
     if (this.authService.isLoggedIn() && !this.user) {
@@ -48,14 +57,19 @@ export class CartConfirmationComponent implements OnInit {
   }
 
   placeOrder(booksMap: Map<Book, number>) {
+    this.loadingUtils.blockUI();
     this.orderService.placeOrder(booksMap).subscribe(
-      (res) => console.log(res)
+      (orderUniqueId) => {
+        LoadingUtils.unblockUI();
+        this.errorList = [];
+        this.router.navigate(['cart/successfull'], { queryParams: { orderId: orderUniqueId } });
+      },
+      error => {
+        this.errorList = [];
+        this.errorList.push(error.error);
+        this.errorList = this.userService.processErrors(this.errorList);
+      }
     )
-  }
-
-  getOrders() {
-    this.orderService.getOrder(this.user.id)
-      .subscribe((res) => console.log(res))
   }
 }
 

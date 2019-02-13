@@ -17,11 +17,12 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {PaginationService} from "../../../services/pagination.service";
 import {ComponentFactory} from "../../../component-factory/component-factory";
 import {TranslateService} from "@ngx-translate/core";
+import {LoadingUtils} from "../../../utils/loading/loading.utils";
 
 @Component({
   selector: 'entity-list',
   templateUrl: './entity-list.component.html',
-  styleUrls: ['./entity-list.component.css'],
+  styleUrls: ['./entity-list.component.less'],
 
 })
 export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
@@ -33,10 +34,9 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
   page: any;
   _page: string;
   name: string = 'user';
+  isTabFormat: boolean = false;
 
   @ViewChild('addEditEntity', {read: ViewContainerRef}) addEditContainerRef;
-
-  // @ViewChild(PaginationComponent) pagination: PaginationComponent;
 
   constructor(private userService: UserService,
               private paginationService: PaginationService,
@@ -44,7 +44,8 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
               public router: Router,
               public route: ActivatedRoute,
               private componentFactory: ComponentFactory,
-              private translate: TranslateService) {
+              private translate: TranslateService,
+              private loadingUtils: LoadingUtils) {
     route.params.subscribe(params => { this._page = params['page']; });
   }
 
@@ -60,26 +61,33 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
   ngOnInit() {
     this.paginationService.currentPageSize = this.paginationService.defaultPageSize;
     this.userService.changedUserAsObservable.subscribe(user => this.updatedUser = user);
-    // if(!this.userService.entityList) {
-      this.getAllUsers();
-    // } else {
-    //    this.entityList = this.userService.entityList;
-    // }
+    this.getAllUsers();
   }
 
   ngOnDestroy() {
     this.userService.entityList = this.entityList;
   }
 
+  toggleView() {
+    this.isTabFormat = !this.isTabFormat;
+  }
+
   getAllUsers(): void {
+    this.loadingUtils.blockUI();
     this.loading = true;
     this.userService.getAllUsers()
       .subscribe(
         data => {
           this.populateEntities(data)
           },
-        errorCode =>  this.statusCode = errorCode,
-        () => this.loading = false
+        errorCode =>  {
+          this.statusCode = errorCode;
+          LoadingUtils.unblockUI();
+        },
+        () => {
+          this.loading = false;
+          LoadingUtils.unblockUI();
+        }
       );
   }
 
@@ -95,14 +103,8 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngAfterViewChecked(): void {
-    // if (this.updatedUser) {
-    //   let user = _.find(this.entityList, (entity) => entity.id == this.updatedUser.id);
-    //   this.entityList.forEach((entity, index) => {
-    //     if (entity.id == this.updatedUser.id) {
-    //       this.entityList[index] = this.updatedUser;
-    //     }
-    //   })
-    // }
     this.cdr.detectChanges();
   }
+
+
 }

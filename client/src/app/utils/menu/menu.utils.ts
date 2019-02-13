@@ -13,7 +13,7 @@ export class MenuUtils {
     if ($categoryElements.length > 0) {
       $categoryElements.each(function(num, element) {
         let href = $(element).attr('href');
-        if (href.includes(this.router.url)) {
+        if (href && href.includes(this.router.url)) {
           $(element).siblings().removeClass('active');
           $(element).addClass('active');
         }

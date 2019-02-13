@@ -5,6 +5,7 @@ import {User} from "../../../models/user.model";
 import {Router} from "@angular/router";
 import {PaginationService} from "../../../services/pagination.service";
 import {BooksList} from "../../books/books-list/books-list.component";
+import {LoadingUtils} from "../../../utils/loading/loading.utils";
 
 @Component({
   selector: 'pagination',
@@ -26,6 +27,7 @@ export class PaginationComponent implements OnInit, AfterViewChecked {
 
   constructor(private userService: UserService,
               private paginationService: PaginationService,
+              private loadingUtils: LoadingUtils,
               private cdr: ChangeDetectorRef) {
     // this.paginationService.currentPageSize = 10;
   }
@@ -49,6 +51,8 @@ export class PaginationComponent implements OnInit, AfterViewChecked {
   }
 
   getPage(pageNumber: number, name: string) {
+    this.entityListComponent.loading = true;
+    this.loadingUtils.blockUI();
     if (this.entityListComponent.page.totalPages == 1) {
       return;
     }
@@ -57,24 +61,24 @@ export class PaginationComponent implements OnInit, AfterViewChecked {
       .subscribe(
         data => this.entityListComponent.populateEntities(data, true),
         errorCode =>  this.entityListComponent.statusCode = errorCode,
-        () => this.entityListComponent.loading = false
+        () => {
+          this.entityListComponent.loading = false;
+          LoadingUtils.unblockUI();
+        }
       );
-  }
-
-  ngAfterViewChecked(): void {
-    if (this.entityListComponent.page) {
-      this.pageArray = Array.from(Array(this.entityListComponent.page.totalPages).keys());
-    }
-    this.cdr.detectChanges();
   }
 
   private _getPage(pageName: string) {
     this.entityListComponent.loading = true;
+    this.loadingUtils.blockUI();
     this.paginationService.getPageByLink(this.entityListComponent.links[pageName].href)
       .subscribe(
         data => this.entityListComponent.populateEntities(data, true),
         errorCode => this.entityListComponent.statusCode = errorCode,
-        () => this.entityListComponent.loading = false
+        () => {
+          this.entityListComponent.loading = false;
+          LoadingUtils.unblockUI();
+        }
       );
   }
 
@@ -82,5 +86,12 @@ export class PaginationComponent implements OnInit, AfterViewChecked {
     if (this.isSpecialLinkForPageByNumber && this.entityListComponent.links.first) {
       return this.entityListComponent.links.first.href.replace('&page=0', `&page=${pageNumber}`)
     }
+  }
+
+  ngAfterViewChecked(): void {
+    if (this.entityListComponent.page) {
+      this.pageArray = Array.from(Array(this.entityListComponent.page.totalPages).keys());
+    }
+    this.cdr.detectChanges();
   }
 }

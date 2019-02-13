@@ -73,7 +73,10 @@
       "back.button": "Back",
       "login.header.message" : "Authorization",
       "login.choose.text" : "Please do one of the following to proceed:",
-      "order.confirm" : "Confirm Order"
+      "order.confirm.button" : "Confirm Order",
+      "order.details" : "Confirm Order",
+      "back.to.shopping" : "Back to shopping",
+      "user.details" : "User Details"
     }
   },
   "all.users.page": {
@@ -117,7 +120,17 @@
     "cabinet.main.section.label": "My Information"
   },
   "my": {
-    "orders.title": "My Orders",
+    "orders": {
+      "authorization" : {
+        "hi" : "Hi",
+        "registered.may.proceed" : "As you are registered user, you may now proceed!"
+      },
+      "title": "My Orders",
+      "no.orders": "You have no orders yet!",
+      "order.id.header": "Order Id",
+      "position.number.header" : "Position #",
+      "total.amount" : "Total Amount"
+    },
     "cabinet.title": "My Cabinet"
   },
   "field.error": "Field",
@@ -132,5 +145,6 @@
     "user.byEmail.exists.error": "User with such E-mail already exists!",
     "user.doesn't.exists.error": "No user to be updated!",
     "old.password.doesn't.match.error": "Old password doesn't match!"
-  }
+  },
+  "loading.message": "Please wait"
 }

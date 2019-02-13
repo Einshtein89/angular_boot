@@ -23,9 +23,11 @@ export class EntityComponent implements OnInit, OnDestroy, AfterViewChecked {
   @Input() entity: User;
   @Input() editForm: ViewContainerRef;
   @Input() entityListComponent: any;
+  @Input() isTabFormat: boolean;
   updatedUser: User;
   errorList: any;
   imgSrc: any;
+  isShowButtons: any;
 
   constructor(private userService: UserService,
               private paginationService: PaginationService,
@@ -35,9 +37,6 @@ export class EntityComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   ngOnInit() {
     this.userService.changedUserAsObservable.subscribe(user => this.updatedUser = user);
-    $('.special.cards .image').dimmer({
-      on: 'hover'
-    });
     this.imgSrc = this.imageService.getImgSrc(this.entity);
   }
 
@@ -78,6 +77,18 @@ export class EntityComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   ngAfterViewChecked(): void {
     this.editDeleteUserService.updateCurrentUser(this);
+    $('.special.cards .image').dimmer({
+      on: 'hover'
+    });
+
     this.cdr.detectChanges();
+  }
+
+  showButtons() {
+    this.isShowButtons = true;
+  }
+
+  hideButtons() {
+    this.isShowButtons = false;
   }
 }
