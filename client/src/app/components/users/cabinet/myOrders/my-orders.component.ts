@@ -19,7 +19,7 @@ export class MyOrdersComponent implements OnInit, AfterContentChecked {
   private user: User;
   private orders: Map<string, Map<number, Array<Order>>> = new Map<string, Map<number, Array<Order>>>();
   private ordersUpdated: boolean = true;
-  private loading: boolean;
+  loading: boolean;
   private ordersValues: Array<Map<number, Array<Order>>>;
   private ordersKeys: Array<string>;
 

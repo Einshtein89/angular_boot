@@ -34,7 +34,7 @@ export class EntityList implements OnInit, OnDestroy, AfterViewChecked {
   page: any;
   _page: string;
   name: string = 'user';
-  isTabFormat: boolean = false;
+  isTabFormat: boolean = true;
 
   @ViewChild('addEditEntity', {read: ViewContainerRef}) addEditContainerRef;
 

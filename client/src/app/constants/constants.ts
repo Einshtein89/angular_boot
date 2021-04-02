@@ -1,6 +1,8 @@
 
 export class Constants {
-  public static hostUrl: string = 'http://localhost:3000';
+  public static baseUrl: string = window.location.origin;
+  // public static hostUrl: string = `${Constants.baseUrl}/api` ;
+  public static hostUrl: string = `http://localhost:3000/api` ;
   public static books: string = '/books';
   public static users: string = '/users';
   public static photo: string = '/userPhotoUpload';

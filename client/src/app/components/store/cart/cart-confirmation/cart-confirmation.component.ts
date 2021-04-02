@@ -25,12 +25,12 @@ import {Router} from "@angular/router";
 })
 export class CartConfirmationComponent implements OnInit {
   private user: User;
-  private booksInCart: Map<Book, number> = new Map();
-  private booksInCartKeys: Array<Book>;
-  private errorList: any[];
+  booksInCart: Map<Book, number> = new Map();
+  booksInCartKeys: Array<Book>;
+  errorList: any[];
 
   constructor(private router: Router,
-              private authService: AuthService,
+              public authService: AuthService,
               private tokenStorage: TokenStorage,
               private translate: TranslateService,
               private userService: UserService,

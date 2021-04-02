@@ -34,7 +34,8 @@ export class SearchResultComponent implements OnInit, OnDestroy {
   getToolTipText() : string {
     return "Click to see " + this.searchResult.firstName + "!";
   }
-  private removeFading() {
+
+  removeFading() {
     $(".modal-backdrop").remove();
   }
 

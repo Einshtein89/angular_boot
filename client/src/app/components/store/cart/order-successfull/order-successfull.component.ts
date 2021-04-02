@@ -11,7 +11,7 @@ import {ActivatedRoute, Router} from "@angular/router";
   styleUrls: ['./order-successfull.component.css']
 })
 export class OrderSuccessfullComponent implements OnInit {
-  private orderId: any;
+  orderId: any;
 
   constructor(private userService: UserService,
               private authService: AuthService,

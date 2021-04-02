@@ -25,7 +25,7 @@ import com.nixsolutions.angular_boot.entity.users.Photo;
 import com.nixsolutions.angular_boot.entity.users.User;
 
 @RestController
-@RequestMapping("/userPhotoUpload")
+@RequestMapping("/api/userPhotoUpload")
 public class UserPhotoController
 {
   @Autowired

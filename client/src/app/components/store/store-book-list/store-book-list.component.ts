@@ -8,7 +8,7 @@ import {CatalogService} from "../../../services/book/catalog.service";
   styleUrls: ['./store-book-list.component.css']
 })
 export class StoreBookListComponent implements OnInit {
-  private category: string;
+  category: string;
 
   constructor(private route: ActivatedRoute,
               private catalogService: CatalogService) {

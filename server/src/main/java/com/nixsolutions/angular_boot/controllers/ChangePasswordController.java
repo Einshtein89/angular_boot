@@ -16,7 +16,7 @@ import com.nixsolutions.angular_boot.entity.users.PasswordChange;
 import com.nixsolutions.angular_boot.entity.users.User;
 
 @RestController
-@RequestMapping("/changePassword")
+@RequestMapping("/api/changePassword")
 public class ChangePasswordController
 {
   @Autowired

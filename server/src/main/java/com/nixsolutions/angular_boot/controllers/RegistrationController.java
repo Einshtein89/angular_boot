@@ -24,7 +24,7 @@ import com.nixsolutions.angular_boot.entity.users.User;
 import com.nixsolutions.angular_boot.validators.BeforeCreateUserValidator;
 
 @RestController
-@RequestMapping("/signup")
+@RequestMapping("/api/signup")
 public class RegistrationController
 {
   @Autowired

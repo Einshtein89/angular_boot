@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.nixsolutions.angular_boot.entity.Book;
 
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+//@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RepositoryRestResource(collectionResourceRel = "books", path = "books")
 public interface BookRepository extends PagingAndSortingRepository<Book, Long>
 {

@@ -19,7 +19,7 @@ import com.nixsolutions.angular_boot.entity.Book;
 import com.nixsolutions.angular_boot.process.order.OrderProcess;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/api/orders")
 public class OrdersController
 {
   @Autowired

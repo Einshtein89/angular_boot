@@ -23,7 +23,7 @@ declare var $ : any;
 export class CabinetComponent implements OnInit, AfterViewChecked {
 
   private user: User;
-  private loading: boolean;
+  loading: boolean;
   private statusCode: string;
   private errorList: any = [];
 

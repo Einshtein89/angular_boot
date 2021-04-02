@@ -13,7 +13,7 @@ import * as _ from "underscore";
 export class AddToCartPopupComponent implements OnInit {
   private _ref:any;
   private _currentBook: Book;
-  private allBooksInCart: Array<Book> = [];
+  allBooksInCart: Array<Book> = [];
   private booksMap: Map<Book, number> = new Map<Book, number>();
 
   constructor(private imageService: ImageService,
@@ -32,7 +32,7 @@ export class AddToCartPopupComponent implements OnInit {
     return this.imageService.getImgSrc(book);
   }
 
-  private removeModal(){
+  removeModal(){
     $("#addToCartModal").modal('hide');
     this._ref.destroy();
   }

@@ -8,8 +8,9 @@ import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from "@angular/common
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import {Catalog} from "../../models/catalog.model";
 import {Book} from "../../models/book.model";
+import {Constants} from "../../constants/constants";
 
-export const CATALOG_API_URL = 'http://localhost:3000/catalogs';
+export const CATALOG_API_URL = `${Constants.hostUrl}/catalogs`;
 export const DEFAULT_PAGE_SIZE = 10000;
 
 @Injectable()

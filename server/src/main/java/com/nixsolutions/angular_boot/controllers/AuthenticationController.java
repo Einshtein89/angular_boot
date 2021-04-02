@@ -18,7 +18,7 @@ import com.nixsolutions.angular_boot.dao.UserRepository;
 import com.nixsolutions.angular_boot.entity.users.LoginUser;
 
 @RestController
-@RequestMapping("/token")
+@RequestMapping("/api/token")
 public class AuthenticationController {
 
   @Autowired

@@ -10,7 +10,7 @@ import {TokenStorage} from "../../../services/auth/token.storage";
 })
 export class FooterComponent implements OnInit {
 
-  constructor(private authService: AuthService,
+  constructor(public authService: AuthService,
               private router: Router,
               private tokenStorage: TokenStorage) { }
 

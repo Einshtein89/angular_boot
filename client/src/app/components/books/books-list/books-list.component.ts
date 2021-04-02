@@ -19,7 +19,7 @@ import {TranslateService} from "@ngx-translate/core";
   styleUrls: ['./books-list.component.less']
 })
 export class BooksList implements OnInit, AfterViewChecked {
-  private loading: boolean;
+  loading: boolean;
   private statusCode: number;
   private books: Array<Book> = [];
   private booksByCategory: Array<Book> = [];

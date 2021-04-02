@@ -28,16 +28,16 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
   // private userRoles: string[];
   private languages: Map<string, string> = new Map<string, string>();
   private localeUpdated: boolean;
-  private cartLength: number;
+  cartLength: number;
   private displayEmptyCartPopup: boolean;
   expComponent: ComponentRef<any>;
   @ViewChild('emptyCartPopup', {read: ViewContainerRef}) emptyCartPopupContainerRef;
 
 
-  constructor(private authService: AuthService,
+  constructor(public authService: AuthService,
               private router: Router,
               private tokenStorage: TokenStorage,
-              private translate: TranslateService,
+              public translate: TranslateService,
               private cartService: CartService,
               private componentFactory: ComponentFactory,
               private cdr: ChangeDetectorRef) { }
@@ -61,11 +61,11 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
     this.translate.use(browserLang.match(/en|ru/) ? browserLang : 'en');
 
 
-    // let booksMap = this.cartService.booksInCart.getValue();
-    let map = new Map<Book, number>();
-    map.set(new Book({id: "1", author: "Test test", title: "New book", price: 300.45,
-      catalog: new Catalog({id: "1", name: "Catalog"})}), 1)
-    this.cartService.booksInCart.next(map);
+    // // let booksMap = this.cartService.booksInCart.getValue();
+    // let map = new Map<Book, number>();
+    // map.set(new Book({id: "1", author: "Test test", title: "New book", price: 300.45,
+    //   catalog: new Catalog({id: "1", name: "Catalog"})}), 1)
+    // this.cartService.booksInCart.next(map);
 
   }
 
@@ -74,11 +74,11 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
     this.router.navigate(['.']);
   }
 
-  private showMenu() {
+  showMenu() {
     $(".language_menu").addClass('visible');
   }
 
-  private hideMenu() {
+  hideMenu() {
     $(".language_menu").removeClass('visible');
   }
 
@@ -91,7 +91,7 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
     localStorage['language'] = lang;
   }
 
-  private removeActiveFromCatalogList() {
+  removeActiveFromCatalogList() {
     if ($("#categoryName").length != 0) {
       $('.ui.vertical.menu').children().removeClass('active')
     }

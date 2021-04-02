@@ -9,7 +9,7 @@ import {ImageService} from "../../../../services/image.service";
   styleUrls: ['./cart-order.component.less']
 })
 export class CartOrderComponent implements OnInit {
-  private allBooksInCart: Array<Book> = [];
+  allBooksInCart: Array<Book> = [];
   private booksMap: Map<Book, number> = new Map<Book, number>();
 
   constructor(private imageService: ImageService,

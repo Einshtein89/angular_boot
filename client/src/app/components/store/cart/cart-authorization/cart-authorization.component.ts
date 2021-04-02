@@ -16,11 +16,11 @@ export class CartAuthorizationComponent implements OnInit {
   return: string = '';
   loggedInUser: User;
 
-  constructor(private authService: AuthService,
+  constructor(public authService: AuthService,
               private tokenStorage: TokenStorage,
               public translate: TranslateService,
               private userService: UserService,
-              private cartService: CartService) { }
+              public cartService: CartService) { }
 
   ngOnInit() {
     this.userService.loggedInUserAsObservable.subscribe(user => this.loggedInUser = user);

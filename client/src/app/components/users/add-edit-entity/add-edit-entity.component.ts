@@ -19,25 +19,25 @@ declare var $ : any;
 })
 export class AddEditEntityComponent implements OnInit, OnDestroy, AfterViewChecked {
   public myForm: FormGroup;
-  private firstName: FormControl;
-  private lastName: FormControl;
-  private email: FormControl;
-  private password: FormControl;
-  private phone: FormControl;
-  private sex: FormControl;
-  private confirmPassword: FormControl;
+  firstName: FormControl;
+  lastName: FormControl;
+  email: FormControl;
+  password: FormControl;
+  phone: FormControl;
+  sex: FormControl;
+  confirmPassword: FormControl;
   userList: User[];
-  private errorList: any = [];
+  errorList: any = [];
   private _ref:any;
-  private _currentUser: User;
+  _currentUser: User;
   private _links: any;
   private _entityListComponent: EntityList;
   private _isRegister: boolean;
   private options: any;
   private isFirstNameRequired: boolean = true;
-  private sexArray: Array<string>;
-  private _isModal: boolean;
-  private _isEdit: any;
+  sexArray: Array<string>;
+  _isModal: boolean;
+  _isEdit: any;
 
   constructor(private userService: UserService,
               private paginationService: PaginationService,
@@ -110,18 +110,18 @@ export class AddEditEntityComponent implements OnInit, OnDestroy, AfterViewCheck
     return this.isFirstNameRequired ? Validators.required : null;
   }
 
-  private removeModal(){
+  removeModal(){
     $("#addEditUserModal").modal('hide');
     this._ref.destroy();
     this.ngOnDestroy();
   }
 
-  private goToPrevPage() {
+  goToPrevPage() {
     this.myForm.reset();
     this.location.back();
   }
 
-  private onSubmit(user: User) {
+  onSubmit(user: User) {
     if (!this.myForm.valid) {
       return false;
     }

@@ -14,7 +14,7 @@ export class CabinetMainComponent implements OnInit {
   ngOnInit() {
   }
 
-  private makeActive($event) {
+  makeActive($event) {
     $(event.target).siblings().removeClass('active');
     $(event.target).addClass('active');
   }

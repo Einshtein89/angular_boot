@@ -16,7 +16,7 @@ import {MenuUtils} from "../../../utils/menu/menu.utils";
 export class StoreMainComponent implements OnInit, AfterContentChecked {
   private loading: boolean;
   private statusCode: number;
-  private catalogs: Array<Catalog> = [];
+  catalogs: Array<Catalog> = [];
   private catalogsWithTranslations: Map<string, string> = new Map<string, string>();
   private currentCategory: string;
 
