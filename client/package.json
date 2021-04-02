@@ -29,7 +29,7 @@
     "@types/underscore": "^1.8.8",
     "angular2-image-upload": "^1.0.0-rc.1",
     "block-ui": "^2.70.1",
-    "bootstrap": "3.3.7",
+    "bootstrap": "3.4.1",
     "core-js": "^2.4.1",
     "jquery": "^3.3.1",
     "jquery-confirm": "^3.3.2",
