@@ -82,9 +82,13 @@ export class CabinetComponent implements OnInit, AfterViewChecked {
     this.populateTextMessages();
     this.createForms();
     this.imageService.getImage(this.user['_links'].photo.href).subscribe((res) => {
-        this.imgSrc= 'data:image/jpg;base64,' + res.body;
+        this.imgSrc = 'data:image/jpg;base64,' + res.body;
       },
-      (error) => this.errorList.push(error.error)
+      (error) => {
+        if (error.status === 404) {
+          this.imgSrc = this.imageService.getImgSrc(this.user);
+        }
+      }
     );
   }
 

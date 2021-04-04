@@ -74,7 +74,12 @@ export class UserInfoComponent implements OnInit, AfterViewChecked {
 
   getUserImage() {
     this.imageService.getImage(this.entity['_links'].photo.href).subscribe((res) => {
-        this.imgSrc= 'data:image/jpg;base64,' + res.body;
+        this.imgSrc = 'data:image/jpg;base64,' + res.body;
+      },
+      (error) => {
+        if (error.status === 404) {
+          this.imgSrc = this.imageService.getImgSrc(this.entity);
+        }
       }
     );
   }

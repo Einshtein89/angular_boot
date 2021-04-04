@@ -38,9 +38,13 @@ export class EntityComponent implements OnInit, OnDestroy, AfterViewChecked {
   ngOnInit() {
     this.userService.changedUserAsObservable.subscribe(user => this.updatedUser = user);
     this.imageService.getImage(this.entity['_links'].photo.href).subscribe((res) => {
-        this.imgSrc= 'data:image/jpg;base64,' + res.body;
+        this.imgSrc = 'data:image/jpg;base64,' + res.body;
       },
-      (error) => this.errorList.push(error.error)
+      (error) => {
+        if (error.status === 404) {
+          this.imgSrc = this.imageService.getImgSrc(this.entity);
+        }
+      }
     );
   }
 
