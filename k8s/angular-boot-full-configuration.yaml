@@ -10,62 +10,6 @@ data:
   mongo-root-password: cGFzc3dvcmQ=
 ---
 apiVersion: v1
-kind: Secret
-metadata:
-  namespace: books-store
-  name: tls-secret
-# Opaque - default type for key-value pairs
-type: Opaque
-data:
-  mongo-root-username: dXNlcm5hbWU=
-  mongo-root-password: cGFzc3dvcmQ=
-  tls.cert: -----BEGIN CERTIFICATE-----
-    MIICpDCCAYwCCQD7msIrwJLncTANBgkqhkiG9w0BAQsFADAUMRIwEAYDVQQDDAli
-    b29rcy5jb20wHhcNMjEwNDA0MTM1MjQ0WhcNMjIwMzMwMTM1MjQ0WjAUMRIwEAYD
-    VQQDDAlib29rcy5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCX
-    VCx7Zv1uRG0gBEoL90EI4S2URekOt9PORv8q/mZX6f7nUdguGdGykY9/Rs0KQDMv
-    CrM+VPYzcodsSC5tkSKFbrK+7kl72ykw1eB/C2xkyCyHjNW0FRA3wU8LE/B0bZCB
-    zrzNJp07DWlC1yq78NQck1zV4iWc5GUH+hdwRSznqecW1+lXGw/TZZA77jY2oQYo
-    y5D2hEgb0/50R0Kldo62IqLIVEfDjoZ3RFDhB2+rvDEohGOswh9ezpSW/9mnFz+z
-    yhAq4W8MxEYOc4N67oDjR5pd0BQc/uF8fbFgcCuwB51GvmMcWIVgNAqxSfz0fiW+
-    XlgkxNBvzLpqX8USfljtAgMBAAEwDQYJKoZIhvcNAQELBQADggEBAFzaNB6WMGMx
-    Uq+YeuaSwOBUjWRaoOZw/DBJ+miliVz94lhSmjC721OgvEJycb4AwQGQ5jIss+3V
-    8uEICGkcaQNkirv0j6xUm5CcVTaeCKkdedcYY1qFIdJggZ3pMRfPQfpbbgafpqdj
-    mXiLGwQwzXAybSbB5H4BAqGZWMfDPFiRGcu1/uw8MHvym9fFyNfKCyM2Pv4/1NcY
-    PmjrxdHT7coNk3wGrLPliNlfNIPSDBHWM+Lv0q4m8c7cQo05vLRwWkMMfzGh20PL
-    gc8fY2JYhWRkPb/h0Nw0B1l+w5q2cTHRLWaH9FjYz8VaS2Ioj7vaJrl8G+HVkQXU
-    grCdcchuQrQ=
-    -----END CERTIFICATE-----
-  tls.key: -----BEGIN RSA PRIVATE KEY-----
-    MIIEpAIBAAKCAQEAl1Qse2b9bkRtIARKC/dBCOEtlEXpDrfTzkb/Kv5mV+n+51HY
-    LhnRspGPf0bNCkAzLwqzPlT2M3KHbEgubZEihW6yvu5Je9spMNXgfwtsZMgsh4zV
-    tBUQN8FPCxPwdG2Qgc68zSadOw1pQtcqu/DUHJNc1eIlnORlB/oXcEUs56nnFtfp
-    VxsP02WQO+42NqEGKMuQ9oRIG9P+dEdCpXaOtiKiyFRHw46Gd0RQ4Qdvq7wxKIRj
-    rMIfXs6Ulv/Zpxc/s8oQKuFvDMRGDnODeu6A40eaXdAUHP7hfH2xYHArsAedRr5j
-    HFiFYDQKsUn89H4lvl5YJMTQb8y6al/FEn5Y7QIDAQABAoIBAGcBO5nvu3eQCftu
-    D/zfGxxxMbYoc/+5rulMuClKqt0SgJhxxEV0+6ChpdxLlAtzMaPGk8VMzZytS3Kw
-    GzInRSkv9WkzBz/QKNR98GZpnylme7D0cw41/CkHYsc2lkiZv3AsCaVWsFVexpRh
-    o0v0HF0rDVjkqxeE+yQX3lZkL7Grj5MqoXR94VJXhHPpZlHHr3Yt0S0VN+zKsHF4
-    EqoSAl9n2H5Cz5P3kwMA+qWZCT3QoSM8pq1fQev4AoMB0D1w1THffkrwGl2nSU78
-    tjhRzZwzkDl72nIofDE9ZLlEyZbvmhAAUr5ocqE3+2mOC8MxcQ3shXZo1kSZ2sCD
-    KPYoKwECgYEAxscO6LlfhJk754leNjTDepy1I9yHtZFEZnVTAzKMG0AMuam3cCmQ
-    4ZtO7o8Whjm3bpovJIFnP5xImSg2JEAfx0nr3EqJMKtMYpPn+oWsutzfqz36EZUe
-    s+ZkuQcyzE22zJmeEoN9FJL7KL25gE0Y3j9LULDWQi6GNXsjS+e2wEECgYEAwuRf
-    K6Z87e09zZzI53ekTLbit82tGK3FNx0HJolAv3IaBSiUQgigmJG42oyjiv9zbSWb
-    k15CEcn78IAWoSGoy05HIQiWmt4sY8i9vf1aqyxiUbLZ05lkCQ4Ue4zFUw8NED2w
-    XV4LnItZavAnJ/LTGbF8aFiqUuKUYXGn1j9zLa0CgYAj0UCFfMmSWg4qRV1dhRpo
-    II6fPKCTfe6GS8O+gsAuNNdWKRettT+u9048vDnBy+qamlu+Rzb0hlOqjU1cMNXJ
-    Ei/WzPN1ephT9vTI9odOUHhZIdzKiEU1A2HI2Vw05hf3PAL4sQq7x1RMXgtr6/h8
-    K4mFq6ef20RBpMOSbNlIQQKBgQCFmka/xrc35/4JOSTkwLjqOil79UxncaCT4ptn
-    SIoRc+fwh1vzVLS7QpJliCoI/IulVDWttd03Eq9atIRO26M6FCRgueF8szfdA91H
-    JCqG07tm5GO9UhcoufVCqUMQaG39Jz0DFJiDLWgUDiPZl/YtU+XEJpxEi71Ke76h
-    +gc8VQKBgQCw6PGEn4uua08CecO9v4P1RDGhbEoQ7+2Qoj6iDqT78a5FQykusXPa
-    xto8CD+eifiTTiv7NSXo1AQE5Ck5We/Zu4HeKM0mk+bC0LGiLNxYQS7Yl3fNvyMx
-    B39WW+1k3Yb7T9yJvL6Vey7mkFrfJ49PSEySy6Q+9FhGnPX4KJYv2g==
-    -----END RSA PRIVATE KEY-----
-  type: kubernetes.io/tls
----
-apiVersion: v1
 kind: ConfigMap
 metadata:
   namespace: books-store
@@ -127,7 +71,7 @@ spec:
         - books.com
       secretName: tls-secret
   rules:
-    - host: dashboard.com
+    - host: books.com
       http:
         paths:
           - path: /
