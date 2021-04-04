@@ -5,7 +5,8 @@ import static java.util.stream.Collectors.toList;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.springframework.http.ResponseEntity.ok;
 
-import java.sql.Date;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -44,8 +45,8 @@ public class OrderProcess
   
   public String getOrders(Long userId)
   {
-    List<Order> ordersByUser = orderRepository.getAllByUserIdOrderByUniqueId(userId);
-    Map<Date, Map<Long, List<OrderExtension>>> processedOrders = ordersByUser.stream()
+    List<Order> ordersByUser = orderRepository.getAllByUserIdOrderById(userId);
+    Map<LocalDate, Map<Long, List<OrderExtension>>> processedOrders = ordersByUser.stream()
         .map(this::toOrderExtension)
         .collect(groupingBy(Order::getDate, groupingBy(Order::getUniqueId)));
     JSONObject response = new JSONObject();
@@ -57,7 +58,7 @@ public class OrderProcess
     return EMPTY;
   }
   
-  public ResponseEntity<?> placeOrders(@RequestBody Map<String, Book> orderMap)
+  public ResponseEntity<?> placeOrders(Map<String, Book> orderMap)
   {
     HashMap<Book, Long> preparedMap = preProcess(orderMap);
     long uniqueId = Calendar.getInstance().getTimeInMillis();
@@ -103,7 +104,7 @@ public class OrderProcess
           SecurityContextHolder.getContext().getAuthentication().getPrincipal();
       com.nixsolutions.angular_boot.entity.users.User currentUser = userRepository.findByEmail(principal.getUsername());
       order.setUserId(currentUser.getId());
-      order.setDate(new Date(uniqueId));
+      order.setDate(LocalDate.now());
       order.setUniqueId(uniqueId);
       return order;
     };

@@ -23,6 +23,7 @@ import com.nixsolutions.angular_boot.configs.jwttoken.TokenProvider;
 import com.nixsolutions.angular_boot.dao.UserRepository;
 import com.nixsolutions.angular_boot.entity.users.Photo;
 import com.nixsolutions.angular_boot.entity.users.User;
+import com.nixsolutions.angular_boot.services.SequenceGeneratorService;
 
 @RestController
 @RequestMapping("/api/userPhotoUpload")
@@ -32,6 +33,8 @@ public class UserPhotoController
   private TokenProvider tokenProvider;
   @Autowired
   private UserRepository userRepository;
+  @Autowired
+  private SequenceGeneratorService sequenceGeneratorService;
   
   @PostMapping
   public ResponseEntity<?> saveUserPhoto(
@@ -50,7 +53,8 @@ public class UserPhotoController
     
     try
     {
-      currentUser.setPhoto(new Photo(photo.getName(), photo.getBytes()));
+      long photoId = sequenceGeneratorService.generateSequence(Photo.SEQUENCE_NAME);
+      currentUser.setPhoto(new Photo(photoId, photo.getName(), photo.getBytes()));
     }
     catch (IOException e)
     {

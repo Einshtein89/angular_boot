@@ -2,11 +2,9 @@ package com.nixsolutions.angular_boot.controllers;
 
 import static com.nixsolutions.angular_boot.configs.Constants.REGISTRATION;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -19,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nixsolutions.angular_boot.dao.UserRepository;
 import com.nixsolutions.angular_boot.entity.users.User;
 import com.nixsolutions.angular_boot.validators.BeforeCreateUserValidator;
@@ -34,7 +33,10 @@ public class RegistrationController
   private BeforeCreateUserValidator validator;
 
   @PostMapping
-  public ResponseEntity<?> register(HttpServletRequest req, HttpServletResponse res, @RequestBody User user) {
+  public ResponseEntity<?> register(@RequestBody String newUserJson) throws IOException
+  {
+    ObjectMapper mapper = new ObjectMapper();
+    User user = mapper.readValue(newUserJson, User.class);
     BeanPropertyBindingResult beanPropertyBindingResult =
         new BeanPropertyBindingResult(user, REGISTRATION);
     validator.validate(user, beanPropertyBindingResult);

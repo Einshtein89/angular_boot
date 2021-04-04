@@ -3,17 +3,25 @@ import {HttpClient, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {User} from "../models/user.model";
 import {Constants} from "../constants/constants";
+import {Book} from "../models/book.model";
 
-const IMAGE_POST_URL = `${Constants.hostUrl}${Constants.photo}`;
+const IMAGE_POST_URL = `${Constants.hostUrl}${Constants.photoUpload}`;
 
 @Injectable()
 export class ImageService implements OnInit {
+
+  private photo: any;
 
   constructor(private http:HttpClient){}
 
   public postImage(photo: FormData): Observable<any> {
     return this.http.post(IMAGE_POST_URL, photo)
       .catch(this._handleError);
+  }
+
+  public getImage(url: string) {
+    return this.http.get(url)
+      .catch(this._handleError)
   }
 
   public prepareMultipartRequest(image: any) {

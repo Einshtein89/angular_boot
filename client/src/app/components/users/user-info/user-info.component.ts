@@ -44,11 +44,11 @@ export class UserInfoComponent implements OnInit, AfterViewChecked {
       this.userService.getUserById(this.id)
         .subscribe(data => {
           this.entity = data;
-          this.imgSrc = this.imageService.getImgSrc(this.entity);
+          this.getUserImage();
         });
     }
     if (this.entity) {
-      this.imgSrc = this.imageService.getImgSrc(this.entity);
+      this.getUserImage();
     }
   }
 
@@ -62,7 +62,7 @@ export class UserInfoComponent implements OnInit, AfterViewChecked {
     this.editDeleteUserService.deleteUser(this);
   }
 
-  getUserPhoto() {
+  getUserImageSrc() {
     return this.imgSrc;
   }
 
@@ -70,6 +70,13 @@ export class UserInfoComponent implements OnInit, AfterViewChecked {
   ngAfterViewChecked(): void {
     this.editDeleteUserService.updateCurrentUser(this);
     this.cdr.detectChanges();
+  }
+
+  getUserImage() {
+    this.imageService.getImage(this.entity['_links'].photo.href).subscribe((res) => {
+        this.imgSrc= 'data:image/jpg;base64,' + res.body;
+      }
+    );
   }
 
 }

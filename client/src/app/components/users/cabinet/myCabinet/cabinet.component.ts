@@ -81,7 +81,11 @@ export class CabinetComponent implements OnInit, AfterViewChecked {
   private prepareCabinetData() {
     this.populateTextMessages();
     this.createForms();
-    this.imgSrc = this.imageService.getImgSrc(this.user);
+    this.imageService.getImage(this.user['_links'].photo.href).subscribe((res) => {
+        this.imgSrc= 'data:image/jpg;base64,' + res.body;
+      },
+      (error) => this.errorList.push(error.error)
+    );
   }
 
   private onSubmit(user: User) {
@@ -120,7 +124,7 @@ export class CabinetComponent implements OnInit, AfterViewChecked {
             .subscribe(
               (res) => {
                 this.imgSrc = this.imageService.getImgSrc(res);
-                // this.photo = res.photo.body;
+                // this.photoUpload = res.photoUpload.body;
                 this.errorList = [];
                 // $('#imageUploader').css('display', 'none');
                 // $('.img-ul-container').empty();

@@ -1,61 +1,34 @@
 package com.nixsolutions.angular_boot.entity.users;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import org.hibernate.annotations.DynamicUpdate;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-@Entity
-@Table(name="photo")
-@DynamicUpdate
+@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Getter
+@Setter
+@Document(collection = "photos")
 public class Photo
 {
+  @Transient
+  public static final String SEQUENCE_NAME = "photos_sequence";
+
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name="photo_id")
   private long id;
+  @NonNull
   private String name;
+  @NonNull
   private byte[] body;
-  
-  public Photo() {}
-  
-  public Photo(String name, byte[] body)
-  {
-    this.name = name;
-    this.body = body;
-  }
-  
-  public long getId()
-  {
-    return this.id;
-  }
-  
-  public void setId(long id)
-  {
-    this.id = id;
-  }
-  
-  public String getName()
-  {
-    return this.name;
-  }
-  
-  public void setName(String name)
-  {
-    this.name = name;
-  }
-  
-  public byte[] getBody()
-  {
-    return this.body;
-  }
-  
-  public void setBody(byte[] body)
-  {
-    this.body = body;
-  }
+
 }

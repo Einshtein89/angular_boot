@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -68,7 +69,7 @@ public class DefaultUserRepositoryImpl implements UserRepository
   }
   
   @Override
-  public <S extends User> Iterable<S> save(Iterable<S> iterable)
+  public <S extends User> List<S> save(Iterable<S> iterable)
   {
     return userRepository.save(iterable);
   }
@@ -86,7 +87,7 @@ public class DefaultUserRepositoryImpl implements UserRepository
   }
   
   @Override
-  public Iterable<User> findAll()
+  public List<User> findAll()
   {
     return userRepository.findAll();
   }
@@ -128,11 +129,59 @@ public class DefaultUserRepositoryImpl implements UserRepository
   }
   
   @Override
-  public Iterable<User> findAll(Sort sort)
+  public List<User> findAll(Sort sort)
   {
     return userRepository.findAll(sort);
   }
-  
+
+  @Override
+  public <S extends User> S insert(S s)
+  {
+    return userRepository.insert(s);
+  }
+
+  @Override
+  public <S extends User> List<S> insert(Iterable<S> iterable)
+  {
+    return userRepository.insert(iterable);
+  }
+
+  @Override
+  public <S extends User> S findOne(Example<S> example)
+  {
+    return userRepository.findOne(example);
+  }
+
+  @Override
+  public <S extends User> List<S> findAll(Example<S> example)
+  {
+    return userRepository.findAll(example);
+  }
+
+  @Override
+  public <S extends User> List<S> findAll(Example<S> example, Sort sort)
+  {
+    return userRepository.findAll(example, sort);
+  }
+
+  @Override
+  public <S extends User> Page<S> findAll(Example<S> example, Pageable pageable)
+  {
+    return userRepository.findAll(example, pageable);
+  }
+
+  @Override
+  public <S extends User> long count(Example<S> example)
+  {
+    return userRepository.count(example);
+  }
+
+  @Override
+  public <S extends User> boolean exists(Example<S> example)
+  {
+    return userRepository.exists(example);
+  }
+
   @Override
   public Page<User> findAll(Pageable pageable)
   {

@@ -11,10 +11,10 @@
       <a (click)="getPage(page, this.entityListComponent.name)">{{ page + 1 }}</a>
     </li>
     <!--{/pages}-->
-    <li *ngIf="this.entityListComponent.page.number !== this.entityListComponent.page.totalPages - 1">
+    <li *ngIf="this.entityListComponent.page.totalElements !== 0 && this.entityListComponent.page.number !== this.entityListComponent.page.totalPages - 1">
       <a (click)="getNextPage()">></a>
     </li>
-    <li *ngIf="this.entityListComponent.page.number !== this.entityListComponent.page.totalPages - 1">
+    <li *ngIf="this.entityListComponent.page.totalElements !== 0 && this.entityListComponent.page.number !== this.entityListComponent.page.totalPages - 1">
       <a (click)="getLastPage()">»</a>
     </li>
   </ul>

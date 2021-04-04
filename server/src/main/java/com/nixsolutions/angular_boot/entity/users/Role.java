@@ -2,26 +2,26 @@ package com.nixsolutions.angular_boot.entity.users;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "role")
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@RequiredArgsConstructor
+@ToString
+@Getter
+@Setter
+@Document(collection = "roles")
 public class Role {
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name="role_id")
-  private int id;
-  @Column(name="role")
+
+  @Transient
+  public static final String SEQUENCE_NAME = "roles_sequence";
+
+  private long id;
+  @NonNull
   private String role;
 
-  public int getId() {
-    return id;
-  }
-  public void setId(int id) {
-    this.id = id;
-  }
-  public String getRole() {
-    return role;
-  }
-  public void setRole(String role) {
-    this.role = role;
-  }
 }

@@ -62,7 +62,7 @@ export class BooksList implements OnInit, AfterViewChecked {
   private getAllBooks(isCategoryDefined: boolean) {
     this.loading = true;
     if (isCategoryDefined) {
-      this.bookService.getBooksByCategoryName(this.category).subscribe(data => {
+      this.bookService.getBooksByCategoryId(this.category).subscribe(data => {
           this.populateEntities(data);
           this.populateCatalogs();
         },

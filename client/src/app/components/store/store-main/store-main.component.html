@@ -3,7 +3,7 @@
     <div class="ui vertical fluid tabular menu">
       <a class="item" id="categoryName" *ngFor="let catalog of catalogs"
          (click)="filterByCategory(catalog)"
-         [routerLink]="['./', catalog.name]">
+         [routerLink]="['./', catalog.id]">
         {{ getCatalogName(catalog.name) }}
       </a>
     </div>
