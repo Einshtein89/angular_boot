@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment                                          # 1
+metadata:
+  name: angular-deployment
+  labels:
+    app: angular-deployment
+spec:
+  selector:
+    matchLabels:
+      app: angular-deployment
+  replicas: 2                                             # 2
+  minReadySeconds: 15
+  strategy:
+    type: RollingUpdate                                   # 3
+    rollingUpdate:
+      maxUnavailable: 1                                   # 4
+      maxSurge: 1                                         # 5
+  template:
+    metadata:
+      labels:
+        app: angular-deployment                                 # 6
+    spec:
+      containers:
+        - image: einshtein89/angular:5
+          imagePullPolicy: Always                         # 7
+          name: angular-deployment
+          ports:
+            - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-boot-deployment
+  labels:
+    app: spring-boot-deployment
+spec:
+  selector:
+    matchLabels:
+      app: spring-boot-deployment
+  replicas: 2
+  minReadySeconds: 15
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: spring-boot-deployment
+    spec:
+      containers:
+        - image: einshtein89/spring_boot_angular:1
+          imagePullPolicy: Always
+          name: spring-boot-deployment
+          ports:
+            - containerPort: 3000
