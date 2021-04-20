@@ -37,17 +37,11 @@ curl "https://hub.docker.com/v2/repositories/${ORGANIZATION}/${FRONTEND_IMAGE}/t
 
 #compiling and building backend, pushing to remote
 cd ../server || exit
-mvn clean package && \
 docker build -t $USERNAME/$BACKEND_IMAGE:$BACKEND_TAG . && \
 docker push $USERNAME/$BACKEND_IMAGE:$BACKEND_TAG && \
 
 #compiling and building frontend, pushing to remote
 cd ../client || exit
-if [[ -d dist ]]
-then
-    rm -r dist
-fi
-npm run build && \
 docker build -t $USERNAME/$FRONTEND_IMAGE:$FRONTEND_TAG . && \
 docker push $USERNAME/$FRONTEND_IMAGE:$FRONTEND_TAG && \
 
@@ -61,7 +55,6 @@ if [[ -f tls.key ]]
 then
     rm tls.key
 fi
-kubectl delete namespace books-store && \
 kubectl create namespace books-store && \
 
 #create secret in k8s with cert and key (CN should correspond to host URL)
@@ -69,6 +62,8 @@ openssl genrsa -out tls.key 2048 && \
 openssl req -new -x509 -key tls.key -out tls.cert -days 360 -subj /CN=books.com && \
 kubectl create secret -n books-store tls tls-secret --cert=tls.cert --key=tls.key && \
 kubectl apply -f angular-boot-full-configuration.yaml
+
+kubectl delete pods --all --namespace=books-store
 
 #clean up
 #deleting local tags
