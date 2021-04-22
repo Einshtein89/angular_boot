@@ -1,6 +1,7 @@
 #!/bin/bash
 
-#brew install jq
+#brew install kubectl
+#brew install helm
 
 #docker hub credentials and repo details
 USERNAME=$1
@@ -10,30 +11,18 @@ BACKEND_IMAGE=books_backend_mongo
 BACKEND_TAG=$3
 FRONTEND_IMAGE=books_frontend_mongo
 FRONTEND_TAG=$4
+PROJECT_NAME=books-store
 
 #deleting local tags
-docker rmi $USERNAME/$BACKEND_IMAGE:$BACKEND_TAG
-docker rmi $USERNAME/$FRONTEND_IMAGE:$FRONTEND_TAG
+docker rmi $USERNAME/$BACKEND_IMAGE:$BACKEND_TAG && \
+docker rmi $USERNAME/$FRONTEND_IMAGE:$FRONTEND_TAG && \
 
-#getting access token and deleting tags from remote repo
-login_data() {
-cat <<EOF
-{
-  "username": "$USERNAME",
-  "password": "$PASSWORD"
-}
-EOF
-}
+#deleting tags from remote repo
+docker run --rm -it lumir/remove-dockerhub-tag --user $USERNAME \
+ --password $PASSWORD ${ORGANIZATION}/${BACKEND_IMAGE}:${BACKEND_TAG}
 
-TOKEN=`curl -s -H "Content-Type: application/json" -X POST -d "$(login_data)" "https://hub.docker.com/v2/users/login/" | jq -r .token`
-
-curl "https://hub.docker.com/v2/repositories/${ORGANIZATION}/${BACKEND_IMAGE}/tags/${BACKEND_TAG}/" \
--X DELETE \
--H "Authorization: JWT ${TOKEN}"
-
-curl "https://hub.docker.com/v2/repositories/${ORGANIZATION}/${FRONTEND_IMAGE}/tags/${FRONTEND_TAG}/" \
--X DELETE \
--H "Authorization: JWT ${TOKEN}"
+docker run --rm -it lumir/remove-dockerhub-tag --user $USERNAME \
+ --password $PASSWORD ${ORGANIZATION}/${FRONTEND_IMAGE}:${FRONTEND_TAG}
 
 #compiling and building backend, pushing to remote
 cd ../server || exit
@@ -55,20 +44,26 @@ if [[ -f tls.key ]]
 then
     rm tls.key
 fi
-kubectl create namespace books-store && \
+
+if [[ $(kubectl get namespace | grep $PROJECT_NAME) ]]
+then
+    kubectl delete namespace $PROJECT_NAME
+fi
+
+kubectl create namespace $PROJECT_NAME && \
 
 #create secret in k8s with cert and key (CN should correspond to host URL)
 openssl genrsa -out tls.key 2048 && \
 openssl req -new -x509 -key tls.key -out tls.cert -days 360 -subj /CN=books.com && \
 kubectl create secret -n books-store tls tls-secret --cert=tls.cert --key=tls.key && \
-kubectl apply -f angular-boot-full-configuration.yaml
 
-kubectl delete pods --all --namespace=books-store
+helm upgrade --install --namespace $PROJECT_NAME $PROJECT_NAME $PROJECT_NAME && \
+#kubectl delete pods --all --namespace=$PROJECT_NAME && \
 
 #clean up
 #deleting local tags
-docker rmi $USERNAME/$BACKEND_IMAGE:$BACKEND_TAG
-docker rmi $USERNAME/$FRONTEND_IMAGE:$FRONTEND_TAG
+docker rmi $USERNAME/$BACKEND_IMAGE:$BACKEND_TAG && \
+docker rmi $USERNAME/$FRONTEND_IMAGE:$FRONTEND_TAG && \
 #deleting certificates
 if [[ -f tls.cert ]]
 then

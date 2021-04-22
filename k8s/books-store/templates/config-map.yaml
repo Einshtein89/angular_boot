@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: {{ .Values.namespace }}
+  name: {{ .Values.configmap.name }}
+data:
+  #name of the service of the deployment we need serves as a url.
+  MONGODB_SERVER_URL: "{{ .Values.mongo_db.service.name }}:{{ .Values.mongo_db.service.port }}" #port number should correspond to port from service

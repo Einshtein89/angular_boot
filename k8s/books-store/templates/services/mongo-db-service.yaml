@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.mongo_db.service.name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "books-store.labels" . | nindent 4 }}
+spec:
+  ports:
+    - port: {{ .Values.mongo_db.service.port }}
+      targetPort: {{ .Values.mongo_db.service.targetPort }}
+      protocol: {{ .Values.mongo_db.service.protocol }}
+  selector:
+    app: {{ .Values.mongo_db.service.selector }}
