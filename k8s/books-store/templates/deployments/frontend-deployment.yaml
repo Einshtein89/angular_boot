@@ -10,6 +10,12 @@ spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.frontend.deployment.replicaCount }}
   {{- end }}
+  minReadySeconds: 15
+  strategy:
+    type: {{ .Values.frontend.deployment.strategy }}
+    rollingUpdate:
+      maxUnavailable: {{ .Values.frontend.deployment.maxUnavailable }}
+      maxSurge: {{ .Values.frontend.deployment.maxSurge }}
   selector:
     matchLabels:
       app: {{ .Values.frontend.deployment.name }}

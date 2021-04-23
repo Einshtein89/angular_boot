@@ -45,17 +45,19 @@ then
     rm tls.key
 fi
 
-if [[ $(kubectl get namespace | grep $PROJECT_NAME) ]]
+#create namespace if needed
+if [[ ! $(kubectl get namespace | grep $PROJECT_NAME) ]]
 then
-    kubectl delete namespace $PROJECT_NAME
+    kubectl create namespace $PROJECT_NAME
 fi
 
-kubectl create namespace $PROJECT_NAME && \
-
 #create secret in k8s with cert and key (CN should correspond to host URL)
-openssl genrsa -out tls.key 2048 && \
-openssl req -new -x509 -key tls.key -out tls.cert -days 360 -subj /CN=books.com && \
-kubectl create secret -n books-store tls tls-secret --cert=tls.cert --key=tls.key && \
+if [[ ! $(kubectl get secret -n $PROJECT_NAME | grep tls-secret) ]]
+then
+    openssl genrsa -out tls.key 2048 && \
+    openssl req -new -x509 -key tls.key -out tls.cert -days 360 -subj /CN=books.com && \
+    kubectl create secret -n books-store tls tls-secret --cert=tls.cert --key=tls.key
+fi
 
 helm upgrade --install --namespace $PROJECT_NAME $PROJECT_NAME $PROJECT_NAME && \
 #kubectl delete pods --all --namespace=$PROJECT_NAME && \
@@ -64,6 +66,7 @@ helm upgrade --install --namespace $PROJECT_NAME $PROJECT_NAME $PROJECT_NAME && 
 #deleting local tags
 docker rmi $USERNAME/$BACKEND_IMAGE:$BACKEND_TAG && \
 docker rmi $USERNAME/$FRONTEND_IMAGE:$FRONTEND_TAG && \
+
 #deleting certificates
 if [[ -f tls.cert ]]
 then

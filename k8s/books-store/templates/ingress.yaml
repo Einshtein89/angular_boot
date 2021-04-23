@@ -1,6 +1,6 @@
 {{- if .Values.ingress.enabled -}}
 {{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 {{- else -}}
 apiVersion: extensions/v1beta1
 {{- end }}
@@ -28,11 +28,17 @@ spec:
       http:
         paths:
           - path: /
+            pathType: Prefix
             backend:
-              serviceName: {{ .Values.frontend.service.name }}
-              servicePort: {{ .Values.frontend.service.port }}
+              service:
+                name: {{ .Values.frontend.service.name }}
+                port:
+                  number: {{ .Values.frontend.service.port }}
           - path: /api
+            pathType: Prefix
             backend:
-              serviceName: {{ .Values.backend.service.name }}
-              servicePort: {{ .Values.backend.service.port }}
+              service:
+                name: {{ .Values.backend.service.name }}
+                port:
+                  number: {{ .Values.backend.service.port }}
 {{- end }}

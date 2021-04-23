@@ -47,11 +47,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
   public JwtAuthenticationFilter authenticationTokenFilterBean() throws Exception {
     return new JwtAuthenticationFilter();
   }
-  
-//  @Bean
-//  public LocaleConfigurerFilter localeConfigurerFilter() throws Exception {
-//    return new LocaleConfigurerFilter();
-//  }
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
@@ -66,7 +61,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
         .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
     
     http.headers().frameOptions().disable();
-//        .addFilterAfter(localeConfigurerFilter(), JwtAuthenticationFilter.class);
   }
 
   @Bean
