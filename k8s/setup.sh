@@ -59,6 +59,7 @@ then
     kubectl create secret -n books-store tls tls-secret --cert=tls.cert --key=tls.key
 fi
 
+helm dependency update $PROJECT_NAME && \
 helm upgrade --install --namespace $PROJECT_NAME $PROJECT_NAME $PROJECT_NAME && \
 #kubectl delete pods --all --namespace=$PROJECT_NAME && \
 

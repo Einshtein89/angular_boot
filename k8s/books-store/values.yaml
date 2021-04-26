@@ -2,6 +2,14 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+mongodb:
+  auth:
+    enabled: false
+#    rootPassword: password
+  service:
+      port: 80
+      nameOverride: mongodb
+
 namespace: books-store
 repository: einshtein89
 
@@ -51,9 +59,10 @@ backend:
       imagePullPolicy: Always
     containerPort: 3000
 
-mongo_db:
+mongo_db_custom:
+  enabled: false
   service:
-    name: mongodb-service
+    name: mongo-service
     selector: mongodb
     protocol: TCP
     port: 80

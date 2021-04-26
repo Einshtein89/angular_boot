@@ -17,7 +17,6 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 import com.nixsolutions.angular_boot.dao.BookRepository;
 import com.nixsolutions.angular_boot.dao.CatalogRepository;
-import com.nixsolutions.angular_boot.dao.OrderRepository;
 import com.nixsolutions.angular_boot.dao.PhotoRepository;
 import com.nixsolutions.angular_boot.dao.RoleRepository;
 import com.nixsolutions.angular_boot.dao.UserRepository;
@@ -41,8 +40,6 @@ public class AngularBootApplication implements CommandLineRunner
   private UserRepository userRepository;
   @Autowired
   private PhotoRepository photoRepository;
-  @Autowired
-  private OrderRepository orderRepository;
 
 	private static final Logger log = LoggerFactory.getLogger(AngularBootApplication.class);
 
@@ -58,7 +55,6 @@ public class AngularBootApplication implements CommandLineRunner
     roleRepository.deleteAll();
     userRepository.deleteAll();
     photoRepository.deleteAll();
-    orderRepository.deleteAll();
 
     List<Catalog> catalogs = new ArrayList<>();
     catalogs.add(new Catalog("Sci-Fi"));
@@ -96,7 +92,6 @@ public class AngularBootApplication implements CommandLineRunner
         .findByCatalogId(catalogRepository.findCatalogByName("Sci-Fi").getId(), new PageRequest(0, 10));
 //    Page bookByCatalogName = bookRepository
 //        .findByCatalogName(catalogRepository.findCatalogByName("Sci-Fi").getName(), new PageRequest(0, 10));
-    int a = 0;
 //    System.out.println(bookByCatalogId.getCatalog());
 
   }
