@@ -1,8 +1,8 @@
+import {environment} from "../../environments/environment";
 
 export class Constants {
   public static baseUrl: string = window.location.origin;
-  public static hostUrl: string = `${Constants.baseUrl}/api` ;
-  // public static hostUrl: string = `http://localhost:3000/api` ;
+  public static hostUrl: string = environment.production ? `${Constants.baseUrl}/api` : `http://localhost:3000/api`;
   public static books: string = '/books';
   public static users: string = '/users';
   public static photo: string = '/photos';
