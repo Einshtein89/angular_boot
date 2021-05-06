@@ -36,7 +36,7 @@
     "ng-simple-slideshow": "^1.2.6",
     "rxjs": "^5.5.6",
     "semantic-ui": "^2.4.2",
-    "underscore": "^1.9.1",
+    "underscore": "^1.12.1",
     "zone.js": "^0.8.19"
   },
   "devDependencies": {
