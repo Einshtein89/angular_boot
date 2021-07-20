@@ -10,7 +10,7 @@ spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.backend.deployment.replicaCount }}
   {{- end }}
-  minReadySeconds: 15
+  minReadySeconds: {{ .Values.backend.deployment.minReadySeconds }}
   strategy:
     type: {{ .Values.backend.deployment.strategy }}
     rollingUpdate:

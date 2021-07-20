@@ -2,20 +2,13 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-mongodb:
-  auth:
-    enabled: false
-#    rootPassword: password
-  service:
-      port: 80
-      nameOverride: mongodb
-
 namespace: books-store
 repository: einshtein89
 
 configmap:
   name: configmap
 
+#UI section
 frontend:
   service:
     name: angular-service
@@ -38,6 +31,7 @@ frontend:
     containerPort: 80
 
 
+#backend section
 backend:
   service:
     name: spring-boot-service
@@ -59,6 +53,27 @@ backend:
       imagePullPolicy: Always
     containerPort: 3000
 
+
+#mongo section
+#bitnami chart
+mongodb:
+  auth:
+    enabled: false
+  #    rootPassword: password
+  service:
+    port: 80
+    nameOverride: mongodb
+
+#cowboysysop mongo express
+mongo-express:
+  mongodbServer: books-store-mongodb
+  mongodbPort: 80
+  mongodbEnableAdmin: true
+  service:
+    port: 80
+
+
+#local custom mongo
 mongo_db_custom:
   enabled: false
   service:
@@ -72,6 +87,34 @@ mongo_db_custom:
     replicaCount: 1
     image: mongo
     containerPort: 27017
+
+#local custom mongo express
+custom_mongo_express:
+  enabled: false
+  name: mongo_express
+  inage: mongo_express
+  containerPort: 8081
+  service:
+    name: mongo_express-service
+#    type: LoadBalancer
+    port: 80
+    targetPort: 8081
+    nodePort: 30000
+  secret:
+    name: mongodb-secret
+
+#ingress section
+ingress:
+  host: books.com
+  name: ingress
+  enabled: true
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+  # kubernetes.io/tls-acme: "true"
+  tls:
+    secretName: tls-secret
+    hosts:
+      - books.com
 
 
 imagePullSecrets: []
@@ -100,17 +143,6 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-ingress:
-  host: books.com
-  name: ingress
-  enabled: true
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  tls:
-    secretName: tls-secret
-    hosts:
-      - books.com
 
 resources:
    limits:

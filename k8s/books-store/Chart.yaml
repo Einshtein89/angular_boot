@@ -27,3 +27,6 @@ dependencies:
   - name: mongodb
     version: 10.12.5
     repository: "@bitnami"
+  - name: mongo-express
+    version: 2.3.1
+    repository: "@cowboysysop"
